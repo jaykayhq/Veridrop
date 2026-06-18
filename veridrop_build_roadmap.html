@@ -1,0 +1,126 @@
+
+<h2 class="sr-only">Veridrop development roadmap: 8 phases over 12 months with pre-flight blockers and phase-by-phase deliverables</h2>
+
+<style>
+:root{--bb:#B5D4F4;--bt:#042C53;--tb:#9FE1CB;--tt:#04342C;--pb:#CECBF6;--pt:#26215C;--gb:#D3D1C7;--gt:#2C2C2A;--cb:#F5C4B3;--ct:#4A1B0C}
+@media(prefers-color-scheme:dark){:root{--bb:#185FA5;--bt:#B5D4F4;--tb:#0F6E56;--tt:#9FE1CB;--pb:#534AB7;--pt:#CECBF6;--gb:#5F5E5A;--gt:#D3D1C7;--cb:#993C1D;--ct:#F5C4B3}}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.pbd{display:none}.pc.open .pbd{display:block}.pc.open{border-color:var(--color-border-secondary)}.pc.open .pa{transform:rotate(180deg)}
+.ph:hover{background:var(--color-background-secondary)}.gbt:hover{filter:brightness(1.08)}
+</style>
+
+<div style="padding:.5rem 0">
+
+<div style="border:.5px solid var(--color-border-danger);background:var(--color-background-danger);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:1.25rem">
+  <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--color-text-danger);margin-bottom:10px">
+    <i class="ti ti-alert-triangle" aria-hidden="true" style="font-size:14px"></i> Resolve before writing a line of code
+  </div>
+  <div id="blki"></div>
+</div>
+
+<div style="display:flex;justify-content:space-between;margin-bottom:5px">
+  <span style="font-size:11px;color:var(--color-text-secondary);font-family:var(--font-mono)">48-week build timeline</span>
+  <span style="font-size:11px;color:var(--color-text-secondary);font-family:var(--font-mono)">Click a block to jump to phase</span>
+</div>
+<div id="gantt" style="display:flex;height:30px;border-radius:var(--border-radius-md);overflow:hidden;border:.5px solid var(--color-border-tertiary);margin-bottom:1.5rem"></div>
+
+<div id="phases"></div>
+
+<div style="margin-top:12px;padding:12px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);display:flex;align-items:center;gap:12px">
+  <span style="font-size:11px;color:var(--color-text-secondary)">Total runway</span>
+  <span style="font-size:20px;font-weight:500;color:var(--color-text-primary)">~12 months</span>
+  <span style="font-size:12px;color:var(--color-text-secondary);flex:1;text-align:right;line-height:1.5">The PRD's 4-month launch window assumes the tech is already built.<br>Start the inspector network on Day 1 of build.</span>
+</div>
+
+</div>
+
+<script>
+const C={blue:{bg:'var(--bb)',tx:'var(--bt)'},teal:{bg:'var(--tb)',tx:'var(--tt)'},purp:{bg:'var(--pb)',tx:'var(--pt)'},gray:{bg:'var(--gb)',tx:'var(--gt)'},coral:{bg:'var(--cb)',tx:'var(--ct)'}};
+
+const BL=[
+  {id:'B-01',t:'Escrow licensing — existential risk',d:"Can Veridrop legally hold buyer funds in Nigeria? You need a CBN Payment Service Provider license or a formal escrow partnership with Paystack/Flutterwave. This single decision defines your entire payment architecture — resolve it first."},
+  {id:'B-02',t:'Inspector gig network — ops problem, not a tech problem',d:'Recruit, vet, and train inspectors in parallel with the tech build. Week 1 of build = Week 1 of ops. Tech without inspectors means zero completed transactions on launch day.'},
+  {id:'B-03',t:'Tamper-evident QR seal supply chain',d:'Procurement, MOQs, serialization printing, and distribution logistics must be contracted before you build the digital QR ledger around them. The physical product defines the digital system.'},
+];
+
+const PH=[
+  {id:'P0',lbl:'Architecture & partnerships',wks:'Wks 1–4',dur:4,col:'gray',
+   ds:['Tech stack: NestJS (backend) · Flutter (3 mobile apps) · Next.js (vendor + admin web)','Database schema: users, escrow vaults, wallets, orders, inspections, QR ledger, audit log','OpenAPI contract across all 5 app surfaces — define before any code is written','Payment gateway evaluation + escrow partner agreement signed (resolves B-01)','QR seal vendor selected + sample batch procured and scan-tested in field conditions (B-03)','Cloud infra: AWS/GCP with CI/CD pipelines, dev / staging / prod environments','Inspector onboarding playbook drafted — this is an ops deliverable, not engineering (B-02)'],
+   risk:'No code should be written until the escrow partner is confirmed. Every payment architecture decision flows from this.',
+   ms:'All 3 pre-flight blockers resolved — green light to build'},
+  {id:'P1',lbl:'Core backend + admin dashboard',wks:'Wks 5–10',dur:6,col:'blue',
+   ds:['Auth system + JWT with RBAC for 4 roles: Buyer, Vendor, Inspector, Admin','Escrow ledger: atomic fund lock / hold / release / penalty debit — ACID guaranteed','Payment gateway integration in escrow mode (Paystack or Flutterwave)','Per-role wallet system with immutable balance history','Admin web dashboard: user approval queues for vendors, inspectors, and riders','Immutable audit log: every state change → UTC timestamp + user hash + device ID','Notification infrastructure: push (FCM/APNs) + SMS via Termii / Africa\'s Talking'],
+   risk:"The escrow ledger is the highest-risk component in the system. Budget extra time — test atomic transaction edge cases, rollbacks, and concurrent lock scenarios aggressively before moving to P2.",
+   ms:"End-to-end fund lock and release works — API-only, no UI yet"},
+  {id:'P2',lbl:'Inspector app + dispatch engine',wks:'Wks 11–18',dur:8,col:'teal',
+   ds:['Inspector Flutter app: assignment feed + GPS map routing to vendor location','Dynamic product checklists by category (IMEI for electronics, stitching/color for fashion)','Enforced live camera: gallery upload blocked, GPS + timestamp embedded in every capture','Mandatory fail reason codes with required corroborating photo proof attached','"Fail order" trigger → atomic escrow reversal + inspector payout + vendor wallet debit','Offline media queue: local cache with background sync on network reconnect','Geo-dispatch engine: match inspector to nearest valid unassigned order in real time','Inspection report generation + encrypted media archive in S3'],
+   risk:"Blocking gallery access and forcing live camera has platform-specific constraints on iOS (UIImagePickerController vs PHPickerViewController). Prototype and test this in Week 11 — it's a core compliance requirement. If it can't be enforced reliably, the inspection's evidentiary value collapses.",
+   ms:"Inspector completes a full real inspection end-to-end under field conditions — offline, low signal, unfamiliar vendor site"},
+  {id:'P3',lbl:'QR chain of custody + rider app',wks:'Wks 19–22',dur:4,col:'teal',
+   ds:['QR serialization engine: unique seal ID → cryptographic DB entry at inspection close','Rider Flutter app: sequential scan workflow — source handoff → in-transit → delivery scan','Tamper detection: reject any scan where QR ID diverges from the inspection DB record','Buyer proximity validation at delivery: QR scan or OTP confirmation required','Chain of custody log: every scan → GPS + UTC timestamp + user hash','Block escrow release if any custody chain scan is skipped or mismatched'],
+   risk:"Physical QR seal quality matters. If seals delaminate or cameras can't read them in dim light, the custody chain breaks. Scan-test the actual seal material in poor conditions before building the digital ledger around it.",
+   ms:"Full custody chain scan completes and triggers automatic escrow settlement"},
+  {id:'P4',lbl:'Buyer app + vendor dashboard',wks:'Wks 23–28',dur:6,col:'purp',
+   ds:['Buyer Flutter app: escrow-locked checkout, fund lock confirmation, real-time order tracker','Buyer: multimedia inspection report viewer — photos, checklist, pass/fail verdict','Buyer: single-tap dispute trigger with structured reason codes','Vendor web dashboard: escrow-locked order pipeline, inspector dispatch status','Vendor: account balance + penalty ledger (read-only on active locked escrow vaults)','Vendor: listing management + mandatory KYC identity attestation (CAC / BVN)','Real-time WebSocket status updates across all 5 user app surfaces'],
+   risk:null,
+   ms:"Full transaction flow completes across all 5 user roles without admin intervention"},
+  {id:'P5',lbl:'Settlement + dispute engine',wks:'Wks 29–32',dur:4,col:'blue',
+   ds:['Failed inspection → auto-refund buyer, pay inspector, debit vendor penalty wallet','Late buyer cancellation → forfeit inspection fee to inspector, partial escrow refund','First-mile holdback: 10% security reserve on vendor\'s first 10 transactions','Escrow freeze on negative vendor balance across all their active orders until cleared','Automated dispute rules engine with admin manual override queue','Vendor trust rating engine: inspection pass rate history → tier fee subsidies'],
+   risk:"The cross-order escrow freeze rule may have regulatory implications depending on your license structure. Get legal review before building this automation into production.",
+   ms:"Zero manual intervention needed for any standard pass/fail transaction resolution"},
+  {id:'P6',lbl:'Hardening + integration',wks:'Wks 33–36',dur:4,col:'gray',
+   ds:['Shopify plugin: Veridrop Secure checkout + escrow injection into merchant storefronts','WooCommerce plugin equivalent','Load test: 15,000 concurrent users — escrow latency <1.5s, dashboard render <2.5s','Security audit: TLS 1.3 in transit, AES-256 at rest, full penetration test','RBAC audit: confirm no admin role can overwrite finalized transaction logs','Inspector offline sync stress test — extended field simulation in edge network conditions'],
+   risk:null,
+   ms:"Platform passes security audit and holds all load test targets at the PRD's NFR thresholds"},
+  {id:'P7',lbl:'Alpha → beta → general release',wks:'Wks 37–48',dur:12,col:'coral',
+   ds:['Alpha (Wks 37–40): 10 vetted vendors · 20 inspectors · 1 metro area · luxury smartphones only','Stress test routing engine, QR seal scanning, and live escrow under real transaction conditions','Beta (Wks 41–44): fashion + electronics · 3 metro areas · 3PL logistics onboarded','Full automated inspector gig routing — zero manual dispatch','Shopify + WooCommerce plugins go live for enrolled merchants','General release (Wks 45–48): Veridrop Secure badge + full marketing activation'],
+   risk:"The PRD's 4-month market launch assumes the tech is already built. One public escrow failure permanently destroys the trust brand Veridrop is built on — do not rush the alpha.",
+   ms:"95% inspection pass rate · <0.5% post-delivery disputes · 85% inspector retention"},
+];
+
+const TOTAL=48;
+
+document.getElementById('blki').innerHTML=BL.map((b,i)=>`
+  <div style="display:flex;gap:10px;padding:8px 10px;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-danger);${i<BL.length-1?'margin-bottom:6px':''}">
+    <span style="font-family:var(--font-mono);font-size:10px;font-weight:500;color:var(--color-text-danger);flex-shrink:0;padding-top:2px;min-width:30px">${b.id}</span>
+    <div>
+      <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px">${b.t}</div>
+      <p style="font-size:12px;color:var(--color-text-secondary);line-height:1.55;margin:0">${b.d}</p>
+    </div>
+  </div>`).join('');
+
+const gantt=document.getElementById('gantt');
+PH.forEach((p,i)=>{
+  const c=C[p.col],pct=(p.dur/TOTAL*100).toFixed(2);
+  const el=document.createElement('div');
+  el.className='gbt';
+  el.style.cssText=`width:${pct}%;background:${c.bg};color:${c.tx};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;font-family:var(--font-mono);cursor:pointer;flex-shrink:0;overflow:hidden;${i<PH.length-1?'border-right:.5px solid rgba(128,128,128,.15)':''}`;
+  el.textContent=p.id;el.title=`${p.lbl} (${p.wks})`;
+  el.onclick=()=>{const card=document.getElementById('c'+i);card.classList.add('open');setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),50);};
+  gantt.appendChild(el);
+});
+
+const phcon=document.getElementById('phases');
+PH.forEach((p,i)=>{
+  const c=C[p.col];
+  const dH=p.ds.map(d=>`<div style="display:flex;gap:7px;align-items:flex-start;font-size:12.5px;color:var(--color-text-primary);margin-bottom:5px;line-height:1.5"><i class="ti ti-arrow-right" aria-hidden="true" style="color:var(--color-text-secondary);font-size:14px;flex-shrink:0;margin-top:1px"></i>${d}</div>`).join('');
+  const rH=p.risk?`<div style="border:.5px solid var(--color-border-warning);background:var(--color-background-warning);border-radius:var(--border-radius-md);padding:9px 11px;margin-top:10px"><div style="font-size:10px;font-weight:500;color:var(--color-text-warning);display:flex;align-items:center;gap:4px;margin-bottom:3px;text-transform:uppercase;letter-spacing:.06em"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px"></i>Risk / decision point</div><div style="font-size:12px;color:var(--color-text-warning);line-height:1.55">${p.risk}</div></div>`:'';
+  const mH=p.ms?`<div style="border:.5px solid var(--color-border-success);background:var(--color-background-success);border-radius:var(--border-radius-md);padding:7px 11px;margin-top:8px;display:flex;align-items:flex-start;gap:6px;font-size:12px;color:var(--color-text-success);line-height:1.5"><i class="ti ti-flag" aria-hidden="true" style="font-size:14px;flex-shrink:0;margin-top:1px"></i><span>${p.ms}</span></div>`:'';
+  const card=document.createElement('div');
+  card.id='c'+i;
+  card.className='pc'+(i===0?' open':'');
+  card.style.cssText='border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:6px;background:var(--color-background-primary);overflow:hidden';
+  card.innerHTML=`
+    <div class="ph" onclick="this.closest('.pc').classList.toggle('open')" style="display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer">
+      <span style="font-size:10px;font-weight:500;font-family:var(--font-mono);padding:2px 7px;border-radius:4px;flex-shrink:0;background:${c.bg};color:${c.tx}">${p.id}</span>
+      <span style="flex:1;font-size:14px;font-weight:500;color:var(--color-text-primary)">${p.lbl}</span>
+      <span style="font-size:11px;color:var(--color-text-secondary);font-family:var(--font-mono);flex-shrink:0">${p.wks}</span>
+      <i class="ti ti-chevron-down pa" aria-hidden="true" style="color:var(--color-text-secondary);font-size:12px;flex-shrink:0;transition:transform .2s;margin-left:4px"></i>
+    </div>
+    <div class="pbd" style="padding:12px 14px 14px;border-top:.5px solid var(--color-border-tertiary)">
+      <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--color-text-secondary);margin-bottom:7px">Deliverables</div>
+      ${dH}${rH}${mH}
+    </div>`;
+  phcon.appendChild(card);
+});
+</script>
