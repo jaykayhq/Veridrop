@@ -17,8 +17,8 @@ export default function VendorProducts() {
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-[#e8e8e8]">Products</h1>
-          <p className="text-sm text-[#666] mt-1">Manage your product listings</p>
+          <h1 className="text-xl font-semibold text-text-primary">Products</h1>
+          <p className="text-sm text-text-muted mt-1">Manage your product listings</p>
         </div>
         <button className="px-4 py-2 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity">
           + Add Product
@@ -26,28 +26,28 @@ export default function VendorProducts() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Active Listings</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">5</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Active Listings</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">5</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Out of Stock</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">2</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Out of Stock</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">2</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Total Sales Value</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">{formatCurrency(3438700)}</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Total Sales Value</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">{formatCurrency(3438700)}</p>
         </div>
       </div>
 
-      <div className="bg-[#111] rounded-xl border border-[#1a1a1a]">
+      <div className="bg-surface rounded-xl border border-default">
         <DataTable
           columns={[
             { key: "id", header: "ID" },
             { key: "name", header: "Name" },
             { key: "category", header: "Category" },
             { key: "price", header: "Price", className: "font-medium", render: (row) => formatCurrency(row.price as number) },
-            { key: "stock", header: "Stock", render: (row) => <span className={row.stock === 0 ? "text-red-400 font-medium" : ""}>{row.stock as number}</span> },
+            { key: "stock", header: "Stock", render: (row) => <span className={row.stock === 0 ? "text-danger font-medium" : ""}>{row.stock as number}</span> },
             { key: "sales", header: "Sales" },
             { key: "status", header: "Status", render: (row) => <StatusBadge status={row.status as string} /> },
           ]}

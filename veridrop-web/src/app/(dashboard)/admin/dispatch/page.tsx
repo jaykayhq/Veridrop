@@ -13,30 +13,30 @@ export default function AdminDispatch() {
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-[#e8e8e8]">Dispatch Network</h1>
-        <p className="text-sm text-[#666] mt-1">Delivery companies and rider management</p>
+        <h1 className="text-xl font-semibold text-text-primary">Dispatch Network</h1>
+        <p className="text-sm text-text-muted mt-1">Delivery companies and rider management</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Total Companies</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">5</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Total Companies</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">5</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Active</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Active</p>
           <p className="text-lg font-semibold text-emerald-400 mt-1">3</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Total Riders</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">24</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Total Riders</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">24</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Total Deliveries</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">1,885</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Total Deliveries</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">1,885</p>
         </div>
       </div>
 
-      <div className="bg-[#111] rounded-xl border border-[#1a1a1a]">
+      <div className="bg-surface rounded-xl border border-default">
         <DataTable
           columns={[
             { key: "id", header: "ID" },

@@ -18,20 +18,20 @@ export default function AdminUsers() {
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-[#e8e8e8]">Users</h1>
-          <p className="text-sm text-[#666] mt-1">All platform users and their roles</p>
+          <h1 className="text-xl font-semibold text-text-primary">Users</h1>
+          <p className="text-sm text-text-muted mt-1">All platform users and their roles</p>
         </div>
         <div className="flex gap-2">
           <input
             type="text"
             placeholder="Search users..."
-            className="px-3 py-2 text-sm border border-[#1f1f1f] rounded-lg bg-[#0d0d0d] text-[#e8e8e8] placeholder-[#555] focus:outline-none focus:ring-2 focus:ring-[#00bda6] focus:border-transparent w-64"
+            className="px-3 py-2 text-sm border border-default rounded-lg bg-input text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-teal-light focus:border-transparent w-64"
             readOnly
           />
         </div>
       </div>
 
-      <div className="bg-[#111] rounded-xl border border-[#1a1a1a]">
+      <div className="bg-surface rounded-xl border border-default">
         <DataTable
           columns={[
             { key: "id", header: "ID" },
@@ -41,7 +41,7 @@ export default function AdminUsers() {
               key: "role",
               header: "Role",
               render: (row) => (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#1a1a1a] text-[#aaa] border border-[#2a2a2a]">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-surface text-text-secondary border border-subtle">
                   {row.role as string}
                 </span>
               ),
@@ -55,7 +55,7 @@ export default function AdminUsers() {
               key: "joined",
               header: "Joined",
               render: (row) => (
-                <span className="text-[#666]">{formatDate(row.joined as string)}</span>
+                <span className="text-text-muted">{formatDate(row.joined as string)}</span>
               ),
             },
           ]}

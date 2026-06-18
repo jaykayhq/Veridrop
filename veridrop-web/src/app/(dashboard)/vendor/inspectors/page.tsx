@@ -13,26 +13,26 @@ export default function VendorInspectors() {
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-[#e8e8e8]">Inspectors</h1>
-        <p className="text-sm text-[#666] mt-1">Available field inspectors in your area</p>
+        <h1 className="text-xl font-semibold text-text-primary">Inspectors</h1>
+        <p className="text-sm text-text-muted mt-1">Available field inspectors in your area</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Available Now</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Available Now</p>
           <p className="text-lg font-semibold text-emerald-400 mt-1">3</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">On Assignment</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">2</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">On Assignment</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">2</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Avg. Rating</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">4.7 / 5.0</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Avg. Rating</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">4.7 / 5.0</p>
         </div>
       </div>
 
-      <div className="bg-[#111] rounded-xl border border-[#1a1a1a]">
+      <div className="bg-surface rounded-xl border border-default">
         <DataTable
           columns={[
             { key: "id", header: "ID" },
@@ -42,7 +42,7 @@ export default function VendorInspectors() {
               header: "Rating",
               render: (row) => (
                 <span className="flex items-center gap-1">
-                  <span className="text-[#c8a862]">★</span> {row.rating as string}
+                  <span className="text-brand-gold">★</span> {row.rating as string}
                 </span>
               ),
             },

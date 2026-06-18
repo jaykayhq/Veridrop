@@ -16,19 +16,19 @@ export function StatCard({
   icon,
 }: StatCardProps) {
   const changeColors = {
-    up: "text-[#00bda6]",
-    down: "text-[#dc2626]",
-    neutral: "text-[#666]",
+    up: "text-teal-light",
+    down: "text-danger",
+    neutral: "text-text-muted",
   };
 
   return (
     <div className="card p-5">
       <div className="flex items-start justify-between">
         <div className="space-y-1">
-          <p className="text-[10px] font-medium text-[#555] uppercase tracking-[0.1em]">
+          <p className="text-[10px] font-medium text-text-muted uppercase tracking-[0.1em]">
             {label}
           </p>
-          <p className="text-2xl font-semibold text-[#e8e8e8] tracking-tight">{value}</p>
+          <p className="text-2xl font-semibold text-text-primary tracking-tight">{value}</p>
           {change && (
             <p className={cn("text-xs font-medium", changeColors[changeType])}>
               {change}
@@ -36,7 +36,7 @@ export function StatCard({
           )}
         </div>
         {icon && (
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#1f1f1f] bg-[#0a0a0a] text-[#888] shrink-0">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-default bg-app text-text-secondary shrink-0">
             {icon}
           </div>
         )}

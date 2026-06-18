@@ -14,26 +14,26 @@ export default function AdminDisputes() {
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-[#e8e8e8]">Disputes</h1>
-        <p className="text-sm text-[#666] mt-1">Review and resolve transaction disputes</p>
+        <h1 className="text-xl font-semibold text-text-primary">Disputes</h1>
+        <p className="text-sm text-text-muted mt-1">Review and resolve transaction disputes</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Open Disputes</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">4</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Open Disputes</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">4</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Under Review</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Under Review</p>
           <p className="text-lg font-semibold text-[#c8a862] mt-1">2</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Avg. Resolution</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">48h</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Avg. Resolution</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">48h</p>
         </div>
       </div>
 
-      <div className="bg-[#111] rounded-xl border border-[#1a1a1a]">
+      <div className="bg-surface rounded-xl border border-default">
         <DataTable
           columns={[
             { key: "id", header: "ID" },
@@ -56,7 +56,7 @@ export default function AdminDisputes() {
               key: "filed",
               header: "Filed",
               render: (row) => (
-                <span className="text-[#666]">{formatDate(row.filed as string)}</span>
+                <span className="text-text-muted">{formatDate(row.filed as string)}</span>
               ),
             },
           ]}

@@ -17,26 +17,26 @@ export default function AdminTransactions() {
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-[#e8e8e8]">Transactions</h1>
-        <p className="text-sm text-[#666] mt-1">All escrow transactions across the platform</p>
+        <h1 className="text-xl font-semibold text-text-primary">Transactions</h1>
+        <p className="text-sm text-text-muted mt-1">All escrow transactions across the platform</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Total Volume</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">{formatCurrency(1480200)}</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Total Volume</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">{formatCurrency(1480200)}</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Active Escrows</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">342</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Active Escrows</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">342</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Avg. Transaction</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">{formatCurrency(185025)}</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Avg. Transaction</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">{formatCurrency(185025)}</p>
         </div>
       </div>
 
-      <div className="bg-[#111] rounded-xl border border-[#1a1a1a]">
+      <div className="bg-surface rounded-xl border border-default">
         <DataTable
           columns={[
             { key: "id", header: "ID" },
@@ -58,7 +58,7 @@ export default function AdminTransactions() {
               key: "date",
               header: "Date",
               render: (row) => (
-                <span className="text-[#666]">{formatDate(row.date as string)}</span>
+                <span className="text-text-muted">{formatDate(row.date as string)}</span>
               ),
             },
           ]}

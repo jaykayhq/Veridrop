@@ -14,8 +14,8 @@ export default function AdminOverview() {
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-[#e8e8e8]">Admin Overview</h1>
-        <p className="text-sm text-[#666] mt-1">Platform-wide metrics and activity</p>
+        <h1 className="text-xl font-semibold text-text-primary">Admin Overview</h1>
+        <p className="text-sm text-text-muted mt-1">Platform-wide metrics and activity</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -26,64 +26,64 @@ export default function AdminOverview() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-5">
-          <h3 className="text-sm font-semibold text-[#e8e8e8] mb-4">Pending Approvals</h3>
+        <div className="bg-surface rounded-xl border border-default p-5">
+          <h3 className="text-sm font-semibold text-text-primary mb-4">Pending Approvals</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-[#666]">Vendors</span>
-              <span className="font-medium text-[#e8e8e8]">12</span>
+              <span className="text-text-muted">Vendors</span>
+              <span className="font-medium text-text-primary">12</span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-[#666]">Inspectors</span>
-              <span className="font-medium text-[#e8e8e8]">8</span>
+              <span className="text-text-muted">Inspectors</span>
+              <span className="font-medium text-text-primary">8</span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-[#666]">Riders</span>
-              <span className="font-medium text-[#e8e8e8]">5</span>
+              <span className="text-text-muted">Riders</span>
+              <span className="font-medium text-text-primary">5</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-5">
-          <h3 className="text-sm font-semibold text-[#e8e8e8] mb-4">Order Status</h3>
+        <div className="bg-surface rounded-xl border border-default p-5">
+          <h3 className="text-sm font-semibold text-text-primary mb-4">Order Status</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-[#666]">Pending inspection</span>
-              <span className="font-medium text-[#e8e8e8]">42</span>
+              <span className="text-text-muted">Pending inspection</span>
+              <span className="font-medium text-text-primary">42</span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-[#666]">In transit</span>
-              <span className="font-medium text-[#e8e8e8]">156</span>
+              <span className="text-text-muted">In transit</span>
+              <span className="font-medium text-text-primary">156</span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-[#666]">Awaiting delivery scan</span>
-              <span className="font-medium text-[#e8e8e8]">89</span>
+              <span className="text-text-muted">Awaiting delivery scan</span>
+              <span className="font-medium text-text-primary">89</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-5">
-          <h3 className="text-sm font-semibold text-[#e8e8e8] mb-4">Today&apos;s Activity</h3>
+        <div className="bg-surface rounded-xl border border-default p-5">
+          <h3 className="text-sm font-semibold text-text-primary mb-4">Today&apos;s Activity</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-[#666]">Inspections completed</span>
-              <span className="font-medium text-[#e8e8e8]">64</span>
+              <span className="text-text-muted">Inspections completed</span>
+              <span className="font-medium text-text-primary">64</span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-[#666]">Escrows released</span>
-              <span className="font-medium text-[#e8e8e8]">₦1.2M</span>
+              <span className="text-text-muted">Escrows released</span>
+              <span className="font-medium text-text-primary">₦1.2M</span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-[#666]">New registrations</span>
-              <span className="font-medium text-[#e8e8e8]">18</span>
+              <span className="text-text-muted">New registrations</span>
+              <span className="font-medium text-text-primary">18</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-[#111] rounded-xl border border-[#1a1a1a]">
-        <div className="px-5 py-4 border-b border-[#1a1a1a]">
-          <h3 className="text-sm font-semibold text-[#e8e8e8]">Recent Transactions</h3>
+      <div className="bg-surface rounded-xl border border-default">
+        <div className="px-5 py-4 border-b border-default">
+          <h3 className="text-sm font-semibold text-text-primary">Recent Transactions</h3>
         </div>
         <DataTable
           columns={[

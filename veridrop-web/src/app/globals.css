@@ -102,6 +102,9 @@
   --sidebar-collapsed-width: 64px;
   --topbar-height: 48px;
 
+  /* ─── Glass Effect Background ─── */
+  --glass-bg: rgba(17, 17, 17, 0.6);
+
   /* ─── Theme transition ─── */
   --theme-transition: background-color 300ms var(--ease-standard),
                       color 300ms var(--ease-standard),
@@ -138,6 +141,7 @@
   --shadow-brand-subtle: 0 0 30px -5px rgba(0, 189, 166, 0.2);
   --shadow-brand: 0 0 30px -10px rgba(0, 189, 166, 0.2);
   --shadow-gold: 0 0 30px -10px rgba(200, 168, 98, 0.15);
+  --glass-bg: rgba(255, 255, 255, 0.7);
 }
 
 @theme inline {
@@ -221,14 +225,14 @@ img, picture, video, canvas, svg {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: var(--bg-app);
 }
 ::-webkit-scrollbar-thumb {
-  background: #222;
+  background: var(--border-subtle);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #333;
+  background: var(--border-hover);
 }
 
 /* ─── Skeleton / Shimmer ─── */
@@ -239,9 +243,9 @@ img, picture, video, canvas, svg {
 .skeleton {
   background: linear-gradient(
     90deg,
-    #111 25%,
-    #1a1a1a 37%,
-    #111 63%
+    var(--bg-surface) 25%,
+    var(--bg-surface-hover) 37%,
+    var(--bg-surface) 63%
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
@@ -335,7 +339,7 @@ img, picture, video, canvas, svg {
 
 /* ─── Glass Effect ─── */
 .glass {
-  background: rgba(17, 17, 17, 0.6);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -374,9 +378,9 @@ img, picture, video, canvas, svg {
 .trust-badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1-5, 6px);
+  gap: var(--space-2, 6px);
   padding: 3px 10px;
-  border-radius: var(--radius-full, 9999px);
+  border-radius: var(--radius-lg, 12px);
   font-size: 0.625rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -468,20 +472,20 @@ img, picture, video, canvas, svg {
   border-radius: var(--radius-md);
   font-size: 1rem;
   color: var(--text-primary);
-  background: #0d0d0d;
+  background: var(--bg-input);
   border: 1px solid var(--border-subtle);
   transition: all var(--transition-fast);
   outline: none;
 }
 .input:hover {
-  border-color: #444;
+  border-color: var(--border-hover);
 }
 .input:focus {
   border-color: var(--brand-teal-light);
   box-shadow: 0 0 0 3px #0d8f8f33;
 }
 .input::placeholder {
-  color: #555;
+  color: var(--text-muted);
 }
 
 /* ─── Divider ─── */

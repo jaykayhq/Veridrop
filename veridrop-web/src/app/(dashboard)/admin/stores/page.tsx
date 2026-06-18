@@ -13,30 +13,30 @@ export default function AdminStores() {
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-[#e8e8e8]">Stores</h1>
-        <p className="text-sm text-[#666] mt-1">All vendor storefronts on the platform</p>
+        <h1 className="text-xl font-semibold text-text-primary">Stores</h1>
+        <p className="text-sm text-text-muted mt-1">All vendor storefronts on the platform</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Total Stores</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">5</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Total Stores</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">5</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Active</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Active</p>
           <p className="text-lg font-semibold text-emerald-400 mt-1">4</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Pending</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Pending</p>
           <p className="text-lg font-semibold text-yellow-400 mt-1">1</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Total Products</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">55</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Total Products</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">55</p>
         </div>
       </div>
 
-      <div className="bg-[#111] rounded-xl border border-[#1a1a1a]">
+      <div className="bg-surface rounded-xl border border-default">
         <DataTable
           columns={[
             { key: "id", header: "ID" },
@@ -45,7 +45,7 @@ export default function AdminStores() {
               key: "slug",
               header: "Link",
               render: (row) => (
-                <span className="font-mono text-[#00bda6] text-xs">/s/{row.slug as string}</span>
+                <span className="font-mono text-brand-teal-light text-xs">/s/{row.slug as string}</span>
               ),
             },
             { key: "owner", header: "Owner" },

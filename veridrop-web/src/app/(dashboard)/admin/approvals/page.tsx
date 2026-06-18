@@ -17,30 +17,30 @@ export default function AdminApprovals() {
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-[#e8e8e8]">Approvals</h1>
-        <p className="text-sm text-[#666] mt-1">Vendor, inspector, and rider onboarding queue</p>
+        <h1 className="text-xl font-semibold text-text-primary">Approvals</h1>
+        <p className="text-sm text-text-muted mt-1">Vendor, inspector, and rider onboarding queue</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Pending</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">25</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Pending</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">25</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Vendors</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">12</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Vendors</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">12</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Inspectors</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">8</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Inspectors</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">8</p>
         </div>
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4">
-          <p className="text-xs text-[#666] uppercase tracking-wider">Riders</p>
-          <p className="text-lg font-semibold text-[#e8e8e8] mt-1">5</p>
+        <div className="bg-surface rounded-xl border border-default p-4">
+          <p className="text-xs text-text-muted uppercase tracking-wider">Riders</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">5</p>
         </div>
       </div>
 
-      <div className="bg-[#111] rounded-xl border border-[#1a1a1a]">
+      <div className="bg-surface rounded-xl border border-default">
         <DataTable
           columns={[
             { key: "id", header: "ID" },
@@ -49,7 +49,7 @@ export default function AdminApprovals() {
               key: "type",
               header: "Type",
               render: (row) => (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#1a1a1a] text-[#aaa] border border-[#2a2a2a]">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-surface text-text-secondary border border-subtle">
                   {row.type as string}
                 </span>
               ),
@@ -65,7 +65,7 @@ export default function AdminApprovals() {
               key: "applied",
               header: "Applied",
               render: (row) => (
-                <span className="text-[#666]">{formatDate(row.applied as string)}</span>
+                <span className="text-text-muted">{formatDate(row.applied as string)}</span>
               ),
             },
           ]}
