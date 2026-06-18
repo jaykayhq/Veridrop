@@ -136,6 +136,8 @@
   --shadow-lg: 0 10px 15px -3px rgb(10 84 166 / 0.08), 0 4px 6px -4px rgb(10 84 166 / 0.05);
   --shadow-xl: 0 20px 25px -5px rgb(10 84 166 / 0.08), 0 8px 10px -6px rgb(10 84 166 / 0.05);
   --shadow-brand-subtle: 0 0 30px -5px rgba(0, 189, 166, 0.2);
+  --shadow-brand: 0 0 30px -10px rgba(0, 189, 166, 0.2);
+  --shadow-gold: 0 0 30px -10px rgba(200, 168, 98, 0.15);
 }
 
 @theme inline {
@@ -311,6 +313,24 @@ img, picture, video, canvas, svg {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* ─── Logo wordmark ─── */
+.logo-wordmark {
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-weight: 750;
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+  position: relative;
+}
+
+/* ─── Stat counter styling ─── */
+.stat-value {
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
 }
 
 /* ─── Glass Effect ─── */
