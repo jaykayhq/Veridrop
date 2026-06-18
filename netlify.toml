@@ -1,3 +1,4 @@
+# Build configuration for Veridrop web app
 [build]
   base = "veridrop-web"
   command = "npm run build"
