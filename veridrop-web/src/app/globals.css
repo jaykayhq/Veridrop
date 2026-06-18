@@ -7,6 +7,29 @@
  * ─────────────────────────────────────────── */
 
 :root {
+  /* ─── Semantic Surface Colors ─── */
+  --bg-app: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-surface-hover: #1a1a1a;
+  --bg-surface-raised: #1a1a1a;
+  --bg-card: #111111;
+  --bg-card-hover: #1a1a1a;
+  --bg-input: #0d0d0d;
+  --bg-sidebar: #0d0d0d;
+  --bg-topbar: rgba(13, 13, 13, 0.7);
+
+  /* ─── Semantic Border Colors ─── */
+  --border-default: #1a1a1a;
+  --border-subtle: #2a2a2a;
+  --border-hover: #444444;
+
+  /* ─── Semantic Text Colors ─── */
+  --text-primary: #e8e8e8;
+  --text-secondary: #a0a0a0;
+  --text-muted: #666666;
+  --text-inverse: #0f172a;
+
+  /* ─── Brand Colors ─── */
   --brand-teal: #089b8a;
   --brand-teal-light: #00bda6;
   --brand-teal-muted: #00bda622;
@@ -14,20 +37,11 @@
   --brand-blue-muted: #0a54a622;
   --brand-gold: #c8a862;
   --brand-gold-muted: #c8a86222;
-  --brand-dark: #0a0a0a;
-  --brand-card: #111111;
-  --brand-card-hover: #1a1a1a;
-  --brand-border: #1a1a1a;
-  --brand-border-light: #2a2a2a;
-  --brand-text: #e8e8e8;
-  --brand-text-secondary: #a0a0a0;
-  --brand-muted: #666666;
-  --brand-muted-dim: #444444;
   --brand-danger: #dc2626;
   --brand-warning: #d97706;
   --brand-success: #00bda6;
 
-  /* Spacing Scale */
+  /* ─── Spacing Scale ─── */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -41,7 +55,7 @@
   --space-20: 5rem;
   --space-24: 6rem;
 
-  /* Border Radius Scale */
+  /* ─── Border Radius Scale ─── */
   --radius-xs: 2px;
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -49,7 +63,7 @@
   --radius-xl: 16px;
   --radius-xxl: 24px;
 
-  /* Shadows */
+  /* ─── Shadows ─── */
   --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
   --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
@@ -59,7 +73,7 @@
   --shadow-brand-subtle: 0 0 20px -8px rgba(0, 189, 166, 0.15);
   --shadow-gold: 0 0 30px -10px rgba(200, 168, 98, 0.3);
 
-  /* Transitions */
+  /* ─── Transitions ─── */
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-emphatic: cubic-bezier(0.2, 0, 0, 1);
@@ -68,7 +82,7 @@
   --transition-slow: 300ms var(--ease-standard);
   --transition-spring: 400ms var(--ease-spring);
 
-  /* Gradients */
+  /* ─── Gradients ─── */
   --gradient-brand: linear-gradient(135deg, #0a54a6 0%, #00bda6 100%);
   --gradient-brand-reverse: linear-gradient(135deg, #00bda6 0%, #0a54a6 100%);
   --gradient-brand-subtle: linear-gradient(135deg, #00bda622 0%, #0a54a611 100%);
@@ -80,23 +94,70 @@
   --gradient-surface: linear-gradient(180deg, #111111 0%, #0a0a0a 100%);
   --gradient-card-hover: linear-gradient(135deg, #00bda608 0%, transparent 100%);
 
-  /* Mesh Gradient Pattern */
+  /* ─── Mesh Gradient Pattern ─── */
   --mesh-dot: radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.08) 0%, transparent 100%);
+
+  /* ─── Sidebar ─── */
+  --sidebar-width: 240px;
+  --sidebar-collapsed-width: 64px;
+  --topbar-height: 48px;
+
+  /* ─── Theme transition ─── */
+  --theme-transition: background-color 300ms var(--ease-standard),
+                      color 300ms var(--ease-standard),
+                      border-color 300ms var(--ease-standard),
+                      box-shadow 300ms var(--ease-standard);
+}
+
+/* ─── Light Theme ─── */
+.light {
+  --bg-app: #f2f7fb;
+  --bg-surface: #ffffff;
+  --bg-surface-hover: #f8fafc;
+  --bg-surface-raised: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --bg-input: #ffffff;
+  --bg-sidebar: #f8f9fa;
+  --bg-topbar: rgba(255, 255, 255, 0.8);
+
+  --border-default: #e2e8f0;
+  --border-subtle: #cbd5e1;
+  --border-hover: #94a3b8;
+
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-inverse: #e8e8e8;
+
+  --shadow-xs: 0 1px 2px 0 rgb(10 84 166 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(10 84 166 / 0.08), 0 1px 2px -1px rgb(10 84 166 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(10 84 166 / 0.08), 0 2px 4px -2px rgb(10 84 166 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(10 84 166 / 0.08), 0 4px 6px -4px rgb(10 84 166 / 0.05);
+  --shadow-xl: 0 20px 25px -5px rgb(10 84 166 / 0.08), 0 8px 10px -6px rgb(10 84 166 / 0.05);
+  --shadow-brand-subtle: 0 0 30px -5px rgba(0, 189, 166, 0.2);
 }
 
 @theme inline {
-  --color-background: #0a0a0a;
-  --color-foreground: #e8e8e8;
+  --color-app: var(--bg-app);
+  --color-surface: var(--bg-surface);
+  --color-surface-hover: var(--bg-surface-hover);
+  --color-surface-raised: var(--bg-surface-raised);
+  --color-card: var(--bg-card);
+  --color-card-hover: var(--bg-card-hover);
+  --color-input: var(--bg-input);
+  --color-sidebar: var(--bg-sidebar);
+  --color-topbar: var(--bg-topbar);
+  --color-border: var(--border-default);
+  --color-border-subtle: var(--border-subtle);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-inverse: var(--text-inverse);
   --color-brand-teal: #089b8a;
   --color-brand-teal-light: #00bda6;
   --color-brand-blue: #0a54a6;
   --color-brand-gold: #c8a862;
-  --color-brand-dark: #0a0a0a;
-  --color-brand-card: #111111;
-  --color-brand-card-hover: #1a1a1a;
-  --color-brand-border: #1a1a1a;
-  --color-brand-muted: #666666;
-  --color-brand-text-secondary: #a0a0a0;
   --color-danger: #dc2626;
   --color-warning: #d97706;
   --color-success: #00bda6;
@@ -116,12 +177,13 @@ html {
 }
 
 body {
-  background: var(--brand-dark);
-  color: var(--brand-text);
+  background: var(--bg-app);
+  color: var(--text-primary);
   font-family: var(--font-sans), Inter, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
+  transition: var(--theme-transition);
 }
 
 img, picture, video, canvas, svg {
@@ -141,7 +203,7 @@ img, picture, video, canvas, svg {
 /* ─── Selection ─── */
 ::selection {
   background: var(--brand-teal-muted);
-  color: var(--brand-text);
+  color: var(--text-primary);
 }
 
 /* ─── Focus Ring ─── */
@@ -299,20 +361,20 @@ img, picture, video, canvas, svg {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  border: 1px solid var(--brand-border);
+  border: 1px solid var(--border-default);
   background: var(--gradient-brand-subtle);
   color: var(--brand-teal-light);
 }
 
 /* ─── Card ─── */
 .card {
-  background: var(--brand-card);
-  border: 1px solid var(--brand-border);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
-  transition: all var(--transition-normal);
+  transition: all var(--transition-normal), var(--theme-transition);
 }
 .card:hover {
-  border-color: var(--brand-border-light);
+  border-color: var(--border-subtle);
   background: var(--gradient-card-hover);
 }
 .card:focus-within {
@@ -365,8 +427,8 @@ img, picture, video, canvas, svg {
   font-weight: 500;
   letter-spacing: 0.02em;
   background: transparent;
-  color: var(--brand-text-secondary);
-  border: 1px solid var(--brand-border-light);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
   cursor: pointer;
   transition: all var(--transition-normal);
 }
@@ -385,9 +447,9 @@ img, picture, video, canvas, svg {
   padding: 0 16px;
   border-radius: var(--radius-md);
   font-size: 1rem;
-  color: var(--brand-text);
+  color: var(--text-primary);
   background: #0d0d0d;
-  border: 1px solid var(--brand-border-light);
+  border: 1px solid var(--border-subtle);
   transition: all var(--transition-fast);
   outline: none;
 }
@@ -405,7 +467,7 @@ img, picture, video, canvas, svg {
 /* ─── Divider ─── */
 .divider {
   height: 1px;
-  background: var(--brand-border);
+  background: var(--border-default);
   border: none;
 }
 
@@ -443,112 +505,3 @@ img, picture, video, canvas, svg {
   animation: pulse-ring 2s var(--ease-standard) infinite;
 }
 
-/* ─── Light Theme Overrides ─── */
-.light {
-  --brand-dark: #f2f7fb;
-  --brand-card: #ffffff;
-  --brand-card-hover: #f8fafc;
-  --brand-border: #e2e8f0;
-  --brand-border-light: #cbd5e1;
-  --brand-text: #0f172a;
-  --brand-text-secondary: #334155;
-  --brand-muted: #64748b;
-  --brand-muted-dim: #94a3b8;
-  
-  /* Colorful diffused shadows for light mode */
-  --shadow-xs: 0 1px 2px 0 rgb(10 84 166 / 0.05);
-  --shadow-sm: 0 1px 3px 0 rgb(10 84 166 / 0.08), 0 1px 2px -1px rgb(10 84 166 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(10 84 166 / 0.08), 0 2px 4px -2px rgb(10 84 166 / 0.05);
-  --shadow-lg: 0 10px 15px -3px rgb(10 84 166 / 0.08), 0 4px 6px -4px rgb(10 84 166 / 0.05);
-  --shadow-xl: 0 20px 25px -5px rgb(10 84 166 / 0.08), 0 8px 10px -6px rgb(10 84 166 / 0.05);
-  --shadow-brand-subtle: 0 0 30px -5px rgba(0, 189, 166, 0.2);
-}
-
-.light body {
-  background: var(--brand-dark);
-  color: var(--brand-text);
-}
-
-/* ─── CSS-based logo mark ─── */
-.logo-mark {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  background: var(--gradient-brand);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-sans), Inter, sans-serif;
-  font-weight: 800;
-  font-size: 1rem;
-  color: white;
-  flex-shrink: 0;
-  transition: transform var(--transition-spring);
-}
-.logo-mark:hover {
-  transform: scale(1.05) rotate(-3deg);
-}
-
-/* ─── Logo wordmark ─── */
-.logo-wordmark {
-  font-family: var(--font-sans), Inter, sans-serif;
-  font-weight: 750;
-  font-size: 1.25rem;
-  letter-spacing: -0.03em;
-  position: relative;
-}
-
-/* ─── Stat counter styling ─── */
-.stat-value {
-  font-family: var(--font-sans), Inter, sans-serif;
-  font-weight: 700;
-  font-size: 1.75rem;
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-
-/* ─── Light mode compat ─── */
-html.light [class*="bg-[#0a0a0a]"] { background-color: #ffffff !important; }
-html.light [class*="bg-[#0a0a0a]/"] { background-color: #ffffffcc !important; }
-html.light [class*="bg-[#111]"] { background-color: #f8f9fa !important; }
-html.light [class*="bg-[#0d0d0d]"] { background-color: #ffffff !important; }
-html.light [class*="bg-[#1a1a1a]"] { background-color: #e2e8f0 !important; }
-html.light [class*="bg-[#1f1f1f]"] { background-color: #e2e8f0 !important; }
-html.light [class*="bg-[#555]"] { background-color: #cbd5e1 !important; }
-html.light [class*="text-[#e8e8e8]"] { color: #1a1a1a !important; }
-html.light [class*="text-[#666]"] { color: #64748b !important; }
-html.light [class*="text-[#555]"] { color: #94a3b8 !important; }
-html.light [class*="text-[#444]"] { color: #64748b !important; }
-html.light [class*="text-[#888]"] { color: #64748b !important; }
-html.light [class*="text-[#aaa]"] { color: #475569 !important; }
-html.light [class*="text-[#ccc]"] { color: #475569 !important; }
-html.light [class*="text-[#333]"] { color: #334155 !important; }
-html.light [class*="border-[#1a1a1a]"] { border-color: #e2e8f0 !important; }
-html.light [class*="border-[#1f1f1f]"] { border-color: #e2e8f0 !important; }
-html.light [class*="border-[#2a2a2a]"] { border-color: #cbd5e1 !important; }
-html.light [class*="border-[#333]"] { border-color: #cbd5e1 !important; }
-html.light [class*="border-[#555]"] { border-color: #94a3b8 !important; }
-html.light [class*="divide-[#1a1a1a]"] > :not(:last-child) { border-color: #e2e8f0 !important; }
-html.light [class*="placeholder-[#555]"]::placeholder { color: #94a3b8 !important; }
-html.light [class*="placeholder:text-[#555]"]::placeholder { color: #94a3b8 !important; }
-html.light ::-webkit-scrollbar-track { background: #f1f5f9 !important; }
-html.light ::-webkit-scrollbar-thumb { background: #cbd5e1 !important; }
-html.light ::-webkit-scrollbar-thumb:hover { background: #94a3b8 !important; }
-
-@media (hover: hover) {
-  html.light [class*="hover:text-[#e8e8e8]"]:hover { color: #1a1a1a !important; }
-  html.light [class*="hover:bg-[#111]"]:hover { background-color: #f1f5f9 !important; }
-  html.light [class*="hover:bg-[#0d0d0d]"]:hover { background-color: #f8f9fa !important; }
-  html.light [class*="hover:border-[#333]"]:hover { border-color: #cbd5e1 !important; }
-  html.light [class*="hover:border-[#555]"]:hover { border-color: #94a3b8 !important; }
-  html.light [class*="hover:border-[#2a2a2a]"]:hover { border-color: #cbd5e1 !important; }
-  html.light [class*="hover:shadow-[0_0_30px_-10px_rgba(13,143,143,0.15)"]:hover {
-    --tw-shadow-color: #0b6e8a1a !important;
-  }
-}
-
-html.light [class*="landing-dark"] {
-  background-color: #ffffff !important;
-  color: #1a1a1a !important;
-}
