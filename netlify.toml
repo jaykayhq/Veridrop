@@ -1,10 +1,13 @@
-# Build configuration for Veridrop web app
 [build]
   base = "veridrop-web"
   command = "npm run build"
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Explicitly enable the Netlify Next.js plugin for auto-deploys
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [[headers]]
   for = "/*"
