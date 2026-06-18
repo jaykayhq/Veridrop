@@ -95,18 +95,18 @@ export default function CheckoutPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-[#e8e8e8] font-sans flex items-center justify-center">
+      <div className="min-h-screen bg-app text-text-primary font-sans flex items-center justify-center">
         <div className="max-w-md w-full mx-6">
-          <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-8 text-center">
+          <div className="bg-surface rounded-xl border border-default p-8 text-center">
             <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">✓</span>
             </div>
             <h2 className="text-lg font-semibold mb-2">Order Placed Successfully!</h2>
-            <p className="text-sm text-[#666] mb-1">Your order ID is:</p>
-            <p className="text-sm font-mono text-[#00bda6] mb-4">{success.orderId}</p>
+            <p className="text-sm text-text-muted mb-1">Your order ID is:</p>
+            <p className="text-sm font-mono text-brand-teal-light mb-4">{success.orderId}</p>
             <Link
               href={success.trackingUrl}
-              className="inline-block rounded-lg bg-gradient-to-r from-[#0a54a6] to-[#00bda6] px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+              className="inline-block rounded-lg bg-gradient-to-r from-brand-blue to-brand-teal-light px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
             >
               Track Your Order
             </Link>
@@ -117,14 +117,14 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#e8e8e8] font-sans">
-      <nav className="sticky top-0 z-50 border-b border-[#1a1a1a] bg-[#0a0a0a]/80 backdrop-blur-md">
+    <div className="min-h-screen bg-app text-text-primary font-sans">
+      <nav className="sticky top-0 z-50 border-b border-default bg-app/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
           <Link href={`/s/${storeId}`} className="flex items-center gap-2.5">
             <LogoIcon size={32} className="shrink-0" />
             <span className="text-sm font-semibold tracking-tight">{storeName}</span>
           </Link>
-          <span className="text-[10px] text-[#555] bg-[#111] border border-[#1f1f1f] px-3 py-1 rounded-full">
+          <span className="text-[10px] text-text-muted bg-surface border border-default px-3 py-1 rounded-full">
             Secure Checkout
           </span>
         </div>
@@ -135,46 +135,46 @@ export default function CheckoutPage() {
 
         <div className="grid gap-8 md:grid-cols-5">
           <div className="md:col-span-3 space-y-6">
-            <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-5">
+            <div className="bg-surface rounded-xl border border-default p-5">
               <h2 className="text-sm font-semibold mb-4">Buyer Information</h2>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs text-[#666] mb-1.5">Full Name</label>
+                  <label className="block text-xs text-text-muted mb-1.5">Full Name</label>
                   <input
                     type="text"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full rounded-lg bg-[#0d0d0d] border border-[#1f1f1f] px-3 py-2.5 text-sm text-[#e8e8e8] placeholder:text-[#555] focus:outline-none focus:ring-2 focus:ring-[#00bda6] focus:border-transparent"
+                    className="w-full rounded-lg bg-input border border-default px-3 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-teal-light focus:border-transparent"
                     placeholder="John Doe"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-[#666] mb-1.5">Email</label>
+                  <label className="block text-xs text-text-muted mb-1.5">Email</label>
                   <input
                     type="email"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full rounded-lg bg-[#0d0d0d] border border-[#1f1f1f] px-3 py-2.5 text-sm text-[#e8e8e8] placeholder:text-[#555] focus:outline-none focus:ring-2 focus:ring-[#00bda6] focus:border-transparent"
+                    className="w-full rounded-lg bg-input border border-default px-3 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-teal-light focus:border-transparent"
                     placeholder="john@example.com"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-[#666] mb-1.5">Phone</label>
+                  <label className="block text-xs text-text-muted mb-1.5">Phone</label>
                   <input
                     type="tel"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="w-full rounded-lg bg-[#0d0d0d] border border-[#1f1f1f] px-3 py-2.5 text-sm text-[#e8e8e8] placeholder:text-[#555] focus:outline-none focus:ring-2 focus:ring-[#00bda6] focus:border-transparent"
+                    className="w-full rounded-lg bg-input border border-default px-3 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-teal-light focus:border-transparent"
                     placeholder="+234 800 000 0000"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-[#666] mb-1.5">Delivery Address</label>
+                  <label className="block text-xs text-text-muted mb-1.5">Delivery Address</label>
                   <textarea
                     value={form.address}
                     onChange={(e) => setForm({ ...form, address: e.target.value })}
                     rows={3}
-                    className="w-full rounded-lg bg-[#0d0d0d] border border-[#1f1f1f] px-3 py-2.5 text-sm text-[#e8e8e8] placeholder:text-[#555] focus:outline-none focus:ring-2 focus:ring-[#00bda6] focus:border-transparent resize-none"
+                    className="w-full rounded-lg bg-input border border-default px-3 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-teal-light focus:border-transparent resize-none"
                     placeholder="12, Example Street, City"
                   />
                 </div>
@@ -183,28 +183,28 @@ export default function CheckoutPage() {
           </div>
 
           <div className="md:col-span-2">
-            <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-5 sticky top-20">
+            <div className="bg-surface rounded-xl border border-default p-5 sticky top-20">
               <h2 className="text-sm font-semibold mb-4">Order Summary</h2>
               <div className="space-y-3 mb-4">
                 {items.map((item) => (
                   <div key={item.id} className="flex items-center justify-between text-sm">
-                    <span className="text-[#aaa] truncate mr-2">
+                    <span className="text-text-secondary truncate mr-2">
                       {item.name} × {item.quantity}
                     </span>
                     <span className="font-medium">₦{(item.price * item.quantity).toLocaleString()}</span>
                   </div>
                 ))}
               </div>
-              <div className="border-t border-[#1a1a1a] pt-3 flex items-center justify-between">
-                <span className="text-sm text-[#e8e8e8] font-medium">Total</span>
-                <span className="text-base font-bold text-[#00bda6]">₦{total.toLocaleString()}</span>
+              <div className="border-t border-default pt-3 flex items-center justify-between">
+                <span className="text-sm text-text-primary font-medium">Total</span>
+                <span className="text-base font-bold text-brand-teal-light">₦{total.toLocaleString()}</span>
               </div>
             </div>
           </div>
         </div>
 
         {error && (
-          <div className="mt-6 rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm text-red-400">
+          <div className="mt-6 rounded-lg bg-danger/10 border border-danger/30 px-4 py-3 text-sm text-danger">
             {error}
           </div>
         )}
@@ -212,7 +212,7 @@ export default function CheckoutPage() {
         <button
           onClick={handlePlaceOrder}
           disabled={placing}
-          className="mt-6 w-full rounded-lg bg-gradient-to-r from-[#0a54a6] to-[#00bda6] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="mt-6 w-full rounded-lg bg-gradient-to-r from-brand-blue to-brand-teal-light px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {placing ? (
             <span className="flex items-center justify-center gap-2">

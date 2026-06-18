@@ -57,14 +57,14 @@ export default function CartPage() {
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#e8e8e8] font-sans">
-      <nav className="sticky top-0 z-50 border-b border-[#1a1a1a] bg-[#0a0a0a]/80 backdrop-blur-md">
+    <div className="min-h-screen bg-app text-text-primary font-sans">
+      <nav className="sticky top-0 z-50 border-b border-default bg-app/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
           <Link href={`/s/${storeId}`} className="flex items-center gap-2.5">
             <LogoIcon size={32} className="shrink-0" />
             <span className="text-sm font-semibold tracking-tight">{storeName}</span>
           </Link>
-          <span className="text-[10px] text-[#555] bg-[#111] border border-[#1f1f1f] px-3 py-1 rounded-full">
+          <span className="text-[10px] text-text-muted bg-surface border border-default px-3 py-1 rounded-full">
             Protected by Veridrop
           </span>
         </div>
@@ -74,12 +74,12 @@ export default function CartPage() {
         <h1 className="text-xl font-semibold mb-8">Shopping Cart</h1>
 
         {items.length === 0 ? (
-          <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-12 text-center">
+          <div className="bg-surface rounded-xl border border-default p-12 text-center">
             <div className="text-4xl mb-4 opacity-30">🛒</div>
-            <p className="text-base text-[#666] mb-4">Your cart is empty</p>
+            <p className="text-base text-text-muted mb-4">Your cart is empty</p>
             <Link
               href={`/s/${storeId}`}
-              className="inline-block rounded-md bg-gradient-to-r from-[#0a54a6] to-[#00bda6] px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+              className="inline-block rounded-md bg-gradient-to-r from-brand-blue to-brand-teal-light px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
             >
               Continue Shopping
             </Link>
@@ -90,28 +90,28 @@ export default function CartPage() {
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-[#111] rounded-xl border border-[#1a1a1a] p-4 flex items-center gap-4"
+                  className="bg-surface rounded-xl border border-default p-4 flex items-center gap-4"
                 >
-                  <div className="h-14 w-14 rounded-lg bg-[#0d0d0d] border border-[#1f1f1f] flex items-center justify-center text-2xl shrink-0">
+                  <div className="h-14 w-14 rounded-lg bg-input border border-default flex items-center justify-center text-2xl shrink-0">
                     {item.image}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate">{item.name}</p>
-                    <p className="text-sm font-semibold text-[#00bda6] mt-0.5">
+                    <p className="text-sm font-semibold text-brand-teal-light mt-0.5">
                       ₦{item.price.toLocaleString()}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => updateQuantity(item.id, -1)}
-                      className="h-8 w-8 rounded-md border border-[#1f1f1f] bg-[#0d0d0d] text-[#aaa] hover:border-[#00bda6] hover:text-[#00bda6] transition-colors text-sm"
+                      className="h-8 w-8 rounded-md border border-default bg-input text-text-secondary hover:border-brand-teal-light hover:text-brand-teal-light transition-colors text-sm"
                     >
                       −
                     </button>
                     <span className="w-8 text-center text-sm font-medium">{item.quantity}</span>
                     <button
                       onClick={() => updateQuantity(item.id, 1)}
-                      className="h-8 w-8 rounded-md border border-[#1f1f1f] bg-[#0d0d0d] text-[#aaa] hover:border-[#00bda6] hover:text-[#00bda6] transition-colors text-sm"
+                      className="h-8 w-8 rounded-md border border-default bg-input text-text-secondary hover:border-brand-teal-light hover:text-brand-teal-light transition-colors text-sm"
                     >
                       +
                     </button>
@@ -121,7 +121,7 @@ export default function CartPage() {
                   </p>
                   <button
                     onClick={() => removeItem(item.id)}
-                    className="text-[#555] hover:text-red-400 transition-colors text-lg shrink-0"
+                    className="text-text-muted hover:text-danger transition-colors text-lg shrink-0"
                   >
                     ×
                   </button>
@@ -129,14 +129,14 @@ export default function CartPage() {
               ))}
             </div>
 
-            <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-5">
+            <div className="bg-surface rounded-xl border border-default p-5">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-sm text-[#666]">Subtotal</span>
+                <span className="text-sm text-text-muted">Subtotal</span>
                 <span className="text-lg font-semibold">₦{total.toLocaleString()}</span>
               </div>
               <Link
                 href={`/s/${storeId}/checkout`}
-                className="block w-full rounded-lg bg-gradient-to-r from-[#0a54a6] to-[#00bda6] px-5 py-3 text-sm font-medium text-white text-center transition-opacity hover:opacity-90"
+                className="block w-full rounded-lg bg-gradient-to-r from-brand-blue to-brand-teal-light px-5 py-3 text-sm font-medium text-white text-center transition-opacity hover:opacity-90"
               >
                 Proceed to Checkout
               </Link>

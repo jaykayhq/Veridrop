@@ -4,28 +4,28 @@ import { Logo, LogoIcon, VeridropLogoFull } from "@/components/Logo";
 
 export default function LandingPage() {
   return (
-    <div className="landing-dark min-h-screen bg-[#0a0a0a] text-[#e8e8e8] font-sans">
+    <div className="landing-dark min-h-screen bg-app text-text-primary font-sans">
       {/* ─── Navbar ─── */}
-      <nav className="sticky top-0 z-50 border-b border-[#1a1a1a] bg-[#0a0a0a]/60 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 border-b border-default bg-app/60 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
           <Logo href="/" />
           <div className="flex items-center gap-4">
             <a
               href="#features"
-              className="text-xs text-[#666] transition-colors hover:text-[#e8e8e8]"
+              className="text-xs text-text-muted transition-colors hover:text-text-primary"
             >
               Features
             </a>
             <a
               href="#how-it-works"
-              className="text-xs text-[#666] transition-colors hover:text-[#e8e8e8]"
+              className="text-xs text-text-muted transition-colors hover:text-text-primary"
             >
               How It Works
             </a>
             <ThemeToggle />
             <Link
               href="/login"
-              className="rounded-md border border-[#333] px-4 py-1.5 text-xs text-[#aaa] transition-colors hover:border-brand-teal hover:text-brand-teal-light"
+              className="rounded-md border border-hover px-4 py-1.5 text-xs text-text-secondary transition-colors hover:border-brand-teal hover:text-brand-teal-light"
             >
               Sign In
             </Link>
@@ -34,7 +34,7 @@ export default function LandingPage() {
       </nav>
 
       {/* ─── Hero ─── */}
-      <section className="relative overflow-hidden border-b border-[#1a1a1a]">
+      <section className="relative overflow-hidden border-b border-default">
         {/* Hero mesh gradient */}
         <div
           className="pointer-events-none absolute inset-0"
@@ -54,9 +54,9 @@ export default function LandingPage() {
         <div className="relative mx-auto max-w-7xl px-6 py-24 md:py-32">
           <div className="mx-auto max-w-3xl text-center">
             {/* Trust Badge */}
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#1f1f1f] bg-[#111] px-4 py-1.5 animate-fade-in">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-default bg-surface px-4 py-1.5 animate-fade-in">
               <LogoIcon size={16} />
-              <span className="text-[10px] font-medium tracking-[0.2em] text-[#555]">
+              <span className="text-[10px] font-medium tracking-[0.2em] text-text-muted">
                 TRUST COMMERCE INFRASTRUCTURE
               </span>
             </div>
@@ -70,7 +70,7 @@ export default function LandingPage() {
               </span>
             </h1>
 
-            <p className="mt-5 text-sm leading-relaxed text-[#666] md:text-base text-pretty max-w-2xl mx-auto animate-fade-in-up">
+            <p className="mt-5 text-sm leading-relaxed text-text-muted md:text-base text-pretty max-w-2xl mx-auto animate-fade-in-up">
               Escrow-protected payments, physical inspection at source, and
               managed logistics — the trust layer for verified commerce across
               Africa.
@@ -115,11 +115,11 @@ export default function LandingPage() {
               ].map((stat, i) => (
                 <div
                   key={stat.label}
-                  className="group rounded-lg border border-[#1f1f1f] bg-[#111]/80 px-4 py-4 text-center transition-all hover:border-brand-teal-light/20 hover:bg-[#111]"
+                  className="group rounded-lg border border-default bg-surface/80 px-4 py-4 text-center transition-all hover:border-brand-teal-light/20 hover:bg-surface-hover"
                   style={{ animationDelay: `${i * 100 + 400}ms` }}
                 >
                   <div className="stat-value text-gradient-brand">{stat.value}</div>
-                  <div className="mt-1 text-[10px] font-medium tracking-[0.05em] text-[#555]">
+                  <div className="mt-1 text-[10px] font-medium tracking-[0.05em] text-text-muted">
                     {stat.label}
                   </div>
                 </div>
@@ -130,7 +130,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── Features ─── */}
-      <section id="features" className="border-b border-[#1a1a1a] py-20 md:py-28">
+      <section id="features" className="border-b border-default py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-2xl text-center">
             <span className="trust-badge">Platform Capabilities</span>
@@ -138,7 +138,7 @@ export default function LandingPage() {
               Everything you need for{" "}
               <span className="text-gradient-brand">trusted commerce</span>
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-[#666] text-pretty">
+            <p className="mt-3 text-sm leading-relaxed text-text-muted text-pretty">
               From capital commitment to final settlement — every step is
               verified, insured, and traceable.
             </p>
@@ -211,14 +211,14 @@ export default function LandingPage() {
       </section>
 
       {/* ─── How It Works ─── */}
-      <section id="how-it-works" className="border-b border-[#1a1a1a] py-20 md:py-28">
+      <section id="how-it-works" className="border-b border-default py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-2xl text-center">
             <span className="trust-badge">Workflow</span>
             <h2 className="mt-4 text-2xl font-bold md:text-3xl">
               How Veridrop works
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-[#666] text-pretty">
+            <p className="mt-3 text-sm leading-relaxed text-text-muted text-pretty">
               Three steps from commitment to delivery. Every milestone verified, every handoff tracked.
             </p>
           </div>
@@ -262,7 +262,7 @@ export default function LandingPage() {
                   {step.step}
                 </div>
                 <h3 className="mb-2 text-base font-semibold">{step.title}</h3>
-                <p className="text-xs leading-relaxed text-[#666]">
+                <p className="text-xs leading-relaxed text-text-muted">
                   {step.description}
                 </p>
               </div>
@@ -272,7 +272,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── Unique Links Deep Dive ─── */}
-      <section className="border-b border-[#1a1a1a] py-20 md:py-28">
+      <section className="border-b border-default py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid items-center gap-10 md:grid-cols-2">
             <div>
@@ -281,7 +281,7 @@ export default function LandingPage() {
                 Every transaction gets its{" "}
                 <span className="text-gradient-brand">own secure world</span>
               </h2>
-              <p className="mt-4 text-sm leading-relaxed text-[#666]">
+              <p className="mt-4 text-sm leading-relaxed text-text-muted">
                 No more digging through email threads. Each Veridrop transaction
                 generates a unique, encrypted link — a private portal where
                 buyers and vendors see exactly what matters for that deal.
@@ -294,7 +294,7 @@ export default function LandingPage() {
                   "End-to-end encrypted communication",
                   "Auto-expires after settlement",
                 ].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm text-[#888]">
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-text-secondary">
                     <svg
                       width="14"
                       height="14"
@@ -320,40 +320,40 @@ export default function LandingPage() {
                 <div className="h-2.5 w-2.5 rounded-full bg-[#555]" />
                 <div className="h-2.5 w-2.5 rounded-full bg-[#555]" />
                 <div className="h-2.5 w-2.5 rounded-full bg-[#555]" />
-                <span className="ml-2 text-[10px] text-[#444]  font-sans">
+                <span className="ml-2 text-[10px] text-[#444] font-sans">
                   transaction-9f8a3b.veridrop.app
                 </span>
               </div>
               <div className="space-y-1.5 leading-relaxed">
                 <div className="animate-fade-in">
                   <span className="text-brand-teal-light">$ </span>
-                  <span className="text-[#888]">inspect</span>
+                  <span className="text-text-secondary">inspect</span>
                   <span className="text-[#555]"> --transaction tx_9f8a3b</span>
                 </div>
                 <div className="animate-fade-in" style={{ animationDelay: "200ms" }}>
-                  <span className="text-[#666]">{">"} Scanning inspection report...</span>
+                  <span className="text-text-muted">{">"} Scanning inspection report...</span>
                 </div>
                 <div className="text-brand-teal-light animate-fade-in" style={{ animationDelay: "400ms" }}>
                   {"\u2713"} Status:{" "}
-                  <span className="text-[#c8a862]">INSPECTION_PASSED</span>
+                  <span className="text-brand-gold">INSPECTION_PASSED</span>
                 </div>
-                <div className="text-[#666] animate-fade-in" style={{ animationDelay: "600ms" }}>
+                <div className="text-text-muted animate-fade-in" style={{ animationDelay: "600ms" }}>
                   {"\u2713"} Items verified:{" "}
-                  <span className="text-[#e8e8e8]">12/12</span>
+                  <span className="text-text-primary">12/12</span>
                 </div>
-                <div className="text-[#666] animate-fade-in" style={{ animationDelay: "800ms" }}>
+                <div className="text-text-muted animate-fade-in" style={{ animationDelay: "800ms" }}>
                   {"\u2713"} Photos uploaded:{" "}
-                  <span className="text-[#e8e8e8]">8</span>
+                  <span className="text-text-primary">8</span>
                 </div>
-                <div className="mt-2 border-t border-[#1f1f1f] pt-2 animate-fade-in" style={{ animationDelay: "1000ms" }}>
+                <div className="mt-2 border-t border-default pt-2 animate-fade-in" style={{ animationDelay: "1000ms" }}>
                   <span className="text-brand-teal-light">$ </span>
-                  <span className="text-[#888]">approve</span>
+                  <span className="text-text-secondary">approve</span>
                   <span className="text-[#555]">
                     {" "}
                     --reason "quality confirmed"
                   </span>
                 </div>
-                <div className="text-[#c8a862] animate-fade-in" style={{ animationDelay: "1200ms" }}>
+                <div className="text-brand-gold animate-fade-in" style={{ animationDelay: "1200ms" }}>
                   {"\u2192"} Funds released to seller
                 </div>
               </div>
@@ -363,7 +363,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── Trust Signals Section ─── */}
-      <section className="border-b border-[#1a1a1a] py-20 md:py-28">
+      <section className="border-b border-default py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-2xl text-center">
             <span className="trust-badge">Trust Infrastructure</span>
@@ -372,7 +372,7 @@ export default function LandingPage() {
               <span className="text-gradient-gold">verification</span>,
               designed for trust
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-[#666]">
+            <p className="mt-3 text-sm leading-relaxed text-text-muted">
               Every layer of Veridrop is engineered to eliminate the trust gap in digital commerce.
             </p>
           </div>
@@ -423,11 +423,11 @@ export default function LandingPage() {
                 key={item.label}
                 className="card p-5 text-center group"
               >
-                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-md border border-[#1f1f1f] bg-[#0a0a0a] transition-colors group-hover:border-brand-teal-light/30">
+                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-md border border-default bg-app transition-colors group-hover:border-brand-teal-light/30">
                   {item.icon}
                 </div>
-                <div className="text-sm font-semibold text-[#e8e8e8]">{item.label}</div>
-                <div className="mt-1 text-[10px] leading-relaxed text-[#555]">{item.desc}</div>
+                <div className="text-sm font-semibold text-text-primary">{item.label}</div>
+                <div className="mt-1 text-[10px] leading-relaxed text-text-muted">{item.desc}</div>
               </div>
             ))}
           </div>
@@ -452,11 +452,11 @@ export default function LandingPage() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="border-b border-[#1a1a1a] py-20 md:py-28">
+      <section className="border-b border-default py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-2xl text-center">
             <div
-              className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-xl border border-[#1f1f1f] bg-[#111]"
+              className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-xl border border-default bg-surface"
             >
               <LogoIcon size={40} />
             </div>
@@ -464,7 +464,7 @@ export default function LandingPage() {
               Ready to build{" "}
               <span className="text-gradient-brand">trusted commerce</span>?
             </h2>
-            <p className="mt-3 text-sm text-[#666]">
+            <p className="mt-3 text-sm text-text-muted">
               Try the demo to explore Veridrop from both the vendor and admin
               perspective.
             </p>
@@ -489,17 +489,17 @@ export default function LandingPage() {
       {/* ─── Footer ─── */}
       <footer className="py-12">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="flex flex-col items-center justify-between gap-4 border-b border-[#1a1a1a] pb-8 md:flex-row">
+          <div className="flex flex-col items-center justify-between gap-4 border-b border-default pb-8 md:flex-row">
             <Logo href="/" />
-            <div className="flex items-center gap-6 text-xs text-[#555]">
-              <Link href="/login" className="transition-colors hover:text-[#e8e8e8]">
+            <div className="flex items-center gap-6 text-xs text-text-muted">
+              <Link href="/login" className="transition-colors hover:text-text-primary">
                 Vendor Demo
               </Link>
-              <Link href="/login" className="transition-colors hover:text-[#e8e8e8]">
+              <Link href="/login" className="transition-colors hover:text-text-primary">
                 Admin Demo
               </Link>
               <span className="text-[#333]">|</span>
-              <a href="#features" className="transition-colors hover:text-[#e8e8e8]">
+              <a href="#features" className="transition-colors hover:text-text-primary">
                 Features
               </a>
             </div>
@@ -551,13 +551,13 @@ function FeatureCard({
         </span>
       </div>
       <h3 className="text-lg font-semibold">{title}</h3>
-      <p className="mt-2 text-xs leading-relaxed text-[#666]">{description}</p>
+      <p className="mt-2 text-xs leading-relaxed text-text-muted">{description}</p>
 
       <div className="mt-4 flex flex-wrap gap-2">
         {metrics.map((m) => (
           <span
             key={m}
-            className="rounded-md border border-[#1f1f1f] bg-[#0a0a0a] px-2.5 py-1 text-[10px] text-[#555]"
+            className="rounded-md border border-default bg-app px-2.5 py-1 text-[10px] text-text-muted"
           >
             {m}
           </span>

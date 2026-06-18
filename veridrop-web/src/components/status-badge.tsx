@@ -6,17 +6,27 @@ interface StatusBadgeProps {
 }
 
 const statusStyles: Record<string, string> = {
-  active: "text-[#00bda6] border-[#00bda633] bg-[#00bda611]",
-  pending: "text-[#c8a862] border-[#c8a86233] bg-[#c8a86211]",
-  passed: "text-[#00bda6] border-[#00bda633] bg-[#00bda611]",
-  failed: "text-[#dc2626] border-[#dc262633] bg-[#dc262611]",
-  completed: "text-[#00bda6] border-[#00bda633] bg-[#00bda611]",
-  cancelled: "text-[#666] border-[#333] bg-[#111]",
-  disputed: "text-[#d97706] border-[#d9770633] bg-[#d9770611]",
-  released: "text-[#0a54a6] border-[#0a54a633] bg-[#0a54a611]",
-  locked: "text-[#0a54a6] border-[#0a54a633] bg-[#0a54a611]",
-  refunded: "text-[#666] border-[#333] bg-[#111]",
-  default: "text-[#a0a0a0] border-[#333] bg-[#111]",
+  active: "text-brand-teal-light border-brand-teal-light/20 bg-brand-teal-light/10",
+  pending: "text-brand-gold border-brand-gold/20 bg-brand-gold/10",
+  passed: "text-brand-teal-light border-brand-teal-light/20 bg-brand-teal-light/10",
+  failed: "text-[#dc2626] border-[#dc2626]/20 bg-[#dc2626]/10",
+  completed: "text-brand-teal-light border-brand-teal-light/20 bg-brand-teal-light/10",
+  cancelled: "text-text-muted border-hover bg-surface",
+  disputed: "text-brand-warning border-[#d97706]/20 bg-[#d97706]/10",
+  released: "text-brand-blue border-brand-blue/20 bg-brand-blue/10",
+  locked: "text-brand-blue border-brand-blue/20 bg-brand-blue/10",
+  refunded: "text-text-muted border-hover bg-surface",
+  resolved: "text-brand-teal-light border-brand-teal-light/20 bg-brand-teal-light/10",
+  review: "text-brand-gold border-brand-gold/20 bg-brand-gold/10",
+  rejected: "text-[#dc2626] border-[#dc2626]/20 bg-[#dc2626]/10",
+  on_order: "text-brand-blue border-brand-blue/20 bg-brand-blue/10",
+  picked_up: "text-brand-blue border-brand-blue/20 bg-brand-blue/10",
+  in_transit: "text-brand-teal-light border-brand-teal-light/20 bg-brand-teal-light/10",
+  delivered: "text-brand-teal-light border-brand-teal-light/20 bg-brand-teal-light/10",
+  available: "text-brand-teal-light border-brand-teal-light/20 bg-brand-teal-light/10",
+  on_delivery: "text-brand-blue border-brand-blue/20 bg-brand-blue/10",
+  offline: "text-text-muted border-hover bg-surface",
+  default: "text-text-secondary border-hover bg-surface",
 };
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {
@@ -33,12 +43,12 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
       <span
         className="h-1.5 w-1.5 rounded-full"
         style={{
-          backgroundColor: style.includes("teal-light") || style.includes("0d8f8f") ? "#00bda6"
-            : style.includes("c8a862") ? "#c8a862"
-            : style.includes("dc2626") ? "#dc2626"
-            : style.includes("d97706") ? "#d97706"
-            : style.includes("1a6b9e") ? "#0a54a6"
-            : style.includes("666") ? "#666"
+          backgroundColor: style.includes("teal-light") ? "#00bda6"
+            : style.includes("gold") ? "#c8a862"
+            : style.includes("warning") ? "#d97706"
+            : style.includes("brand-danger") || style.includes("dc2626") ? "#dc2626"
+            : style.includes("brand-blue") ? "#0a54a6"
+            : style.includes("muted") ? "#666"
             : "#888",
         }}
       />

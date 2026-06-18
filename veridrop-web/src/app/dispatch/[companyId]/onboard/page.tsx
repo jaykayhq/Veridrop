@@ -85,46 +85,46 @@ export default function DispatchOnboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#e8e8e8] font-sans">
-      <nav className="border-b border-[#1a1a1a] bg-[#0a0a0a] px-6 py-3">
+    <div className="min-h-screen bg-app text-text-primary font-sans">
+      <nav className="border-b border-default bg-app px-6 py-3">
         <div className="mx-auto flex max-w-4xl items-center justify-between">
           <div className="flex items-center gap-2.5">
             <LogoIcon size={32} className="shrink-0" />
             <span className="text-sm font-semibold tracking-tight">{companyName}</span>
-            <span className="text-[10px] text-[#555] ml-2">Rider Onboarding</span>
+            <span className="text-[10px] text-text-muted ml-2">Rider Onboarding</span>
           </div>
         </div>
       </nav>
 
       <div className="mx-auto max-w-4xl px-6 py-8 space-y-6">
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-6">
+        <div className="bg-surface rounded-xl border border-default p-6">
           <h2 className="text-sm font-semibold mb-4">Register New Rider</h2>
           <form onSubmit={handleAddRider} className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="block text-xs text-[#666] mb-1.5">Full Name</label>
+                <label className="block text-xs text-text-muted mb-1.5">Full Name</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full rounded-lg bg-[#0d0d0d] border border-[#1f1f1f] px-3 py-2.5 text-sm text-[#e8e8e8] placeholder:text-[#555] focus:outline-none focus:ring-2 focus:ring-[#00bda6] focus:border-transparent"
+                  className="w-full rounded-lg bg-input border border-default px-3 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-teal-light focus:border-transparent"
                   placeholder="Rider name"
                 />
               </div>
               <div>
-                <label className="block text-xs text-[#666] mb-1.5">Phone</label>
+                <label className="block text-xs text-text-muted mb-1.5">Phone</label>
                 <input
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full rounded-lg bg-[#0d0d0d] border border-[#1f1f1f] px-3 py-2.5 text-sm text-[#e8e8e8] placeholder:text-[#555] focus:outline-none focus:ring-2 focus:ring-[#00bda6] focus:border-transparent"
+                  className="w-full rounded-lg bg-input border border-default px-3 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-teal-light focus:border-transparent"
                   placeholder="+234 800 000 0000"
                 />
               </div>
             </div>
 
             {error && (
-              <div className="rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm text-red-400">
+              <div className="rounded-lg bg-danger/10 border border-danger/30 px-4 py-3 text-sm text-danger">
                 {error}
               </div>
             )}
@@ -132,7 +132,7 @@ export default function DispatchOnboardPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="rounded-lg bg-gradient-to-r from-[#0a54a6] to-[#00bda6] px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="rounded-lg bg-gradient-to-r from-brand-blue to-brand-teal-light px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {submitting ? (
                 <span className="flex items-center gap-2">
@@ -146,30 +146,30 @@ export default function DispatchOnboardPage() {
           </form>
         </div>
 
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] overflow-hidden">
-          <div className="px-5 py-4 border-b border-[#1a1a1a]">
+        <div className="bg-surface rounded-xl border border-default overflow-hidden">
+          <div className="px-5 py-4 border-b border-default">
             <h2 className="text-sm font-semibold">Registered Riders ({riders.length})</h2>
           </div>
 
           {loading ? (
-            <div className="px-5 py-8 text-center text-sm text-[#666]">Loading riders...</div>
+            <div className="px-5 py-8 text-center text-sm text-text-muted">Loading riders...</div>
           ) : riders.length === 0 ? (
-            <div className="px-5 py-8 text-center text-sm text-[#666]">No riders registered yet</div>
+            <div className="px-5 py-8 text-center text-sm text-text-muted">No riders registered yet</div>
           ) : (
-            <div className="divide-y divide-[#1a1a1a]">
+            <div className="divide-y divide-default">
               {riders.map((r) => (
-                <div key={r._id} className="flex items-center justify-between px-5 py-4 hover:bg-[#0d0d0d] transition-colors">
+                <div key={r._id} className="flex items-center justify-between px-5 py-4 hover:bg-surface-hover transition-colors">
                   <div className="flex items-center gap-3">
-                    <div className="h-9 w-9 rounded-lg bg-[#0d0d0d] border border-[#1f1f1f] flex items-center justify-center text-sm font-semibold text-[#aaa]">
+                    <div className="h-9 w-9 rounded-lg bg-input border border-default flex items-center justify-center text-sm font-semibold text-text-secondary">
                       {r.name[0]}
                     </div>
                     <div>
                       <p className="text-sm font-medium">{r.name}</p>
-                      <p className="text-xs text-[#666]">{r.phone}</p>
+                      <p className="text-xs text-text-muted">{r.phone}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="text-xs text-[#555]">{r.totalDeliveries} deliveries</span>
+                    <span className="text-xs text-text-muted">{r.totalDeliveries} deliveries</span>
                     <span
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border capitalize ${
                         statusColors[r.status] || "text-gray-400 border-gray-500/30 bg-gray-500/10"

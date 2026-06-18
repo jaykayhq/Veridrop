@@ -13,7 +13,7 @@ export function ThemeToggle() {
       className={`relative h-9 w-9 shrink-0 rounded-lg border transition-all duration-300 ${
         isDark
           ? "border-default bg-surface text-text-primary hover:border-hover"
-          : "border-[#e2e8f0] bg-[#f8f9fa] text-[#1a1a1a] hover:border-[#cbd5e1]"
+          : "border-[#e2e8f0] bg-[#f8f9fa] text-text-primary hover:border-[#cbd5e1]"
       }`}
     >
       <span

@@ -41,10 +41,10 @@ export default function VendorAnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-[#e8e8e8] font-sans flex items-center justify-center">
+      <div className="min-h-screen bg-app text-text-primary font-sans flex items-center justify-center">
         <div className="flex items-center gap-3">
-          <span className="h-5 w-5 animate-spin rounded-full border-2 border-[#00bda6]/30 border-t-[#00bda6]" />
-          <span className="text-sm text-[#666]">Loading analytics...</span>
+          <span className="h-5 w-5 animate-spin rounded-full border-2 border-brand-teal-light/30 border-t-brand-teal-light" />
+          <span className="text-sm text-text-muted">Loading analytics...</span>
         </div>
       </div>
     );
@@ -52,8 +52,8 @@ export default function VendorAnalyticsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-[#e8e8e8] font-sans flex items-center justify-center">
-        <div className="rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm text-red-400">
+      <div className="min-h-screen bg-app text-text-primary font-sans flex items-center justify-center">
+        <div className="rounded-lg bg-danger/10 border border-danger/30 px-4 py-3 text-sm text-danger">
           {error}
         </div>
       </div>
@@ -107,92 +107,92 @@ export default function VendorAnalyticsPage() {
   ).slice(0, 10);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#e8e8e8] font-sans">
+    <div className="min-h-screen bg-app text-text-primary font-sans">
       <div className="mx-auto max-w-7xl px-6 py-8 space-y-6">
         <div>
           <h1 className="text-xl font-semibold">Analytics</h1>
-          <p className="text-sm text-[#666] mt-1">Performance overview for your store</p>
+          <p className="text-sm text-text-muted mt-1">Performance overview for your store</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-5">
-            <p className="text-xs text-[#666] uppercase tracking-wider">Total Orders</p>
+          <div className="bg-surface rounded-xl border border-default p-5">
+            <p className="text-xs text-text-muted uppercase tracking-wider">Total Orders</p>
             <p className="text-2xl font-semibold mt-1">{totalOrders}</p>
-            <p className="text-xs text-[#555] mt-1">
+            <p className="text-xs text-text-muted mt-1">
               {thisMonthCount} this month
               {countChange !== 0 && (
-                <span className={countChange > 0 ? " text-emerald-400 ml-1" : " text-red-400 ml-1"}>
+                <span className={countChange > 0 ? " text-emerald-400 ml-1" : " text-danger ml-1"}>
                   ({countChange > 0 ? "+" : ""}{countChange.toFixed(0)}%)
                 </span>
               )}
             </p>
           </div>
-          <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-5">
-            <p className="text-xs text-[#666] uppercase tracking-wider">Total Revenue</p>
+          <div className="bg-surface rounded-xl border border-default p-5">
+            <p className="text-xs text-text-muted uppercase tracking-wider">Total Revenue</p>
             <p className="text-2xl font-semibold mt-1">{formatCurrency(totalRevenue)}</p>
-            <p className="text-xs text-[#555] mt-1">
+            <p className="text-xs text-text-muted mt-1">
               {formatCurrency(thisMonthRevenue)} this month
               {revenueChange !== 0 && (
-                <span className={revenueChange > 0 ? " text-emerald-400 ml-1" : " text-red-400 ml-1"}>
+                <span className={revenueChange > 0 ? " text-emerald-400 ml-1" : " text-danger ml-1"}>
                   ({revenueChange > 0 ? "+" : ""}{revenueChange.toFixed(0)}%)
                 </span>
               )}
             </p>
           </div>
-          <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-5">
-            <p className="text-xs text-[#666] uppercase tracking-wider">Avg Order Value</p>
+          <div className="bg-surface rounded-xl border border-default p-5">
+            <p className="text-xs text-text-muted uppercase tracking-wider">Avg Order Value</p>
             <p className="text-2xl font-semibold mt-1">{formatCurrency(avgOrderValue)}</p>
           </div>
-          <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-5">
-            <p className="text-xs text-[#666] uppercase tracking-wider">Pass Rate</p>
+          <div className="bg-surface rounded-xl border border-default p-5">
+            <p className="text-xs text-text-muted uppercase tracking-wider">Pass Rate</p>
             <p className="text-2xl font-semibold mt-1">{passRate.toFixed(0)}%</p>
           </div>
         </div>
 
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] p-5">
+        <div className="bg-surface rounded-xl border border-default p-5">
           <h2 className="text-sm font-semibold mb-4">Monthly Revenue</h2>
           <div className="flex items-end gap-2 h-40">
             {monthlyData.map((m) => {
               const height = (m.revenue / maxRevenue) * 100;
               return (
                 <div key={m.month} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
-                  <span className="text-[10px] text-[#555]">{formatCurrency(m.revenue)}</span>
+                  <span className="text-[10px] text-text-muted">{formatCurrency(m.revenue)}</span>
                   <div
-                    className="w-full rounded-t bg-gradient-to-t from-[#0a54a6] to-[#00bda6] transition-all hover:opacity-80"
+                    className="w-full rounded-t bg-gradient-to-t from-brand-blue to-brand-teal-light transition-all hover:opacity-80"
                     style={{ height: `${Math.max(height, 2)}%` }}
                   />
-                  <span className="text-[10px] text-[#555]">{m.month}</span>
+                  <span className="text-[10px] text-text-muted">{m.month}</span>
                 </div>
               );
             })}
           </div>
         </div>
 
-        <div className="bg-[#111] rounded-xl border border-[#1a1a1a] overflow-hidden">
-          <div className="px-5 py-4 border-b border-[#1a1a1a]">
+        <div className="bg-surface rounded-xl border border-default overflow-hidden">
+          <div className="px-5 py-4 border-b border-default">
             <h2 className="text-sm font-semibold">Recent Orders</h2>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[#1a1a1a]">
-                  <th className="text-left px-4 py-3 text-xs font-medium text-[#666] uppercase tracking-wider">Order</th>
-                  <th className="text-left px-4 py-3 text-xs font-medium text-[#666] uppercase tracking-wider">Buyer</th>
-                  <th className="text-left px-4 py-3 text-xs font-medium text-[#666] uppercase tracking-wider">Product</th>
-                  <th className="text-left px-4 py-3 text-xs font-medium text-[#666] uppercase tracking-wider">Amount</th>
-                  <th className="text-left px-4 py-3 text-xs font-medium text-[#666] uppercase tracking-wider">Status</th>
-                  <th className="text-left px-4 py-3 text-xs font-medium text-[#666] uppercase tracking-wider">Date</th>
+                <tr className="border-b border-default">
+                  <th className="text-left px-4 py-3 text-xs font-medium text-text-muted uppercase tracking-wider">Order</th>
+                  <th className="text-left px-4 py-3 text-xs font-medium text-text-muted uppercase tracking-wider">Buyer</th>
+                  <th className="text-left px-4 py-3 text-xs font-medium text-text-muted uppercase tracking-wider">Product</th>
+                  <th className="text-left px-4 py-3 text-xs font-medium text-text-muted uppercase tracking-wider">Amount</th>
+                  <th className="text-left px-4 py-3 text-xs font-medium text-text-muted uppercase tracking-wider">Status</th>
+                  <th className="text-left px-4 py-3 text-xs font-medium text-text-muted uppercase tracking-wider">Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#1a1a1a]">
+              <tbody className="divide-y divide-default">
                 {recentOrders.map((o) => (
-                  <tr key={o._id} className="hover:bg-[#0d0d0d] transition-colors">
-                    <td className="px-4 py-3 font-mono text-xs text-[#aaa]">{o._id.slice(0, 8)}</td>
-                    <td className="px-4 py-3 text-[#ccc]">{o.buyerName}</td>
-                    <td className="px-4 py-3 text-[#ccc]">{o.productName}</td>
+                  <tr key={o._id} className="hover:bg-surface-hover transition-colors">
+                    <td className="px-4 py-3 font-mono text-xs text-text-secondary">{o._id.slice(0, 8)}</td>
+                    <td className="px-4 py-3 text-text-primary">{o.buyerName}</td>
+                    <td className="px-4 py-3 text-text-primary">{o.productName}</td>
                     <td className="px-4 py-3 font-medium">{formatCurrency(o.amount)}</td>
                     <td className="px-4 py-3"><StatusBadge status={o.status} /></td>
-                    <td className="px-4 py-3 text-[#666] text-xs">{formatDate(o.createdAt)}</td>
+                    <td className="px-4 py-3 text-text-muted text-xs">{formatDate(o.createdAt)}</td>
                   </tr>
                 ))}
               </tbody>
