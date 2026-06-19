@@ -1,20 +1,46 @@
-import { NextRequest } from "next/server";
-import { signToken } from "@/lib/api/auth";
-import { ok, err } from "@/lib/api/helpers";
-import { MOCK_USERS } from "@/lib/api/mock-data";
+import { NextResponse } from 'next/server';
+import { createAdminClient, DATABASE_ID } from '@/lib/appwrite.server';
+import { Query } from 'node-appwrite';
 
-// TODO: real auth - verify password against hashed DB credential
-export async function POST(req: NextRequest) {
+export async function POST(request: Request) {
   try {
-    const { email } = await req.json();
-    if (!email) return err("Missing email");
+    const body = await request.json();
+    const { email, password } = body;
 
-    const user = MOCK_USERS.find((u) => u.email === email);
-    if (!user) return err("Invalid credentials", 401);
+    const { databases } = createAdminClient();
 
-    const token = signToken({ userId: user._id, email: user.email, role: user.role as "vendor" | "buyer" | "inspector" | "rider" | "admin" });
-    return ok({ user, token });
-  } catch (e) {
-    return err((e as Error).message);
+    // Query Appwrite for user with matching email
+    const usersList = await databases.listDocuments(
+      DATABASE_ID,
+      'profiles',
+      [
+        Query.equal('email', email)
+      ]
+    );
+
+    const user = usersList.documents[0];
+
+    if (!user || user.password !== password) {
+      return NextResponse.json(
+        { error: 'Invalid credentials' },
+        { status: 401 }
+      );
+    }
+
+    return NextResponse.json({
+      user: {
+        id: user.$id,
+        email: user.email,
+        name: user.name,
+        role: user.role || 'VENDOR',
+        storeId: user.storeId
+      }
+    });
+  } catch (error) {
+    console.error('Login error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
