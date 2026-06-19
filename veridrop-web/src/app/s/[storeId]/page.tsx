@@ -1,30 +1,28 @@
 import { LogoIcon } from "@/components/Logo";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { createAdminClient, DATABASE_ID } from "@/lib/appwrite.server";
+import { Query } from "node-appwrite";
 
-const STORES: Record<string, { name: string; tagline: string; description: string }> = {
-  "gadgethub-ng": {
-    name: "GadgetHub NG",
-    tagline: "Premium Electronics, Trusted Delivery",
-    description: "Shop the latest smartphones, laptops, and accessories. Every order is inspection-protected by Veridrop.",
-  },
-};
+export default async function StorefrontPage({ params }: { params: { storeId: string } }) {
+  const { databases } = createAdminClient();
 
-const products = [
-  { id: 1, name: "iPhone 15 Pro", price: "₦245,000", category: "Phones", image: "📱" },
-  { id: 2, name: "MacBook Air M3", price: "₦520,000", category: "Laptops", image: "💻" },
-  { id: 3, name: "Samsung Galaxy S25", price: "₦156,000", category: "Phones", image: "📱" },
-  { id: 4, name: "Dell XPS 15", price: "₦312,000", category: "Laptops", image: "💻" },
-  { id: 5, name: "iPad Pro 12.9", price: "₦189,000", category: "Tablets", image: "📋" },
-  { id: 6, name: "AirPods Pro 2", price: "₦45,000", category: "Accessories", image: "🎧" },
-];
+  // Fetch store configuration based on the slug URL
+  const storesReq = await databases.listDocuments(DATABASE_ID, "storefronts", [
+    Query.equal("slug", params.storeId)
+  ]);
+  
+  if (storesReq.total === 0) {
+    return <div className="p-10 text-center">Store not found</div>;
+  }
+  
+  const store = storesReq.documents[0];
 
-export default function StorefrontPage({ params }: { params: { storeId: string } }) {
-  const store = STORES[params.storeId] || {
-    name: params.storeId.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
-    tagline: "Verified Products, Secure Checkout",
-    description: "Browse our catalog with confidence. Every purchase is backed by Veridrop's escrow and inspection guarantee.",
-  };
+  // Fetch products belonging to this vendor
+  const productsReq = await databases.listDocuments(DATABASE_ID, "products", [
+    Query.equal("vendorId", store.vendorId)
+  ]);
+  const products = productsReq.documents;
 
   return (
     <div className="min-h-screen bg-app text-text-primary font-sans">
@@ -97,19 +95,13 @@ export default function StorefrontPage({ params }: { params: { storeId: string }
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((p) => (
-            <div
-              key={p.id}
-              className="group rounded-lg border border-default bg-surface p-5 transition-all hover:border-brand-teal-light/30 hover:shadow-[0_0_30px_-10px_rgba(13,143,143,0.15)]"
-            >
-              <div className="mb-4 flex h-32 items-center justify-center rounded-md bg-input text-5xl">
-                {p.image}
-              </div>
+            <div key={p.$id} className="group rounded-lg border border-default bg-surface p-5 transition-all">
               <span className="text-[10px] font-medium tracking-[0.15em] text-brand-blue uppercase">
                 {p.category}
               </span>
               <h3 className="mt-1 text-sm font-semibold">{p.name}</h3>
               <div className="mt-2 flex items-center justify-between">
-                <span className="text-base font-bold text-brand-teal-light">{p.price}</span>
+                <span className="text-base font-bold text-brand-teal-light">₦{p.price}</span>
                 <button className="rounded-md bg-gradient-to-r from-brand-blue to-brand-teal-light px-3 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90">
                   Buy with Veridrop
                 </button>
