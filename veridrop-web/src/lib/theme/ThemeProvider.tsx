@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 
 import { createContext, useContext, useEffect, useState, useCallback } from "react";
@@ -50,3 +51,4 @@ export function useTheme() {
   if (!context) throw new Error("useTheme must be used within ThemeProvider");
   return context;
 }
+

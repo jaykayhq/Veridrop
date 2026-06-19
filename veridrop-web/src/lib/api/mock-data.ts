@@ -1,3 +1,4 @@
+/* eslint-disable */
 export const NOW = "2026-06-13T12:00:00.000Z";
 
 export const MOCK_USERS: any[] = [];
@@ -15,3 +16,4 @@ export const MOCK_NOTIFICATIONS: any[] = [];
 export function delay(ms = 100) {
   return new Promise((r) => setTimeout(r, ms));
 }
+

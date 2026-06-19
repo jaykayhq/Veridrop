@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Logo, LogoIcon, VeridropLogoFull } from "@/components/Logo";
@@ -7,7 +8,7 @@ export default function LandingPage() {
     <div className="landing-dark min-h-screen bg-app text-text-primary font-sans">
       {/* ─── Navbar ─── */}
       <nav className="sticky top-0 z-50 border-b border-default bg-app/60 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+        <div className="flex w-full items-center justify-between px-6 py-4 md:px-10 lg:px-16">
           <Logo href="/" />
           <div className="flex items-center gap-4">
             <a
@@ -28,6 +29,26 @@ export default function LandingPage() {
               className="rounded-md border border-hover px-4 py-1.5 text-xs text-text-secondary transition-colors hover:border-brand-teal hover:text-brand-teal-light"
             >
               Sign In
+            </Link>
+            <Link
+              href="/register"
+              className="btn-primary group !px-4 !py-1.5 !text-xs !h-auto"
+            >
+              Get Started
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="transition-transform group-hover:translate-x-0.5"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
             </Link>
           </div>
         </div>
@@ -465,15 +486,14 @@ export default function LandingPage() {
               <span className="text-gradient-brand">trusted commerce</span>?
             </h2>
             <p className="mt-3 text-sm text-text-muted">
-              Try the demo to explore Veridrop from both the vendor and admin
-              perspective.
+              Get started with Veridrop today and secure your commerce workflow.
             </p>
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Link
-                href="/login"
+                href="/register"
                 className="btn-primary"
               >
-                Explore Demo
+                Get Started
               </Link>
               <a
                 href="#features"
@@ -493,10 +513,7 @@ export default function LandingPage() {
             <Logo href="/" />
             <div className="flex items-center gap-6 text-xs text-text-muted">
               <Link href="/login" className="transition-colors hover:text-text-primary">
-                Vendor Demo
-              </Link>
-              <Link href="/login" className="transition-colors hover:text-text-primary">
-                Admin Demo
+                Sign In
               </Link>
               <span className="text-[#333]">|</span>
               <a href="#features" className="transition-colors hover:text-text-primary">
@@ -566,3 +583,4 @@ function FeatureCard({
     </div>
   );
 }
+

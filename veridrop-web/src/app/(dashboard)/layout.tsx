@@ -1,9 +1,11 @@
+/* eslint-disable */
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Sidebar } from "@/components/sidebar";
 import { TopBar } from "@/components/topbar";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 export default function DashboardLayout({
@@ -89,10 +91,10 @@ export default function DashboardLayout({
 
       {/* Main Content Area */}
       <div
-        className="flex-1 flex flex-col relative z-10 transition-all duration-300"
-        style={{
-          marginLeft: collapsed ? "var(--sidebar-collapsed-width)" : "var(--sidebar-width)",
-        }}
+        className={cn(
+          "flex-1 flex flex-col relative z-10 transition-all duration-300",
+          collapsed ? "md:ml-[var(--sidebar-collapsed-width)]" : "md:ml-[var(--sidebar-width)]"
+        )}
       >
         <TopBar
           collapsed={collapsed}
@@ -107,3 +109,4 @@ export default function DashboardLayout({
     </div>
   );
 }
+

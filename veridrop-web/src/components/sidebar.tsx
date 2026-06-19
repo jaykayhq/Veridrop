@@ -109,14 +109,14 @@ export function Sidebar({ role, collapsed, onToggle, onMobileOpen, onMobileClose
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        "flex flex-col h-full bg-sidebar border-r border-default transition-all duration-300 overflow-hidden",
+        "flex flex-col h-full bg-sidebar shadow-md transition-all duration-300 overflow-hidden",
         collapsed && !hovered ? "w-[var(--sidebar-collapsed-width)]" : "w-[var(--sidebar-width)]"
       )}
       style={{ width: collapsed && !hovered ? "var(--sidebar-collapsed-width)" : "var(--sidebar-width)" }}
     >
       {/* Logo */}
       <div className={cn(
-        "flex items-center h-14 px-4 border-b border-default shrink-0",
+        "flex items-center h-14 px-4 shrink-0",
         collapsed && !hovered ? "justify-center px-0" : "gap-3"
       )}>
         <Link href={`/${role}`} className="flex items-center gap-3 shrink-0">
@@ -181,7 +181,7 @@ export function Sidebar({ role, collapsed, onToggle, onMobileOpen, onMobileClose
 
       {/* User Section */}
       <div className={cn(
-        "border-t border-default py-3 px-3 flex items-center gap-3 shrink-0",
+        "py-3 px-3 flex items-center gap-3 shrink-0",
         collapsed && !hovered ? "justify-center" : ""
       )}>
         <div className="h-8 w-8 rounded-full bg-brand-teal-light/20 flex items-center justify-center text-brand-teal-light text-xs font-bold shrink-0 border border-brand-teal-light/20">
@@ -203,7 +203,7 @@ export function Sidebar({ role, collapsed, onToggle, onMobileOpen, onMobileClose
       {/* Collapse Toggle */}
       <button
         onClick={onToggle}
-        className="flex items-center justify-center h-10 border-t border-default text-text-muted hover:text-text-primary hover:bg-surface-hover transition-colors shrink-0"
+        className="flex items-center justify-center h-10 text-text-muted hover:text-text-primary hover:bg-surface-hover transition-colors shrink-0"
         title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
       >
         {collapsed ? Icons.chevronRight : Icons.chevronLeft}

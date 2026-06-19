@@ -19,9 +19,9 @@
   --bg-topbar: rgba(13, 13, 13, 0.7);
 
   /* ─── Semantic Border Colors ─── */
-  --border-default: #1a1a1a;
-  --border-subtle: #2a2a2a;
-  --border-hover: #444444;
+  --border-default: transparent;
+  --border-subtle: transparent;
+  --border-hover: transparent;
 
   /* ─── Semantic Text Colors ─── */
   --text-primary: #e8e8e8;
@@ -124,9 +124,9 @@
   --bg-sidebar: #f8f9fa;
   --bg-topbar: rgba(255, 255, 255, 0.8);
 
-  --border-default: #e2e8f0;
-  --border-subtle: #cbd5e1;
-  --border-hover: #94a3b8;
+  --border-default: transparent;
+  --border-subtle: transparent;
+  --border-hover: transparent;
 
   --text-primary: #0f172a;
   --text-secondary: #334155;
@@ -529,3 +529,12 @@ img, picture, video, canvas, svg {
   animation: pulse-ring 2s var(--ease-standard) infinite;
 }
 
+/* ─── Global Override to remove ALL lines everywhere ─── */
+*, ::before, ::after {
+  border-color: transparent !important;
+}
+
+hr, .divider, .divider-brand {
+  opacity: 0 !important;
+  display: none !important;
+}

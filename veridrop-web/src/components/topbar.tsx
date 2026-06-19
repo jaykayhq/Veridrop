@@ -24,12 +24,10 @@ export function TopBar({ collapsed, onSidebarToggle, onMobileMenuOpen }: TopBarP
   return (
     <header
       className={cn(
-        "fixed top-0 right-0 h-[var(--topbar-height)] bg-topbar backdrop-blur-xl border-b border-default z-30",
+        "fixed top-0 right-0 h-[var(--topbar-height)] bg-topbar backdrop-blur-xl shadow-sm z-30",
         "transition-all duration-300 flex items-center justify-between px-4 md:px-6",
+        collapsed ? "left-0 md:left-[var(--sidebar-collapsed-width)]" : "left-0 md:left-[var(--sidebar-width)]"
       )}
-      style={{
-        left: collapsed ? "var(--sidebar-collapsed-width)" : "var(--sidebar-width)",
-      }}
     >
       {/* Left side */}
       <div className="flex items-center gap-3">

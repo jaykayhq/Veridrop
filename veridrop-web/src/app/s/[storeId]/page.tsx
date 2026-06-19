@@ -4,12 +4,13 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { createAdminClient, DATABASE_ID } from "@/lib/appwrite.server";
 import { Query } from "node-appwrite";
 
-export default async function StorefrontPage({ params }: { params: { storeId: string } }) {
+export default async function StorefrontPage({ params }: { params: Promise<{ storeId: string }> }) {
+  const { storeId } = await params;
   const { databases } = createAdminClient();
 
   // Fetch store configuration based on the slug URL
   const storesReq = await databases.listDocuments(DATABASE_ID, "storefronts", [
-    Query.equal("slug", params.storeId)
+    Query.equal("slug", storeId)
   ]);
   
   if (storesReq.total === 0) {
@@ -29,7 +30,7 @@ export default async function StorefrontPage({ params }: { params: { storeId: st
       {/* Navbar */}
       <nav className="sticky top-0 z-50 border-b border-default bg-app/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-          <Link href={`/s/${params.storeId}`} className="flex items-center gap-2.5">
+          <Link href={`/s/${storeId}`} className="flex items-center gap-2.5">
             <LogoIcon size={32} className="shrink-0" />
             <span className="text-sm font-semibold tracking-tight text-text-primary">
               {store.name}
@@ -41,7 +42,7 @@ export default async function StorefrontPage({ params }: { params: { storeId: st
             </span>
             <ThemeToggle />
             <Link
-              href={`/s/${params.storeId}/cart`}
+              href={`/s/${storeId}/cart`}
               className="rounded-md border border-hover px-4 py-1.5 text-xs text-text-secondary transition-colors hover:border-brand-blue hover:text-brand-teal-light"
             >
               Cart (0)

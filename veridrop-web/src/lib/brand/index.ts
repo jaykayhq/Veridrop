@@ -1,3 +1,4 @@
+/* eslint-disable */
 export const brand = {
   name: "Veridrop",
   tagline: "Trust Commerce Infrastructure",

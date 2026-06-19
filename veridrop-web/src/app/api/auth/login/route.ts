@@ -5,7 +5,7 @@ import { Query } from 'node-appwrite';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { email, password } = body;
+    const { email, password, role } = body;
 
     const { databases } = createAdminClient();
 
@@ -20,9 +20,9 @@ export async function POST(request: Request) {
 
     const user = usersList.documents[0];
 
-    if (!user || user.password !== password) {
+    if (!user || user.password !== password || (role && user.role !== role)) {
       return NextResponse.json(
-        { error: 'Invalid credentials' },
+        { error: 'Invalid credentials or incorrect role' },
         { status: 401 }
       );
     }
