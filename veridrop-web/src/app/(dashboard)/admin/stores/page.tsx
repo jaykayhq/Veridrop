@@ -1,15 +1,12 @@
 import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
+import { requireAdmin } from "@/lib/api/auth-server";
+import { getAdminStores } from "@/lib/api/queries";
 
-const stores = [
-  { id: "STR-001", name: "GadgetHub NG", slug: "gadgethub-ng", owner: "Amara Okafor", products: 7, status: "active", visits: 1240 },
-  { id: "STR-002", name: "FashionAxis", slug: "fashionaxis", owner: "Chioma Eze", products: 24, status: "active", visits: 892 },
-  { id: "STR-003", name: "TechPlus NG", slug: "techplus-ng", owner: "Daniel Musa", products: 0, status: "pending", visits: 0 },
-  { id: "STR-004", name: "LuxWear", slug: "luxwear", owner: "James D.", products: 15, status: "active", visits: 567 },
-  { id: "STR-005", name: "StyleLab", slug: "stylelab", owner: "Amina B.", products: 9, status: "active", visits: 345 },
-];
+export default async function AdminStores() {
+  await requireAdmin();
+  const data = await getAdminStores();
 
-export default function AdminStores() {
   return (
     <div className="p-6 space-y-6">
       <div>
@@ -20,19 +17,19 @@ export default function AdminStores() {
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Total Stores</p>
-          <p className="text-lg font-semibold text-text-primary mt-1">5</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">{data.totalStores}</p>
         </div>
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Active</p>
-          <p className="text-lg font-semibold text-emerald-400 mt-1">4</p>
+          <p className="text-lg font-semibold text-emerald-400 mt-1">{data.activeStores}</p>
         </div>
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Pending</p>
-          <p className="text-lg font-semibold text-yellow-400 mt-1">1</p>
+          <p className="text-lg font-semibold text-yellow-400 mt-1">{data.pendingStores}</p>
         </div>
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Total Products</p>
-          <p className="text-lg font-semibold text-text-primary mt-1">55</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">{data.totalProducts}</p>
         </div>
       </div>
 
@@ -50,14 +47,14 @@ export default function AdminStores() {
             },
             { key: "owner", header: "Owner" },
             { key: "products", header: "Products" },
-            { key: "visits", header: "Visits" },
+            { key: "activeProducts", header: "Active" },
             {
               key: "status",
               header: "Status",
               render: (row) => <StatusBadge status={row.status as string} />,
             },
           ]}
-          data={stores}
+          data={data.stores}
         />
       </div>
     </div>

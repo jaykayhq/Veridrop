@@ -1,16 +1,17 @@
 import { StatCard } from "@/components/stat-card";
 import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
+import { formatCurrency } from "@/lib/utils";
+import { requireAdmin } from "@/lib/api/auth-server";
+import { getAdminDashboard, getAdminApprovals } from "@/lib/api/queries";
 
-const recentTransactions = [
-  { id: "TXN-001", buyer: "Tunde A.", vendor: "GadgetHub NG", amount: "₦245,000", status: "locked", date: "2026-06-13" },
-  { id: "TXN-002", buyer: "Sarah K.", vendor: "FashionAxis", amount: "₦89,500", status: "passed", date: "2026-06-13" },
-  { id: "TXN-003", buyer: "Michael O.", vendor: "TechPlus", amount: "₦520,000", status: "disputed", date: "2026-06-12" },
-  { id: "TXN-004", buyer: "Chioma E.", vendor: "LuxWear", amount: "₦34,200", status: "delivered", date: "2026-06-12" },
-  { id: "TXN-005", buyer: "James D.", vendor: "GadgetHub NG", amount: "₦156,000", status: "refunded", date: "2026-06-11" },
-];
+export default async function AdminOverview() {
+  await requireAdmin();
+  const [dash, approvals] = await Promise.all([
+    getAdminDashboard(),
+    getAdminApprovals(),
+  ]);
 
-export default function AdminOverview() {
   return (
     <div className="p-6 space-y-6">
       <div>
@@ -19,10 +20,10 @@ export default function AdminOverview() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Total Users" value="1,482" change="+128 this week" changeType="up" icon="👥" />
-        <StatCard label="Active Orders" value="347" change="23 pending dispatch" changeType="neutral" icon="📦" />
-        <StatCard label="Escrow Volume" value="₦8.2M" change="+12% vs last week" changeType="up" icon="💰" />
-        <StatCard label="Dispute Rate" value="2.1%" change="0.3% below target" changeType="down" icon="⚖️" />
+        <StatCard label="Total Users" value={String(dash.totalUsers)} change="registered users" changeType="neutral" icon="👥" />
+        <StatCard label="Active Orders" value={String(dash.activeOrders)} change="in progress" changeType="neutral" icon="📦" />
+        <StatCard label="Escrow Volume" value={formatCurrency(dash.escrowVolume)} change="total volume" changeType="neutral" icon="💰" />
+        <StatCard label="Dispute Rate" value={dash.disputeRate} change="of all orders" changeType={parseFloat(dash.disputeRate) < 3 ? "down" : "up"} icon="⚖️" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -31,15 +32,15 @@ export default function AdminOverview() {
           <div className="space-y-3">
             <div className="flex items-center justify-between text-sm">
               <span className="text-text-muted">Vendors</span>
-              <span className="font-medium text-text-primary">12</span>
+              <span className="font-medium text-text-primary">{approvals.vendors}</span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-text-muted">Inspectors</span>
-              <span className="font-medium text-text-primary">8</span>
+              <span className="font-medium text-text-primary">{approvals.inspectors}</span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-text-muted">Riders</span>
-              <span className="font-medium text-text-primary">5</span>
+              <span className="font-medium text-text-primary">{approvals.riders}</span>
             </div>
           </div>
         </div>
@@ -48,16 +49,16 @@ export default function AdminOverview() {
           <h3 className="text-sm font-semibold text-text-primary mb-4">Order Status</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-text-muted">Pending inspection</span>
-              <span className="font-medium text-text-primary">42</span>
+              <span className="text-text-muted">Active orders</span>
+              <span className="font-medium text-text-primary">{dash.activeOrders}</span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-text-muted">In transit</span>
-              <span className="font-medium text-text-primary">156</span>
+              <span className="text-text-muted">Total volume</span>
+              <span className="font-medium text-text-primary">{formatCurrency(dash.escrowVolume)}</span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-text-muted">Awaiting delivery scan</span>
-              <span className="font-medium text-text-primary">89</span>
+              <span className="text-text-muted">Dispute rate</span>
+              <span className="font-medium text-text-primary">{dash.disputeRate}</span>
             </div>
           </div>
         </div>
@@ -66,16 +67,12 @@ export default function AdminOverview() {
           <h3 className="text-sm font-semibold text-text-primary mb-4">Today&apos;s Activity</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-text-muted">Inspections completed</span>
-              <span className="font-medium text-text-primary">64</span>
+              <span className="text-text-muted">Total transactions</span>
+              <span className="font-medium text-text-primary">{dash.recentTransactions.length}</span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-text-muted">Escrows released</span>
-              <span className="font-medium text-text-primary">₦1.2M</span>
-            </div>
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-text-muted">New registrations</span>
-              <span className="font-medium text-text-primary">18</span>
+              <span className="text-text-muted">Total users</span>
+              <span className="font-medium text-text-primary">{dash.totalUsers}</span>
             </div>
           </div>
         </div>
@@ -87,18 +84,13 @@ export default function AdminOverview() {
         </div>
         <DataTable
           columns={[
-            { key: "id", header: "ID" },
-            { key: "buyer", header: "Buyer" },
-            { key: "vendor", header: "Vendor" },
-            { key: "amount", header: "Amount", className: "font-medium" },
-            {
-              key: "status",
-              header: "Status",
-              render: (row) => <StatusBadge status={row.status as string} />,
-            },
-            { key: "date", header: "Date" },
+            { key: "_id", header: "ID" },
+            { key: "buyerName", header: "Buyer" },
+            { key: "vendorName", header: "Vendor" },
+            { key: "amount", header: "Amount", className: "font-medium", render: (row) => formatCurrency(row.amount as number) },
+            { key: "status", header: "Status", render: (row) => <StatusBadge status={row.status as string} /> },
           ]}
-          data={recentTransactions}
+          data={dash.recentTransactions}
         />
       </div>
     </div>

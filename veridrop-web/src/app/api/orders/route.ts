@@ -1,8 +1,8 @@
-// TODO: Replace mock data with real DB queries (PostgreSQL via Prisma)
 import { NextRequest } from "next/server";
 import { getAuthUser } from "@/lib/api/auth";
 import { ok, err, id } from "@/lib/api/helpers";
-import { MOCK_ORDERS, MOCK_PRODUCTS, MOCK_USERS, MOCK_ESCROWS } from "@/lib/api/mock-data";
+import { db } from "@/lib/api/db";
+import type { User, Order } from "@/lib/api/types";
 
 export async function GET(req: NextRequest) {
   const auth = getAuthUser(req);
@@ -11,19 +11,24 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const status = searchParams.get("status");
 
-  let orders = MOCK_ORDERS;
+  const orders = (await db.orders.find({})) as Order[];
+  let filtered = orders;
 
-  if (auth.role === "vendor") orders = orders.filter((o) => o.vendorId === auth.userId);
-  else if (auth.role === "buyer") orders = orders.filter((o) => o.buyerId === auth.userId);
+  if (auth.role === "vendor") filtered = filtered.filter((o) => o.vendorId === auth.userId);
+  else if (auth.role === "buyer") filtered = filtered.filter((o) => o.buyerId === auth.userId);
   else if (auth.role !== "admin") return err("Forbidden", 403);
 
-  if (status) orders = orders.filter((o) => o.status === status);
+  if (status) filtered = filtered.filter((o) => o.status === status);
 
-  const enriched = orders.map((o) => {
-    const buyer = MOCK_USERS.find((u) => u._id === o.buyerId);
-    const vendor = MOCK_USERS.find((u) => u._id === o.vendorId);
-    return { ...o, buyerName: buyer?.name || "Unknown", vendorName: vendor?.name || "Unknown" };
-  });
+  const enriched = await Promise.all(
+    filtered.map(async (o) => {
+      const [buyer, vendor] = await Promise.all([
+        db.users.findOne({ _id: o.buyerId }) as Promise<User | null>,
+        db.users.findOne({ _id: o.vendorId }) as Promise<User | null>,
+      ]);
+      return { ...o, buyerName: buyer?.name || "Unknown", vendorName: vendor?.name || "Unknown" };
+    })
+  );
 
   return ok(enriched);
 }
@@ -35,11 +40,11 @@ export async function POST(req: NextRequest) {
   const { productId, vendorId } = await req.json();
   if (!productId || !vendorId) return err("Missing productId or vendorId");
 
-  const product = MOCK_PRODUCTS.find((p) => p._id === productId);
+  const allProducts = (await db.products.find({})) as any[];
+  const product = allProducts.find((p: any) => p._id === productId);
   if (!product) return err("Product not found", 404);
 
-  // TODO: real order creation + escrow lock
-  const mockOrder = {
+  const newOrder = {
     _id: id(),
     buyerId: auth.role === "buyer" ? auth.userId : vendorId,
     vendorId,
@@ -50,15 +55,7 @@ export async function POST(req: NextRequest) {
     createdAt: new Date().toISOString(),
   };
 
-  const mockEscrow = {
-    _id: id(),
-    orderId: mockOrder._id,
-    amount: product.price,
-    status: "locked",
-    buyerId: auth.userId,
-    vendorId,
-    createdAt: new Date().toISOString(),
-  };
+  await db.orders.insert(newOrder);
 
-  return ok({ order: mockOrder, escrow: mockEscrow });
+  return ok({ order: newOrder });
 }

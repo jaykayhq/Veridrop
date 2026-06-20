@@ -1,19 +1,15 @@
+import Link from "next/link";
 import { LogoIcon } from "@/components/Logo";
-import { createAdminClient, DATABASE_ID } from "@/lib/appwrite.server";
-import { Query } from "node-appwrite";
+import { getCompanyById } from "@/lib/api/dispatch-queries";
+import { notFound } from "next/navigation";
 
-export default async function DispatchPortalPage({ params }: { params: { companyId: string } }) {
-  const { databases } = createAdminClient();
+export default async function DispatchPortalPage({ params }: { params: Promise<{ companyId: string }> }) {
+  const { companyId } = await params;
+  const company = await getCompanyById(companyId);
 
-  const companyReq = await databases.listDocuments(DATABASE_ID, "dispatch_companies", [
-    Query.equal("companyId", params.companyId)
-  ]);
-  
-  if (companyReq.total === 0) {
-    return <div className="p-10 text-center">Dispatch partner not found</div>;
+  if (!company) {
+    notFound();
   }
-  
-  const company = companyReq.documents[0];
 
   return (
     <div className="min-h-screen bg-app text-text-primary p-6">
@@ -21,9 +17,20 @@ export default async function DispatchPortalPage({ params }: { params: { company
         <LogoIcon size={48} className="mb-6" />
         <h1 className="text-2xl font-bold mb-2">{company.name} Dispatch Portal</h1>
         <p className="text-text-muted mb-8">Manage your Veridrop delivery riders and active pickups.</p>
-        
-        <div className="p-4 bg-input rounded-md border border-default">
-           <p className="text-sm">Rider dashboard integration active.</p>
+
+        <div className="flex gap-4">
+          <Link
+            href={`/dispatch/${companyId}/dashboard`}
+            className="px-6 py-3 bg-gradient-to-r from-brand-blue to-brand-teal-light text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity"
+          >
+            Dashboard
+          </Link>
+          <Link
+            href={`/dispatch/${companyId}/onboard`}
+            className="px-6 py-3 border border-default text-text-secondary text-sm font-medium rounded-lg hover:border-hover transition-colors"
+          >
+            Manage Riders
+          </Link>
         </div>
       </div>
     </div>

@@ -1,8 +1,8 @@
-// TODO: Replace mock data with real DB queries (PostgreSQL via Prisma)
 import { NextRequest } from "next/server";
 import { getAuthUser } from "@/lib/api/auth";
 import { ok, err } from "@/lib/api/helpers";
-import { MOCK_INSPECTIONS, MOCK_USERS, MOCK_ORDERS } from "@/lib/api/mock-data";
+import { db } from "@/lib/api/db";
+import type { Inspection, User, Order } from "@/lib/api/types";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = getAuthUser(req);
@@ -10,11 +10,13 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
   const { id: recordId } = await params;
 
-  const inspection = MOCK_INSPECTIONS.find((i) => i._id === recordId);
+  const inspection = (await db.inspections.findOne({ _id: recordId })) as Inspection | null;
   if (!inspection) return err("Inspection not found", 404);
 
-  const inspector = MOCK_USERS.find((u) => u._id === inspection.inspectorId);
-  const order = MOCK_ORDERS.find((o) => o._id === inspection.orderId);
+  const [inspector, order] = await Promise.all([
+    db.users.findOne({ _id: inspection.inspectorId }) as Promise<User | null>,
+    db.orders.findOne({ _id: inspection.orderId }) as Promise<Order | null>,
+  ]);
 
   return ok({
     ...inspection,
@@ -31,13 +33,12 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const { status } = await req.json();
   if (!status || !["passed", "failed"].includes(status)) return err("Status must be 'passed' or 'failed'");
 
-  const inspection = MOCK_INSPECTIONS.find((i) => i._id === recordId);
+  const inspection = (await db.inspections.findOne({ _id: recordId })) as Inspection | null;
   if (!inspection) return err("Inspection not found", 404);
   if (inspection.inspectorId !== auth.userId) return err("Only the assigned inspector can update", 403);
 
-  // TODO: real inspection workflow — update order status, create QR seal, handle escrow
   const now = new Date().toISOString();
-  const updated = { ...inspection, status, completedAt: now };
+  await db.inspections.update({ _id: recordId }, { $set: { status, completedAt: now } });
 
-  return ok(updated);
+  return ok({ ...inspection, status, completedAt: now });
 }

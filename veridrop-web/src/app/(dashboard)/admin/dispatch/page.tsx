@@ -1,15 +1,12 @@
 import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
+import { requireAdmin } from "@/lib/api/auth-server";
+import { getAdminDispatch } from "@/lib/api/queries";
 
-const companies = [
-  { id: "DC-001", name: "SwiftLogix", riders: 12, status: "active", deliveries: 1240, coverage: "Lagos, Abuja" },
-  { id: "DC-002", name: "RedStar Express", riders: 0, status: "pending", deliveries: 0, coverage: "—" },
-  { id: "DC-003", name: "GoLorry NG", riders: 8, status: "active", deliveries: 456, coverage: "Lagos" },
-  { id: "DC-004", name: "ShipTop NG", riders: 4, status: "active", deliveries: 189, coverage: "Abuja" },
-  { id: "DC-005", name: "QuickSend", riders: 0, status: "pending", deliveries: 0, coverage: "—" },
-];
+export default async function AdminDispatch() {
+  await requireAdmin();
+  const data = await getAdminDispatch();
 
-export default function AdminDispatch() {
   return (
     <div className="p-6 space-y-6">
       <div>
@@ -20,37 +17,36 @@ export default function AdminDispatch() {
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Total Companies</p>
-          <p className="text-lg font-semibold text-text-primary mt-1">5</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">{data.totalCompanies}</p>
         </div>
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Active</p>
-          <p className="text-lg font-semibold text-emerald-400 mt-1">3</p>
+          <p className="text-lg font-semibold text-emerald-400 mt-1">{data.activeCompanies}</p>
         </div>
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Total Riders</p>
-          <p className="text-lg font-semibold text-text-primary mt-1">24</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">{data.totalRiders}</p>
         </div>
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Total Deliveries</p>
-          <p className="text-lg font-semibold text-text-primary mt-1">1,885</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">{data.totalDeliveries.toLocaleString()}</p>
         </div>
       </div>
 
       <div className="bg-surface rounded-xl border border-default">
         <DataTable
           columns={[
-            { key: "id", header: "ID" },
+            { key: "_id", header: "ID" },
             { key: "name", header: "Company" },
-            { key: "riders", header: "Riders" },
-            { key: "deliveries", header: "Deliveries" },
-            { key: "coverage", header: "Coverage" },
+            { key: "activeRiders", header: "Riders" },
+            { key: "deliveriesToday", header: "Deliveries" },
             {
               key: "status",
               header: "Status",
               render: (row) => <StatusBadge status={row.status as string} />,
             },
           ]}
-          data={companies}
+          data={data.companies}
         />
       </div>
     </div>

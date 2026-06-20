@@ -1,12 +1,14 @@
 import { LogoIcon } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { db } from "@/lib/api/db";
+import type { Order } from "@/lib/api/types";
 
-export default function RiderPage() {
-  const assignments = [
-    { id: "RID-001", order: "ORD-003", product: "MacBook Air", pickup: "GadgetHub NG, Ikeja", dropoff: "12, Adeola Odeku, VI", status: "picked_up", amount: "₦2,500" },
-    { id: "RID-002", order: "ORD-006", product: "LV Bag", pickup: "FashionAxis, Surulere", dropoff: "45, Awolowo Rd, Ikoyi", status: "pending", amount: "₦2,000" },
-    { id: "RID-003", order: "ORD-010", product: "PS5", pickup: "TechPlus NG, Yaba", dropoff: "8, Bode Thomas, Surulere", status: "delivered", amount: "₦3,000" },
-  ];
+async function getRiderAssignments(): Promise<Order[]> {
+  return (await db.orders.find({})) as Order[];
+}
+
+export default async function RiderPage() {
+  const assignments = await getRiderAssignments();
 
   return (
     <div className="min-h-screen bg-app text-text-primary font-sans">
@@ -20,7 +22,7 @@ export default function RiderPage() {
             <span className="text-emerald-400">● Available</span>
             <ThemeToggle />
             <div className="h-5 w-5 rounded-full bg-border flex items-center justify-center text-[10px]">
-              E
+              R
             </div>
           </div>
         </div>
@@ -30,7 +32,7 @@ export default function RiderPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-lg font-semibold">Your Assignments</h1>
-            <p className="text-xs text-text-muted mt-1">3 active orders for today</p>
+            <p className="text-xs text-text-muted mt-1">{assignments.length} orders in system</p>
           </div>
           <button className="px-4 py-2 bg-gradient-to-r from-brand-blue to-brand-teal-light text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity">
             Scan QR
@@ -38,17 +40,17 @@ export default function RiderPage() {
         </div>
 
         <div className="space-y-3">
-          {assignments.map((a) => (
-            <div key={a.id} className="bg-surface rounded-xl border border-default p-4 hover:border-hover transition-colors">
+          {assignments.length > 0 ? assignments.map((a) => (
+            <div key={a._id} className="bg-surface rounded-xl border border-default p-4 hover:border-hover transition-colors">
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium">{a.product}</span>
+                    <span className="text-sm font-medium">{a.productName}</span>
                     <span
                       className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border capitalize ${
                         a.status === "delivered"
                           ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
-                          : a.status === "picked_up"
+                          : a.status === "in_transit"
                           ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
                           : "bg-yellow-500/10 text-yellow-400 border-yellow-500/30"
                       }`}
@@ -56,24 +58,11 @@ export default function RiderPage() {
                       {a.status.replace(/_/g, " ")}
                     </span>
                   </div>
-                  <p className="text-xs text-text-muted mt-0.5">Order {a.order}</p>
-                </div>
-                <span className="text-sm font-semibold text-brand-teal-light">{a.amount}</span>
-              </div>
-
-              <div className="flex items-center gap-3 text-xs text-text-muted">
-                <div className="flex-1">
-                  <div className="text-[10px] uppercase tracking-wider text-text-muted mb-0.5">Pickup</div>
-                  <div className="text-text-secondary">{a.pickup}</div>
-                </div>
-                <div className="text-text-muted">→</div>
-                <div className="flex-1">
-                  <div className="text-[10px] uppercase tracking-wider text-text-muted mb-0.5">Dropoff</div>
-                  <div className="text-text-secondary">{a.dropoff}</div>
+                  <p className="text-xs text-text-muted mt-0.5">Order {a._id}</p>
                 </div>
               </div>
 
-              <div className="mt-3 flex gap-2">
+              <div className="flex gap-2">
                 <button className="flex-1 px-3 py-2 bg-brand-teal-light/10 text-brand-teal-light text-xs font-medium rounded-lg border border-brand-teal-light/20 hover:bg-brand-teal-light/20 transition-colors">
                   Scan QR at Pickup
                 </button>
@@ -82,10 +71,13 @@ export default function RiderPage() {
                 </button>
               </div>
             </div>
-          ))}
+          )) : (
+            <div className="bg-surface rounded-xl border border-default p-8 text-center text-sm text-text-muted">
+              No assignments yet. Orders will appear here once inspection passes.
+            </div>
+          )}
         </div>
 
-        {/* QR Scanner Quick Action */}
         <div className="bg-surface rounded-xl border border-default p-6">
           <div className="flex items-center gap-4">
             <div className="h-12 w-12 rounded-lg bg-input border border-default flex items-center justify-center text-xl">

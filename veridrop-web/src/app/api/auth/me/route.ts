@@ -1,12 +1,17 @@
 import { NextRequest } from "next/server";
 import { ok, err } from "@/lib/api/helpers";
-import { MOCK_USERS } from "@/lib/api/mock-data";
+import { db } from "@/lib/api/db";
+import type { User } from "@/lib/api/types";
+import { getAuthUser } from "@/lib/api/auth";
 
-// TODO: real JWT auth - verify token, return authenticated user
 export async function GET(req: NextRequest) {
   try {
-    const vendor = MOCK_USERS.find((u) => u.role === "vendor")!;
-    return ok(vendor);
+    const auth = getAuthUser(req);
+    if (!auth) return err("Unauthorized", 401);
+    const user = (await db.users.findOne({ _id: auth.userId })) as User | null;
+    if (!user) return err("User not found", 404);
+    const { password, ...safe } = user;
+    return ok(safe);
   } catch (e) {
     return err((e as Error).message);
   }

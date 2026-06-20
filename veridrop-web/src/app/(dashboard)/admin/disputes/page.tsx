@@ -1,16 +1,12 @@
 import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
 import { formatCurrency, formatDate } from "@/lib/utils";
+import { requireAdmin } from "@/lib/api/auth-server";
+import { getAdminDisputes } from "@/lib/api/queries";
 
-const disputes = [
-  { id: "DSP-001", order: "TXN-003", buyer: "Michael O.", vendor: "TechPlus", amount: 520000, reason: "Product mismatch", status: "review", filed: "2026-06-12" },
-  { id: "DSP-002", order: "TXN-009", buyer: "Funke A.", vendor: "GadgetHub NG", amount: 189000, reason: "Damaged item", status: "pending", filed: "2026-06-11" },
-  { id: "DSP-003", order: "TXN-012", buyer: "Ibrahim S.", vendor: "ElectroMart", amount: 445000, reason: "Wrong variant", status: "review", filed: "2026-06-10" },
-  { id: "DSP-004", order: "TXN-015", buyer: "Kemi L.", vendor: "FashionAxis", amount: 67000, reason: "Inspection fail disputed", status: "pending", filed: "2026-06-09" },
-  { id: "DSP-005", order: "TXN-018", buyer: "Tunde A.", vendor: "StyleLab", amount: 92000, reason: "Missing accessories", status: "resolved", filed: "2026-06-08" },
-];
-
-export default function AdminDisputes() {
+export default async function AdminDisputes() {
+  await requireAdmin();
+  const data = await getAdminDisputes();
   return (
     <div className="p-6 space-y-6">
       <div>
@@ -21,25 +17,23 @@ export default function AdminDisputes() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Open Disputes</p>
-          <p className="text-lg font-semibold text-text-primary mt-1">4</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">{data.open}</p>
         </div>
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Under Review</p>
-          <p className="text-lg font-semibold text-[#c8a862] mt-1">2</p>
+          <p className="text-lg font-semibold text-[#c8a862] mt-1">{data.underReview}</p>
         </div>
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Avg. Resolution</p>
-          <p className="text-lg font-semibold text-text-primary mt-1">48h</p>
+          <p className="text-lg font-semibold text-text-primary mt-1">{data.avgResolutionTime}</p>
         </div>
       </div>
 
       <div className="bg-surface rounded-xl border border-default">
         <DataTable
           columns={[
-            { key: "id", header: "ID" },
-            { key: "order", header: "Order" },
-            { key: "buyer", header: "Buyer" },
-            { key: "vendor", header: "Vendor" },
+            { key: "_id", header: "ID" },
+            { key: "orderId", header: "Order" },
             {
               key: "amount",
               header: "Amount",
@@ -53,14 +47,14 @@ export default function AdminDisputes() {
               render: (row) => <StatusBadge status={row.status as string} />,
             },
             {
-              key: "filed",
+              key: "filedAt",
               header: "Filed",
               render: (row) => (
-                <span className="text-text-muted">{formatDate(row.filed as string)}</span>
+                <span className="text-text-muted">{formatDate(row.filedAt as string)}</span>
               ),
             },
           ]}
-          data={disputes}
+          data={data.disputes}
         />
       </div>
     </div>

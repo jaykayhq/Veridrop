@@ -1,13 +1,13 @@
 import { NextRequest } from "next/server";
 import { getAuthUser } from "@/lib/api/auth";
-import { ok, err, id } from "@/lib/api/helpers";
-import { MOCK_PRODUCTS } from "@/lib/api/mock-data";
+import { ok, err } from "@/lib/api/helpers";
+import { db } from "@/lib/api/db";
+import type { Product } from "@/lib/api/types";
 
-// TODO: real DB lookup by _id
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const product = MOCK_PRODUCTS.find((p) => p._id === id);
+    const product = (await db.products.findOne({ _id: id })) as Product | null;
     if (!product) return err("Product not found", 404);
     return ok(product);
   } catch (e) {
@@ -15,33 +15,34 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   }
 }
 
-// TODO: real update - validate ownership, persist changes
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     const auth = getAuthUser(req);
     if (!auth) return err("Unauthorized", 401);
 
-    const product = MOCK_PRODUCTS.find((p) => p._id === id);
+    const product = (await db.products.findOne({ _id: id })) as Product | null;
     if (!product) return err("Product not found", 404);
 
     const body = await req.json();
-    return ok({ ...product, ...body, _id: product._id });
+    const updated = { ...product, ...body, _id: product._id };
+    await db.products.update({ _id: id }, { $set: body });
+    return ok(updated);
   } catch (e) {
     return err((e as Error).message);
   }
 }
 
-// TODO: real delete - remove from DB, verify ownership
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     const auth = getAuthUser(req);
     if (!auth) return err("Unauthorized", 401);
 
-    const product = MOCK_PRODUCTS.find((p) => p._id === id);
+    const product = (await db.products.findOne({ _id: id })) as Product | null;
     if (!product) return err("Product not found", 404);
 
+    await db.products.remove({ _id: id }, {});
     return ok({ message: "Product deleted" });
   } catch (e) {
     return err((e as Error).message);

@@ -1,9 +1,8 @@
-// TODO: Replace mock data with real DB queries (PostgreSQL via Prisma)
-// TODO: real GPS tracking integration
 import { NextRequest } from "next/server";
 import { getAuthUser } from "@/lib/api/auth";
 import { ok, err } from "@/lib/api/helpers";
-import { MOCK_ORDERS, MOCK_ESCROWS, MOCK_INSPECTIONS, MOCK_USERS } from "@/lib/api/mock-data";
+import { db } from "@/lib/api/db";
+import type { Order, Escrow, Inspection, User } from "@/lib/api/types";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = getAuthUser(req);
@@ -11,21 +10,20 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
   const { id: recordId } = await params;
 
-  const order = MOCK_ORDERS.find((o) => o._id === recordId);
+  const order = (await db.orders.findOne({ _id: recordId })) as Order | null;
   if (!order) return err("Order not found", 404);
 
   const timeline = [];
-
   if (order.createdAt) {
     timeline.push({ status: "pending", timestamp: order.createdAt, label: "Order placed" });
   }
 
-  const escrow = MOCK_ESCROWS.find((e) => e.orderId === recordId);
+  const escrow = (await db.escrows.findOne({ orderId: recordId })) as Escrow | null;
   if (escrow?.createdAt) {
     timeline.push({ status: "locked", timestamp: escrow.createdAt, label: "Payment locked in escrow" });
   }
 
-  const inspection = MOCK_INSPECTIONS.find((i) => i.orderId === recordId);
+  const inspection = (await db.inspections.findOne({ orderId: recordId })) as Inspection | null;
   if (inspection) {
     timeline.push({
       status: inspection.status === "passed" ? "passed" : "failed",
@@ -48,7 +46,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
   let inspectorInfo = null;
   if (inspection) {
-    const inspector = MOCK_USERS.find((u) => u._id === inspection.inspectorId);
+    const inspector = (await db.users.findOne({ _id: inspection.inspectorId })) as User | null;
     inspectorInfo = {
       name: inspector?.name || "Unknown",
       status: inspection.status,

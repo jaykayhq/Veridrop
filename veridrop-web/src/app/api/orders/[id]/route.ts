@@ -1,8 +1,8 @@
-// TODO: Replace mock data with real DB queries (PostgreSQL via Prisma)
 import { NextRequest } from "next/server";
 import { getAuthUser } from "@/lib/api/auth";
 import { ok, err } from "@/lib/api/helpers";
-import { MOCK_ORDERS, MOCK_ESCROWS, MOCK_USERS } from "@/lib/api/mock-data";
+import { db } from "@/lib/api/db";
+import type { Order, Escrow, User } from "@/lib/api/types";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = getAuthUser(req);
@@ -10,12 +10,14 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
   const { id: recordId } = await params;
 
-  const order = MOCK_ORDERS.find((o) => o._id === recordId);
+  const order = (await db.orders.findOne({ _id: recordId })) as Order | null;
   if (!order) return err("Order not found", 404);
 
-  const escrow = MOCK_ESCROWS.find((e) => e.orderId === recordId);
-  const buyer = MOCK_USERS.find((u) => u._id === order.buyerId);
-  const vendor = MOCK_USERS.find((u) => u._id === order.vendorId);
+  const [escrow, buyer, vendor] = await Promise.all([
+    db.escrows.findOne({ orderId: recordId }) as Promise<Escrow | null>,
+    db.users.findOne({ _id: order.buyerId }) as Promise<User | null>,
+    db.users.findOne({ _id: order.vendorId }) as Promise<User | null>,
+  ]);
 
   return ok({
     ...order,
@@ -33,11 +35,10 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const { status: newStatus } = await req.json();
   if (!newStatus) return err("Missing status");
 
-  const order = MOCK_ORDERS.find((o) => o._id === recordId);
+  const order = (await db.orders.findOne({ _id: recordId })) as Order | null;
   if (!order) return err("Order not found", 404);
 
-  // TODO: real workflow — validate role-based transitions, update escrow, etc.
-  const updated = { ...order, status: newStatus };
+  await db.orders.update({ _id: recordId }, { $set: { status: newStatus } });
 
-  return ok(updated);
+  return ok({ ...order, status: newStatus });
 }

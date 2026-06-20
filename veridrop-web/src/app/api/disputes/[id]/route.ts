@@ -1,8 +1,8 @@
-// TODO: Replace mock data with real DB queries (PostgreSQL via Prisma)
 import { NextRequest } from "next/server";
 import { getAuthUser } from "@/lib/api/auth";
 import { ok, err } from "@/lib/api/helpers";
-import { MOCK_DISPUTES } from "@/lib/api/mock-data";
+import { db } from "@/lib/api/db";
+import type { Dispute } from "@/lib/api/types";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = getAuthUser(req);
@@ -10,7 +10,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
   const { id: recordId } = await params;
 
-  const dispute = MOCK_DISPUTES.find((d) => d._id === recordId);
+  const dispute = (await db.disputes.findOne({ _id: recordId })) as Dispute | null;
   if (!dispute) return err("Dispute not found", 404);
 
   if (auth.role !== "admin" && dispute.buyerId !== auth.userId && dispute.vendorId !== auth.userId) {
@@ -28,13 +28,14 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const { status, resolution } = await req.json();
   if (!status) return err("Missing required field: status");
 
-  const dispute = MOCK_DISPUTES.find((d) => d._id === recordId);
+  const dispute = (await db.disputes.findOne({ _id: recordId })) as Dispute | null;
   if (!dispute) return err("Dispute not found", 404);
 
-  // TODO: real resolution workflow — update escrow/order status based on resolution
-  const updated: Record<string, unknown> = { ...dispute, status };
-  if (resolution) updated.resolution = resolution;
-  if (status === "resolved") updated.resolvedAt = new Date().toISOString();
+  const update: Record<string, unknown> = { status };
+  if (resolution) update.resolution = resolution;
+  if (status === "resolved") update.resolvedAt = new Date().toISOString();
 
-  return ok(updated);
+  await db.disputes.update({ _id: recordId }, { $set: update });
+
+  return ok({ ...dispute, ...update });
 }

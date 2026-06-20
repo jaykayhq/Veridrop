@@ -1,22 +1,21 @@
 import { NextRequest } from "next/server";
 import { getAuthUser } from "@/lib/api/auth";
 import { ok, err, id } from "@/lib/api/helpers";
-import { MOCK_PRODUCTS } from "@/lib/api/mock-data";
+import { db } from "@/lib/api/db";
+import type { Product } from "@/lib/api/types";
 
-// TODO: real product listing with DB pagination, search, filtering
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const vendorId = searchParams.get("vendorId");
-    let products = MOCK_PRODUCTS;
-    if (vendorId) products = products.filter((p) => p.vendorId === vendorId);
-    return ok(products);
+    const products = (await db.products.find({})) as Product[];
+    const filtered = vendorId ? products.filter((p) => p.vendorId === vendorId) : products;
+    return ok(filtered);
   } catch (e) {
     return err((e as Error).message);
   }
 }
 
-// TODO: real creation - persist to DB, handle image upload
 export async function POST(req: NextRequest) {
   try {
     const auth = getAuthUser(req);
@@ -35,6 +34,7 @@ export async function POST(req: NextRequest) {
       sales: 0,
       createdAt: new Date().toISOString(),
     };
+    await db.products.insert(product);
     return ok(product);
   } catch (e) {
     return err((e as Error).message);

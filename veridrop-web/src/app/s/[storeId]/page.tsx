@@ -1,44 +1,35 @@
 import { LogoIcon } from "@/components/Logo";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { createAdminClient, DATABASE_ID } from "@/lib/appwrite.server";
-import { Query } from "node-appwrite";
+import { getStoreBySlug, getStoreProducts } from "@/lib/api/storefront-queries";
+import { notFound } from "next/navigation";
+import { formatCurrency } from "@/lib/utils";
+import AddToCartButton from "./add-to-cart-button";
 
 export default async function StorefrontPage({ params }: { params: Promise<{ storeId: string }> }) {
   const { storeId } = await params;
-  const { databases } = createAdminClient();
+  const store = await getStoreBySlug(storeId);
 
-  // Fetch store configuration based on the slug URL
-  const storesReq = await databases.listDocuments(DATABASE_ID, "storefronts", [
-    Query.equal("slug", storeId)
-  ]);
-  
-  if (storesReq.total === 0) {
-    return <div className="p-10 text-center">Store not found</div>;
+  if (!store) {
+    notFound();
   }
-  
-  const store = storesReq.documents[0];
 
-  // Fetch products belonging to this vendor
-  const productsReq = await databases.listDocuments(DATABASE_ID, "products", [
-    Query.equal("vendorId", store.vendorId)
-  ]);
-  const products = productsReq.documents;
+  const products = await getStoreProducts(store._id);
+  const storeName = store.business || store.name || "Store";
 
   return (
     <div className="min-h-screen bg-app text-text-primary font-sans">
-      {/* Navbar */}
       <nav className="sticky top-0 z-50 border-b border-default bg-app/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
           <Link href={`/s/${storeId}`} className="flex items-center gap-2.5">
             <LogoIcon size={32} className="shrink-0" />
             <span className="text-sm font-semibold tracking-tight text-text-primary">
-              {store.name}
+              {storeName}
             </span>
           </Link>
           <div className="flex items-center gap-4">
             <span className="text-[10px] text-text-muted bg-surface border border-default px-3 py-1 rounded-full">
-              Verified by Veridrop ✓
+              Verified by Veridrop
             </span>
             <ThemeToggle />
             <Link
@@ -51,7 +42,6 @@ export default async function StorefrontPage({ params }: { params: Promise<{ sto
         </div>
       </nav>
 
-      {/* Hero */}
       <section className="relative overflow-hidden border-b border-default">
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.03]"
@@ -70,16 +60,15 @@ export default async function StorefrontPage({ params }: { params: Promise<{ sto
               </span>
             </div>
             <h1 className="text-3xl font-bold leading-tight tracking-tight md:text-4xl">
-              {store.tagline}
+              {storeName}
             </h1>
             <p className="mt-4 text-sm leading-relaxed text-text-muted max-w-xl">
-              {store.description}
+              Shop with confidence — every purchase is protected by Veridrop escrow, inspection, and managed logistics.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Products */}
       <section className="mx-auto max-w-7xl px-6 py-12">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-lg font-semibold">Products</h2>
@@ -96,23 +85,28 @@ export default async function StorefrontPage({ params }: { params: Promise<{ sto
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((p) => (
-            <div key={p.$id} className="group rounded-lg border border-default bg-surface p-5 transition-all">
+            <div key={p._id} className="group rounded-lg border border-default bg-surface p-5 transition-all">
               <span className="text-[10px] font-medium tracking-[0.15em] text-brand-blue uppercase">
                 {p.category}
               </span>
               <h3 className="mt-1 text-sm font-semibold">{p.name}</h3>
-              <div className="mt-2 flex items-center justify-between">
-                <span className="text-base font-bold text-brand-teal-light">₦{p.price}</span>
-                <button className="rounded-md bg-gradient-to-r from-brand-blue to-brand-teal-light px-3 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90">
-                  Buy with Veridrop
-                </button>
+              {p.description && (
+                <p className="mt-1 text-xs text-text-muted line-clamp-2">{p.description}</p>
+              )}
+              <div className="mt-3 flex items-center justify-between">
+                <span className="text-base font-bold text-brand-teal-light">{formatCurrency(p.price)}</span>
+                <AddToCartButton product={p} storeId={storeId} />
               </div>
             </div>
           ))}
+          {products.length === 0 && (
+            <p className="col-span-full text-center text-sm text-text-muted py-8">
+              No products available yet.
+            </p>
+          )}
         </div>
       </section>
 
-      {/* Trust Badge */}
       <section className="border-t border-default py-10">
         <div className="mx-auto max-w-7xl px-6 text-center">
           <div className="inline-flex items-center gap-3 rounded-lg border border-default bg-surface px-5 py-3">
@@ -125,10 +119,9 @@ export default async function StorefrontPage({ params }: { params: Promise<{ sto
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="border-t border-default py-8">
         <div className="mx-auto max-w-7xl px-6 text-center text-[10px] text-text-muted">
-          &copy; {new Date().getFullYear()} {store.name}. Powered by Veridrop Trust Commerce Infrastructure.
+          &copy; {new Date().getFullYear()} {storeName}. Powered by Veridrop Trust Commerce Infrastructure.
         </div>
       </footer>
     </div>

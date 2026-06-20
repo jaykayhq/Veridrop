@@ -2,28 +2,32 @@ import { StatCard } from "@/components/stat-card";
 import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
 import { formatCurrency } from "@/lib/utils";
+import { requireVendor } from "@/lib/api/auth-server";
+import { getVendorDashboard } from "@/lib/api/queries";
 
-const recentOrders = [
-  { id: "ORD-001", buyer: "Tunde A.", product: "iPhone 15 Pro", amount: 245000, status: "locked", inspector: "Chidi E." },
-  { id: "ORD-002", buyer: "Sarah K.", product: "Gucci Bag", amount: 89500, status: "passed", inspector: "Grace O." },
-  { id: "ORD-003", buyer: "Michael O.", product: "MacBook Air", amount: 520000, status: "disputed", inspector: "Chidi E." },
-  { id: "ORD-004", buyer: "Chioma E.", product: "Nike Air Max", amount: 34200, status: "delivered", inspector: "Blessing J." },
-  { id: "ORD-005", buyer: "James D.", product: "Samsung S25", amount: 156000, status: "refunded", inspector: "Grace O." },
-];
+export default async function VendorOverview() {
+  const user = await requireVendor();
+  const data = await getVendorDashboard(user._id);
 
-export default function VendorOverview() {
+  const pipeline = {
+    pending: data.recentOrders.filter((o) => o.status === "pending").length,
+    inTransit: data.recentOrders.filter((o) => ["passed", "in_transit"].includes(o.status)).length,
+    delivered: data.recentOrders.filter((o) => o.status === "delivered").length,
+    disputed: data.recentOrders.filter((o) => ["disputed", "refunded"].includes(o.status)).length,
+  };
+
   return (
     <div className="p-6 space-y-6">
       <div>
         <h1 className="text-xl font-semibold text-text-primary">Vendor Overview</h1>
-        <p className="text-sm text-text-muted mt-1">GadgetHub NG &mdash; Welcome back</p>
+        <p className="text-sm text-text-muted mt-1">{user.business || "Your Store"} &mdash; Welcome back</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Active Orders" value="18" change="4 pending inspection" changeType="neutral" icon="📦" />
-        <StatCard label="Escrow Balance" value={formatCurrency(892000)} change="₦245,000 awaiting release" changeType="neutral" icon="💰" />
-        <StatCard label="This Month" value={formatCurrency(1250000)} change="+22% vs last month" changeType="up" icon="📈" />
-        <StatCard label="Inspection Pass Rate" value="94%" change="2% above platform avg" changeType="up" icon="✅" />
+        <StatCard label="Active Orders" value={String(data.activeOrders)} change="orders in progress" changeType="neutral" icon="📦" />
+        <StatCard label="Escrow Balance" value={formatCurrency(data.escrowBalance)} change="awaiting release" changeType="neutral" icon="💰" />
+        <StatCard label="This Month" value={formatCurrency(data.monthlyVolume)} change="30-day volume" changeType={data.monthlyVolume > 0 ? "up" : "neutral"} icon="📈" />
+        <StatCard label="Inspection Pass Rate" value={`${data.passRate}%`} change="overall pass rate" changeType={data.passRate >= 80 ? "up" : "neutral"} icon="✅" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -33,37 +37,37 @@ export default function VendorOverview() {
             <div>
               <div className="flex items-center justify-between text-sm mb-1.5">
                 <span className="text-text-muted">Pending Inspection</span>
-                <span className="font-medium text-text-primary">4</span>
+                <span className="font-medium text-text-primary">{pipeline.pending}</span>
               </div>
               <div className="w-full bg-border rounded-full h-2">
-                <div className="bg-warning h-2 rounded-full" style={{ width: "22%" }} />
+                <div className="bg-warning h-2 rounded-full" style={{ width: `${Math.max((pipeline.pending / Math.max(data.activeOrders, 1)) * 100, 5)}%` }} />
               </div>
             </div>
             <div>
               <div className="flex items-center justify-between text-sm mb-1.5">
                 <span className="text-text-muted">Passed / In Transit</span>
-                <span className="font-medium text-text-primary">8</span>
+                <span className="font-medium text-text-primary">{pipeline.inTransit}</span>
               </div>
               <div className="w-full bg-border rounded-full h-2">
-                <div className="bg-teal-light h-2 rounded-full" style={{ width: "44%" }} />
+                <div className="bg-teal-light h-2 rounded-full" style={{ width: `${Math.max((pipeline.inTransit / Math.max(data.activeOrders, 1)) * 100, 5)}%` }} />
               </div>
             </div>
             <div>
               <div className="flex items-center justify-between text-sm mb-1.5">
                 <span className="text-text-muted">Delivered</span>
-                <span className="font-medium text-text-primary">5</span>
+                <span className="font-medium text-text-primary">{pipeline.delivered}</span>
               </div>
               <div className="w-full bg-border rounded-full h-2">
-                <div className="bg-[#0a54a6] h-2 rounded-full" style={{ width: "28%" }} />
+                <div className="bg-[#0a54a6] h-2 rounded-full" style={{ width: `${Math.max((pipeline.delivered / Math.max(data.activeOrders, 1)) * 100, 5)}%` }} />
               </div>
             </div>
             <div>
               <div className="flex items-center justify-between text-sm mb-1.5">
                 <span className="text-text-muted">Disputed / Refunded</span>
-                <span className="font-medium text-text-primary">1</span>
+                <span className="font-medium text-text-primary">{pipeline.disputed}</span>
               </div>
               <div className="w-full bg-border rounded-full h-2">
-                <div className="bg-danger h-2 rounded-full" style={{ width: "6%" }} />
+                <div className="bg-danger h-2 rounded-full" style={{ width: `${Math.max((pipeline.disputed / Math.max(data.activeOrders, 1)) * 100, 5)}%` }} />
               </div>
             </div>
           </div>
@@ -94,14 +98,13 @@ export default function VendorOverview() {
         </div>
         <DataTable
           columns={[
-            { key: "id", header: "Order" },
-            { key: "buyer", header: "Buyer" },
-            { key: "product", header: "Product" },
+            { key: "_id", header: "Order" },
+            { key: "buyerName", header: "Buyer" },
+            { key: "productName", header: "Product" },
             { key: "amount", header: "Amount", className: "font-medium text-text-primary", render: (row) => formatCurrency(row.amount as number) },
-            { key: "inspector", header: "Inspector" },
             { key: "status", header: "Status", render: (row) => <StatusBadge status={row.status as string} /> },
           ]}
-          data={recentOrders}
+          data={data.recentOrders}
         />
       </div>
     </div>

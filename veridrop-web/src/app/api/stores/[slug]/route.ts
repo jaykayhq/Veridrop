@@ -1,17 +1,15 @@
 import { NextRequest } from "next/server";
 import { ok, err } from "@/lib/api/helpers";
-import { MOCK_USERS, MOCK_PRODUCTS } from "@/lib/api/mock-data";
+import { db } from "@/lib/api/db";
+import type { User, Product } from "@/lib/api/types";
 
-// TODO: real lookup - query vendor by slug from DB
 export async function GET(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
     const { slug } = await params;
-    const vendor = MOCK_USERS.find((u) => u.slug === slug && u.role === "vendor");
+    const vendor = (await db.users.findOne({ slug, role: "vendor" })) as User | null;
     if (!vendor) return err("Store not found", 404);
 
-    const products = MOCK_PRODUCTS.filter(
-      (p) => p.vendorId === vendor._id && p.status === "active"
-    );
+    const products = (await db.products.find({ vendorId: vendor._id, status: "active" })) as Product[];
     return ok({ store: vendor, products });
   } catch (e) {
     return err((e as Error).message);

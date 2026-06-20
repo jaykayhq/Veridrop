@@ -7,6 +7,7 @@ import { Sidebar } from "@/components/sidebar";
 import { TopBar } from "@/components/topbar";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { seedDatabase } from "@/lib/api/seed";
 
 export default function DashboardLayout({
   children,
@@ -21,6 +22,7 @@ export default function DashboardLayout({
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    seedDatabase();
     setMounted(true);
     const stored = localStorage.getItem("veridrop-sidebar-collapsed");
     if (stored === "true") {

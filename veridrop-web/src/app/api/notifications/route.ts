@@ -1,9 +1,9 @@
 import { NextRequest } from "next/server";
 import { getAuthUser } from "@/lib/api/auth";
 import { ok, err, id } from "@/lib/api/helpers";
-import { MOCK_NOTIFICATIONS } from "@/lib/api/mock-data";
+import { db } from "@/lib/api/db";
+import type { Notification } from "@/lib/api/types";
 
-// TODO: real notifications - query from DB, add pagination
 export async function GET(req: NextRequest) {
   try {
     const auth = getAuthUser(req);
@@ -11,14 +11,13 @@ export async function GET(req: NextRequest) {
 
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId") || auth.userId;
-    const notifications = MOCK_NOTIFICATIONS.filter((n) => n.userId === userId);
+    const notifications = (await db.notifications.find({ userId })) as Notification[];
     return ok(notifications);
   } catch (e) {
     return err((e as Error).message);
   }
 }
 
-// TODO: real creation - persist to DB, trigger push notification
 export async function POST(req: NextRequest) {
   try {
     const auth = getAuthUser(req);
@@ -34,6 +33,7 @@ export async function POST(req: NextRequest) {
       read: false,
       createdAt: new Date().toISOString(),
     };
+    await db.notifications.insert(notification);
     return ok(notification);
   } catch (e) {
     return err((e as Error).message);
