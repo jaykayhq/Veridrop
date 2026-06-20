@@ -19,4 +19,5 @@ export const db = {
   disputes: createDb("disputes"),
   notifications: createDb("notifications"),
   transactions: createDb("transactions"),
+  passwordResets: createDb("passwordResets"),
 };
