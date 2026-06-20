@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createAdminClient, DATABASE_ID } from '@/lib/appwrite.server';
-import { Query } from 'node-appwrite';
+import bcrypt from 'bcryptjs';
+import { db } from '@/lib/api/db';
 import { signToken } from '@/lib/api/auth';
 import type { AuthPayload } from '@/lib/api/types';
 
@@ -9,19 +9,8 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { email, password, role } = body;
 
-    const { databases } = createAdminClient();
-
-    const usersList = await databases.listDocuments(
-      DATABASE_ID,
-      'profiles',
-      [
-        Query.equal('email', email)
-      ]
-    );
-
-    const user = usersList.documents[0];
-
-    if (!user || user.password !== password || (role && user.role !== role)) {
+    const user = await db.users.findOne({ email }) as any;
+    if (!user || !bcrypt.compareSync(password, user.password) || (role && user.role !== role.toLowerCase())) {
       return NextResponse.json(
         { error: 'Invalid credentials or incorrect role' },
         { status: 401 }
@@ -29,14 +18,14 @@ export async function POST(request: Request) {
     }
 
     const token = signToken({
-      userId: user.$id,
+      userId: user._id,
       email: user.email,
-      role: (user.role || 'VENDOR').toLowerCase() as AuthPayload['role'],
+      role: user.role as AuthPayload['role'],
     });
 
     const response = NextResponse.json({
       success: true,
-      data: { token, user: { id: user.$id, email: user.email, name: user.name, role: user.role, storeId: user.storeId } },
+      data: { token, user: { id: user._id, email: user.email, name: user.name, role: user.role, storeId: null } },
     });
 
     response.cookies.set("veridrop_token", token, {
