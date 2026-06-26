@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import DispatchRiderMap from "@/components/dispatch-rider-map";
 
 interface DispatchCompany {
   _id: string;
@@ -18,6 +19,7 @@ interface DispatchClientProps {
 
 export default function DispatchClient({ companies, stats, origin }: DispatchClientProps) {
   const [copyId, setCopyId] = useState<string | null>(null);
+  const [showMap, setShowMap] = useState(true);
 
   const copyLink = (id: string, link: string) => {
     navigator.clipboard.writeText(link);
@@ -42,6 +44,14 @@ export default function DispatchClient({ companies, stats, origin }: DispatchCli
         </div>
       </div>
 
+      {/* Live Rider Map */}
+      {showMap && (
+        <DispatchRiderMap
+          companyName="Your Delivery Network"
+          height={380}
+        />
+      )}
+
       {/* Integration Link */}
       <div className="bg-surface rounded-xl border border-default p-6">
         <div className="flex items-center justify-between mb-4">
@@ -53,10 +63,10 @@ export default function DispatchClient({ companies, stats, origin }: DispatchCli
 
         <div className="flex items-center gap-2 bg-input border border-default rounded-lg p-3">
           <div className="flex-1 font-mono text-sm text-brand-teal-light truncate">
-            {`${origin}/dispatch/link`}
+            {`${origin}/dispatch/connect`}
           </div>
           <button
-            onClick={() => copyLink("integration", `${origin}/dispatch/link`)}
+            onClick={() => copyLink("integration", `${origin}/dispatch/connect`)}
             className="shrink-0 px-4 py-1.5 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-xs font-medium rounded-md hover:opacity-90 transition-opacity"
           >
             {copyId === "integration" ? "Copied!" : "Copy Link"}

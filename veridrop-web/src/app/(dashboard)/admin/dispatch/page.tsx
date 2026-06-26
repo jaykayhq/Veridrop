@@ -2,6 +2,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
 import { requireAdmin } from "@/lib/api/auth-server";
 import { getAdminDispatch } from "@/lib/api/queries";
+import DispatchRiderMap from "@/components/dispatch-rider-map";
 
 export default async function AdminDispatch() {
   await requireAdmin();
@@ -32,6 +33,12 @@ export default async function AdminDispatch() {
           <p className="text-lg font-semibold text-text-primary mt-1">{data.totalDeliveries.toLocaleString()}</p>
         </div>
       </div>
+
+      {/* Live Network Map */}
+      <DispatchRiderMap
+        companyName="Platform-Wide Network"
+        height={400}
+      />
 
       <div className="bg-surface rounded-xl border border-default">
         <DataTable

@@ -59,13 +59,10 @@ export default function DashboardLayout({
 
   return (
     <div className="flex min-h-screen bg-app relative overflow-hidden">
-      {/* Background Images */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-40 dark:opacity-10 mix-blend-multiply dark:mix-blend-screen transition-opacity duration-300">
-        <div className="absolute top-0 right-[-100px] w-[800px] h-[800px] opacity-70">
+      {/* Background Image — Map Route */}
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-30 dark:opacity-8 mix-blend-multiply dark:mix-blend-screen transition-opacity duration-300">
+        <div className="absolute top-0 right-[-100px] w-[800px] h-[800px] opacity-60">
           <Image src="/images/map_route.png" alt="" fill className="object-contain" priority />
-        </div>
-        <div className="absolute bottom-[-50px] left-[-50px] w-[600px] h-[600px] opacity-50">
-          <Image src="/images/dispatch_rider.png" alt="" fill className="object-contain" />
         </div>
       </div>
 

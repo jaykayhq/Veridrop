@@ -14,6 +14,9 @@ export default function StoreClient({ initialSlug, initialStoreName, origin }: S
   const [tagline, setTagline] = useState("");
   const [description, setDescription] = useState("");
   const [copied, setCopied] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState("");
 
   const storeUrl = `${origin}/s/${slug}`;
 
@@ -21,6 +24,39 @@ export default function StoreClient({ initialSlug, initialStoreName, origin }: S
     navigator.clipboard.writeText(storeUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    setError("");
+    setSaved(false);
+
+    try {
+      const token = localStorage.getItem("veridrop_token");
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      const res = await fetch("/api/vendor/settings", {
+        method: "PUT",
+        headers,
+        body: JSON.stringify({
+          business: storeName.trim(),
+          slug: slug.trim(),
+          tagline: tagline.trim(),
+          description: description.trim(),
+        }),
+      });
+
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error || "Failed to save");
+
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Something went wrong");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -94,9 +130,34 @@ export default function StoreClient({ initialSlug, initialStoreName, origin }: S
           </div>
         </div>
 
-        <div className="mt-6 flex justify-end">
-          <button className="px-6 py-2 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity">
-            Save Changes
+        {error && (
+          <div className="mt-4 rounded-lg bg-danger/10 border border-danger/30 px-4 py-3 text-sm text-danger">
+            {error}
+          </div>
+        )}
+
+        <div className="mt-6 flex items-center gap-3 justify-end">
+          {saved && (
+            <span className="flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Saved successfully
+            </span>
+          )}
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="px-6 py-2 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {saving ? (
+              <span className="flex items-center gap-2">
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                Saving...
+              </span>
+            ) : (
+              "Save Changes"
+            )}
           </button>
         </div>
       </div>

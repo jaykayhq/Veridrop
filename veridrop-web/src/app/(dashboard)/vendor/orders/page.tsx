@@ -8,12 +8,12 @@ export default async function VendorOrders() {
 
   return (
     <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <h1 className="text-xl font-semibold text-text-primary">Orders</h1>
           <p className="text-sm text-text-muted mt-1">All your escrow-locked orders</p>
         </div>
-        <button className="px-4 py-2 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity">
+        <button className="w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity active:scale-[0.98]">
           + New Order
         </button>
       </div>

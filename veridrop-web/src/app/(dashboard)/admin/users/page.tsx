@@ -9,16 +9,16 @@ export default async function AdminUsers() {
   const data = await getAdminUsers();
   return (
     <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <h1 className="text-xl font-semibold text-text-primary">Users</h1>
           <p className="text-sm text-text-muted mt-1">All platform users and their roles</p>
         </div>
-        <div className="flex gap-2">
+        <div className="w-full sm:w-auto">
           <input
             type="text"
             placeholder="Search users..."
-            className="px-3 py-2 text-sm border border-default rounded-lg bg-input text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-teal-light focus:border-transparent w-64"
+            className="w-full sm:w-64 px-3 py-2.5 sm:py-2 text-sm border border-default rounded-lg bg-input text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-teal-light focus:border-transparent transition-all"
             readOnly
           />
         </div>

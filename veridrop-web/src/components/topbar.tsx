@@ -63,7 +63,7 @@ export function TopBar({ collapsed, onSidebarToggle, onMobileMenuOpen }: TopBarP
       </div>
 
       {/* Right side */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1 sm:gap-2">
         <button
           className="h-8 w-8 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-hover transition-colors relative"
           title="Notifications"
@@ -75,7 +75,7 @@ export function TopBar({ collapsed, onSidebarToggle, onMobileMenuOpen }: TopBarP
           <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-danger" />
         </button>
         <ThemeToggle />
-        <div className="h-7 w-7 rounded-full bg-brand-teal-light/20 flex items-center justify-center text-brand-teal-light text-[10px] font-bold border border-brand-teal-light/20">
+        <div className="h-7 w-7 rounded-full bg-brand-teal-light/20 flex items-center justify-center text-brand-teal-light text-[10px] font-bold border border-brand-teal-light/20 shrink-0">
           {pathname.startsWith("/admin") ? "A" : "V"}
         </div>
       </div>

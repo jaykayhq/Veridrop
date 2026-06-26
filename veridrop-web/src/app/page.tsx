@@ -1,5 +1,6 @@
 /* eslint-disable */
 import Link from "next/link";
+import Image from "next/image";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Logo, LogoIcon, VeridropLogoFull } from "@/components/Logo";
 
@@ -71,6 +72,19 @@ export default function LandingPage() {
         <div className="grid-pattern pointer-events-none absolute inset-0 opacity-[0.03]" />
         {/* Dot mesh */}
         <div className="mesh-pattern pointer-events-none absolute inset-0 opacity-[0.15]" />
+
+        {/* Dispatch Rider Image — positioned on the right side of hero */}
+        <div className="pointer-events-none absolute right-0 bottom-0 w-[400px] h-[400px] md:w-[550px] md:h-[550px] opacity-25 md:opacity-35 lg:opacity-40 mix-blend-luminosity">
+          <Image
+            src="/images/dispatch_rider.png"
+            alt=""
+            fill
+            className="object-contain object-bottom"
+            priority
+          />
+        </div>
+        {/* Gradient fade on rider image edge */}
+        <div className="pointer-events-none absolute right-0 bottom-0 w-[500px] h-[500px] bg-gradient-to-l from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
 
         <div className="relative mx-auto max-w-7xl px-6 py-24 md:py-32">
           <div className="mx-auto max-w-3xl text-center">
