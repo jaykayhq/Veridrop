@@ -4,6 +4,8 @@ import { formatCurrency, formatDate } from "@/lib/utils";
 import { requireAdmin } from "@/lib/api/auth-server";
 import { getAdminDisputes } from "@/lib/api/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDisputes() {
   await requireAdmin();
   const data = await getAdminDisputes();
@@ -21,7 +23,7 @@ export default async function AdminDisputes() {
         </div>
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Under Review</p>
-          <p className="text-lg font-semibold text-[#c8a862] mt-1">{data.underReview}</p>
+          <p className="text-lg font-semibold text-brand-gold mt-1">{data.underReview}</p>
         </div>
         <div className="bg-surface rounded-xl border border-default p-4">
           <p className="text-xs text-text-muted uppercase tracking-wider">Avg. Resolution</p>

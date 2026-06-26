@@ -38,10 +38,7 @@ export function VendorProductsClient({ initialProducts }: VendorProductsClientPr
 
   const handleSaved = useCallback(async () => {
     try {
-      const token = localStorage.getItem("veridrop_token");
-      const headers: Record<string, string> = {};
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-      const res = await fetch("/api/products", { headers });
+      const res = await fetch("/api/products", { credentials: "include" });
       const data = await res.json();
       if (data.success) setProducts(data.data || []);
     } catch {}
@@ -49,11 +46,11 @@ export function VendorProductsClient({ initialProducts }: VendorProductsClientPr
 
   const handleDelete = async (id: string) => {
     try {
-      const token = localStorage.getItem("veridrop_token");
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
-      const res = await fetch(`/api/products/${id}`, { method: "DELETE", headers });
+      const res = await fetch(`/api/products/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      });
       const data = await res.json();
       if (data.success) {
         setProducts((prev) => prev.filter((p) => p._id !== id));
@@ -69,7 +66,7 @@ export function VendorProductsClient({ initialProducts }: VendorProductsClientPr
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 flex-1 min-w-0">
           <div className="relative flex-1">
             <svg
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-[#666]"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
               width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
             >
@@ -81,13 +78,13 @@ export function VendorProductsClient({ initialProducts }: VendorProductsClientPr
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search products..."
-              className="w-full rounded-lg bg-[#0d0d0d] border border-[#1a1a1a] pl-9 pr-3 py-2.5 sm:py-2 text-sm text-[#e8e8e8] placeholder:text-[#666] focus:outline-none focus:ring-2 focus:ring-[#00bda6] focus:border-transparent transition-all"
+              className="w-full rounded-lg bg-input border border-default pl-9 pr-3 py-2.5 sm:py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-teal-light focus:border-transparent transition-all"
             />
           </div>
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="w-full sm:w-auto rounded-lg bg-[#0d0d0d] border border-[#1a1a1a] px-3 py-2.5 sm:py-2 text-sm text-[#a0a0a0] focus:outline-none focus:ring-2 focus:ring-[#00bda6] focus:border-transparent transition-all"
+            className="w-full sm:w-auto rounded-lg bg-input border border-default px-3 py-2.5 sm:py-2 text-sm text-text-secondary focus:outline-none focus:ring-2 focus:ring-brand-teal-light focus:border-transparent transition-all"
           >
             <option value="all">All Categories</option>
             {categories.map((cat) => (
@@ -97,7 +94,7 @@ export function VendorProductsClient({ initialProducts }: VendorProductsClientPr
         </div>
         <button
           onClick={handleOpenAdd}
-          className="w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-1.5 active:scale-[0.98]"
+          className="w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-gradient-to-r from-brand-blue to-brand-teal-light text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-1.5 active:scale-[0.98]"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="12" y1="5" x2="12" y2="19" />
@@ -115,7 +112,7 @@ export function VendorProductsClient({ initialProducts }: VendorProductsClientPr
             <p className="text-sm text-text-muted">No products found</p>
             <button
               onClick={handleOpenAdd}
-              className="mt-3 text-sm text-[#00bda6] hover:underline"
+              className="mt-3 text-sm text-brand-teal-light hover:underline"
             >
               Add your first product
             </button>
@@ -124,11 +121,11 @@ export function VendorProductsClient({ initialProducts }: VendorProductsClientPr
           filteredProducts.map((product) => (
             <div
               key={product._id}
-              className="group bg-surface rounded-xl border border-default p-4 flex items-center justify-between hover:bg-[#1a1a1a] transition-all duration-200"
+              className="group bg-surface rounded-xl border border-default p-4 flex items-center justify-between hover:bg-surface-hover transition-all duration-200"
             >
               <div className="flex items-center gap-4 min-w-0 flex-1">
                 {/* Product Icon */}
-                <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-[#00bda6]/10 to-[#0a54a6]/10 border border-[#1a1a1a] flex items-center justify-center text-lg shrink-0">
+                <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-brand-teal-light/10 to-brand-blue/10 border border-default flex items-center justify-center text-lg shrink-0">
                   {product.category === "Electronics" ? "📱" :
                    product.category === "Fashion" ? "👕" :
                    product.category === "Accessories" ? "🎧" : "📦"}
@@ -137,7 +134,7 @@ export function VendorProductsClient({ initialProducts }: VendorProductsClientPr
                 {/* Product Info */}
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-medium text-[#e8e8e8] truncate">{product.name}</h3>
+                    <h3 className="text-sm font-medium text-text-primary truncate">{product.name}</h3>
                     {product.status === "active" ? (
                       <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                         Active
@@ -148,21 +145,21 @@ export function VendorProductsClient({ initialProducts }: VendorProductsClientPr
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-3 mt-0.5 text-xs text-[#666]">
+                  <div className="flex items-center gap-3 mt-0.5 text-xs text-text-muted">
                     <span>{product.category}</span>
-                    <span className="w-1 h-1 rounded-full bg-[#666]" />
+                    <span className="w-1 h-1 rounded-full bg-text-muted" />
                     <span>Stock: {product.stock}</span>
                     {product.stock === 0 && (
-                      <span className="text-[#dc2626]">Out of stock</span>
+                      <span className="text-danger">Out of stock</span>
                     )}
-                    <span className="w-1 h-1 rounded-full bg-[#666]" />
+                    <span className="w-1 h-1 rounded-full bg-text-muted" />
                     <span>{product.sales} sold</span>
                   </div>
                 </div>
 
                 {/* Price */}
                 <div className="text-right shrink-0">
-                  <div className="text-sm font-semibold text-[#00bda6]">{formatCurrency(product.price)}</div>
+                  <div className="text-sm font-semibold text-brand-teal-light">{formatCurrency(product.price)}</div>
                 </div>
               </div>
 
@@ -170,7 +167,7 @@ export function VendorProductsClient({ initialProducts }: VendorProductsClientPr
               <div className="flex items-center gap-1 ml-4 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={() => handleOpenEdit(product)}
-                  className="h-8 w-8 flex items-center justify-center rounded-lg text-[#666] hover:text-[#e8e8e8] hover:bg-[#1a1a1a] transition-all"
+                  className="h-8 w-8 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-hover transition-all"
                   title="Edit product"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -182,13 +179,13 @@ export function VendorProductsClient({ initialProducts }: VendorProductsClientPr
                   <div className="flex items-center gap-1">
                     <button
                       onClick={() => handleDelete(product._id)}
-                      className="h-8 px-2 flex items-center gap-1 rounded-lg bg-[#dc2626]/10 text-[#dc2626] text-xs font-medium hover:bg-[#dc2626]/20 transition-all"
+                      className="h-8 px-2 flex items-center gap-1 rounded-lg bg-danger/10 text-danger text-xs font-medium hover:bg-danger/20 transition-all"
                     >
                       Confirm
                     </button>
                     <button
                       onClick={() => setDeleteConfirm(null)}
-                      className="h-8 px-2 flex items-center rounded-lg text-[#666] hover:text-[#e8e8e8] text-xs transition-all"
+                      className="h-8 px-2 flex items-center rounded-lg text-text-muted hover:text-text-primary text-xs transition-all"
                     >
                       Cancel
                     </button>
@@ -196,7 +193,7 @@ export function VendorProductsClient({ initialProducts }: VendorProductsClientPr
                 ) : (
                   <button
                     onClick={() => setDeleteConfirm(product._id)}
-                    className="h-8 w-8 flex items-center justify-center rounded-lg text-[#666] hover:text-[#dc2626] hover:bg-[#dc2626]/10 transition-all"
+                    className="h-8 w-8 flex items-center justify-center rounded-lg text-text-muted hover:text-danger hover:bg-danger/10 transition-all"
                     title="Delete product"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

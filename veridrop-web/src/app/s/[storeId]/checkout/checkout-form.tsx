@@ -26,13 +26,10 @@ export default function CheckoutForm({ storeId }: { storeId: string }) {
     setError("");
 
     try {
-      const token = localStorage.getItem("veridrop_token");
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const res = await fetch("/api/orders", {
         method: "POST",
-        headers,
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           storeId,
           items: items.map((i) => ({ productId: i.product._id, quantity: i.quantity, price: i.product.price })),

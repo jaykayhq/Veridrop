@@ -4,6 +4,8 @@ import { requireVendor } from "@/lib/api/auth-server";
 import { getVendorProducts } from "@/lib/api/queries";
 import { VendorProductsClient } from "./vendor-products-client";
 
+export const dynamic = "force-dynamic";
+
 export default async function VendorProducts() {
   const user = await requireVendor();
   const data = await getVendorProducts(user._id);

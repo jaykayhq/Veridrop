@@ -32,13 +32,10 @@ export default function StoreClient({ initialSlug, initialStoreName, origin }: S
     setSaved(false);
 
     try {
-      const token = localStorage.getItem("veridrop_token");
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const res = await fetch("/api/vendor/settings", {
         method: "PUT",
-        headers,
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           business: storeName.trim(),
           slug: slug.trim(),
@@ -80,7 +77,7 @@ export default function StoreClient({ initialSlug, initialStoreName, origin }: S
           </div>
           <button
             onClick={copyLink}
-            className="shrink-0 px-4 py-1.5 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-xs font-medium rounded-md hover:opacity-90 transition-opacity"
+            className="shrink-0 px-4 py-1.5 bg-gradient-to-r from-brand-blue to-brand-teal-light text-white text-xs font-medium rounded-md hover:opacity-90 transition-opacity"
           >
             {copied ? "Copied!" : "Copy Link"}
           </button>
@@ -148,7 +145,7 @@ export default function StoreClient({ initialSlug, initialStoreName, origin }: S
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-6 py-2 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-2 bg-gradient-to-r from-brand-blue to-brand-teal-light text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? (
               <span className="flex items-center gap-2">

@@ -1,6 +1,9 @@
+import Link from "next/link";
 import { requireVendor } from "@/lib/api/auth-server";
 import { getVendorOrders } from "@/lib/api/queries";
 import OrderTable from "./order-table";
+
+export const dynamic = "force-dynamic";
 
 export default async function VendorOrders() {
   const user = await requireVendor();
@@ -13,9 +16,12 @@ export default async function VendorOrders() {
           <h1 className="text-xl font-semibold text-text-primary">Orders</h1>
           <p className="text-sm text-text-muted mt-1">All your escrow-locked orders</p>
         </div>
-        <button className="w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity active:scale-[0.98]">
+        <Link
+          href="/vendor/products"
+          className="w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-gradient-to-r from-brand-blue to-brand-teal-light text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity active:scale-[0.98] inline-block text-center"
+        >
           + New Order
-        </button>
+        </Link>
       </div>
 
       {data.orders.length > 0 ? (

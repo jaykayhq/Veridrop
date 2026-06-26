@@ -4,6 +4,8 @@ import { formatCurrency, formatDate } from "@/lib/utils";
 import { requireAdmin } from "@/lib/api/auth-server";
 import { getAdminTransactions } from "@/lib/api/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminTransactions() {
   await requireAdmin();
   const data = await getAdminTransactions();

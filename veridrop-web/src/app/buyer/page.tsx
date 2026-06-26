@@ -23,11 +23,7 @@ export default function BuyerOrdersPage() {
   useEffect(() => {
     async function fetchOrders() {
       try {
-        const token = localStorage.getItem("veridrop_token");
-        const headers: Record<string, string> = {};
-        if (token) headers["Authorization"] = `Bearer ${token}`;
-
-        const res = await fetch("/api/orders", { headers });
+        const res = await fetch("/api/orders", { credentials: "include" });
         const data = await res.json();
         if (!data.success) throw new Error(data.error || "Failed to load orders");
         setOrders(data.data || []);

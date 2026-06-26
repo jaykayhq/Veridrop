@@ -9,16 +9,16 @@ const statusStyles: Record<string, string> = {
   active: "text-brand-teal-light border-brand-teal-light/20 bg-brand-teal-light/10",
   pending: "text-brand-gold border-brand-gold/20 bg-brand-gold/10",
   passed: "text-brand-teal-light border-brand-teal-light/20 bg-brand-teal-light/10",
-  failed: "text-[#dc2626] border-[#dc2626]/20 bg-[#dc2626]/10",
+  failed: "text-danger border-danger/20 bg-danger/10",
   completed: "text-brand-teal-light border-brand-teal-light/20 bg-brand-teal-light/10",
   cancelled: "text-text-muted border-hover bg-surface",
-  disputed: "text-brand-warning border-[#d97706]/20 bg-[#d97706]/10",
+  disputed: "text-brand-warning border-warning/20 bg-warning/10",
   released: "text-brand-blue border-brand-blue/20 bg-brand-blue/10",
   locked: "text-brand-blue border-brand-blue/20 bg-brand-blue/10",
   refunded: "text-text-muted border-hover bg-surface",
   resolved: "text-brand-teal-light border-brand-teal-light/20 bg-brand-teal-light/10",
   review: "text-brand-gold border-brand-gold/20 bg-brand-gold/10",
-  rejected: "text-[#dc2626] border-[#dc2626]/20 bg-[#dc2626]/10",
+  rejected: "text-danger border-danger/20 bg-danger/10",
   on_order: "text-brand-blue border-brand-blue/20 bg-brand-blue/10",
   picked_up: "text-brand-blue border-brand-blue/20 bg-brand-blue/10",
   in_transit: "text-brand-teal-light border-brand-teal-light/20 bg-brand-teal-light/10",
@@ -43,13 +43,13 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
       <span
         className="h-1.5 w-1.5 rounded-full"
         style={{
-          backgroundColor: style.includes("teal-light") ? "#00bda6"
-            : style.includes("gold") ? "#c8a862"
-            : style.includes("warning") ? "#d97706"
-            : style.includes("brand-danger") || style.includes("dc2626") ? "#dc2626"
-            : style.includes("brand-blue") ? "#0a54a6"
-            : style.includes("muted") ? "#666"
-            : "#888",
+          backgroundColor: style.includes("teal-light") ? "var(--color-brand-teal-light)"
+            : style.includes("gold") ? "var(--color-brand-gold)"
+            : style.includes("warning") ? "var(--color-warning)"
+            : style.includes("danger") ? "var(--color-danger)"
+            : style.includes("brand-blue") ? "var(--color-brand-blue)"
+            : style.includes("muted") ? "var(--color-text-muted)"
+            : "var(--color-text-secondary)",
         }}
       />
       {status.replace(/_/g, " ")}

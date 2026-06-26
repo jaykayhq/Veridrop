@@ -53,8 +53,8 @@ export function Logo({
     return (
       <Link href={href} className={`inline-flex items-center ${className}`}>
         <span className={`logo-wordmark ${wordmarkClassName}`}>
-          <span className="text-[#0a54a6]">Veri</span>
-          <span className="text-[#00bda6]">drop</span>
+          <span className="text-brand-blue">Veri</span>
+          <span className="text-brand-teal-light">drop</span>
         </span>
       </Link>
     );
@@ -65,10 +65,10 @@ export function Logo({
       <Mark size={iconSize} />
       <div className="flex flex-col">
         <span className={`logo-wordmark leading-none ${wordmarkClassName}`}>
-          <span className="text-[#0a54a6]">Veri</span>
-          <span className="text-[#00bda6]">drop</span>
+          <span className="text-brand-blue">Veri</span>
+          <span className="text-brand-teal-light">drop</span>
         </span>
-        <span className="text-[8px] font-semibold tracking-[0.25em] text-[#555] leading-none mt-1">
+        <span className="text-[8px] font-semibold tracking-[0.25em] text-text-muted leading-none mt-1">
           TRUST INFRASTRUCTURE
         </span>
       </div>
@@ -85,10 +85,10 @@ export function VeridropLogoFull({ className = "" }: { className?: string }) {
           className="logo-wordmark text-xl leading-none"
           style={{ fontFamily: "var(--font-geist-sans), Inter, sans-serif" }}
         >
-          <span className="text-[#0a54a6]">Veri</span>
-          <span className="text-[#00bda6]">drop</span>
+          <span className="text-brand-blue">Veri</span>
+          <span className="text-brand-teal-light">drop</span>
         </span>
-        <span className="text-[9px] font-semibold tracking-[0.22em] text-[#555] leading-none mt-1">
+        <span className="text-[9px] font-semibold tracking-[0.22em] text-text-muted leading-none mt-1">
           TRUST COMMERCE INFRASTRUCTURE
         </span>
       </div>

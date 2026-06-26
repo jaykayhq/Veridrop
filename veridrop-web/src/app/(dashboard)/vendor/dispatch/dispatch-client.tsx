@@ -56,18 +56,18 @@ export default function DispatchClient({ companies, stats, origin }: DispatchCli
       <div className="bg-surface rounded-xl border border-default p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-sm font-semibold text-text-primary">Dispatch Integration Link</h3>
-            <p className="text-xs text-text-muted mt-1">Share this unique link with delivery companies to onboard them</p>
+            <h3 className="text-sm font-semibold text-text-primary">Dispatch Integration</h3>
+            <p className="text-xs text-text-muted mt-1">Delivery companies can access their dedicated portal here</p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 bg-input border border-default rounded-lg p-3">
           <div className="flex-1 font-mono text-sm text-brand-teal-light truncate">
-            {`${origin}/dispatch/connect`}
+            {`${origin}/dispatch`}
           </div>
           <button
-            onClick={() => copyLink("integration", `${origin}/dispatch/connect`)}
-            className="shrink-0 px-4 py-1.5 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-xs font-medium rounded-md hover:opacity-90 transition-opacity"
+            onClick={() => copyLink("integration", `${origin}/dispatch`)}
+            className="shrink-0 px-4 py-1.5 bg-gradient-to-r from-brand-blue to-brand-teal-light text-white text-xs font-medium rounded-md hover:opacity-90 transition-opacity"
           >
             {copyId === "integration" ? "Copied!" : "Copy Link"}
           </button>
@@ -130,9 +130,9 @@ export default function DispatchClient({ companies, stats, origin }: DispatchCli
         <h3 className="text-sm font-semibold text-text-primary mb-4">How It Works</h3>
         <div className="grid gap-4 sm:grid-cols-3">
           {[
-            { step: "01", title: "Share Link", description: "Send your unique dispatch link to any delivery company" },
-            { step: "02", title: "They Connect", description: "Delivery company registers riders and sets coverage zones" },
-            { step: "03", title: "Automated Dispatch", description: "Orders are automatically routed to available riders with QR handoff" },
+            { step: "01", title: "Register", description: "Delivery companies create their dispatch portal" },
+            { step: "02", title: "Add Riders", description: "Register delivery riders with contact details" },
+            { step: "03", title: "Automated Dispatch", description: "Orders are routed to available riders with QR handoff tracking" },
           ].map((s) => (
             <div key={s.step} className="border border-default rounded-lg p-4">
               <span className="text-brand-teal-light text-sm font-bold">{s.step}</span>

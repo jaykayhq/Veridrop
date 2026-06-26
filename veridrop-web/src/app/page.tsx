@@ -73,18 +73,13 @@ export default function LandingPage() {
         {/* Dot mesh */}
         <div className="mesh-pattern pointer-events-none absolute inset-0 opacity-[0.15]" />
 
-        {/* Dispatch Rider Image — positioned on the right side of hero */}
-        <div className="pointer-events-none absolute right-0 bottom-0 w-[400px] h-[400px] md:w-[550px] md:h-[550px] opacity-25 md:opacity-35 lg:opacity-40 mix-blend-luminosity">
-          <Image
-            src="/images/dispatch_rider.png"
-            alt=""
-            fill
-            className="object-contain object-bottom"
-            priority
-          />
+        {/* Abstract geometric accent — brand gradient shape */}
+        <div className="pointer-events-none absolute right-0 bottom-0 w-[400px] h-[400px] md:w-[500px] md:h-[500px] opacity-[0.12]">
+          <div className="w-full h-full rounded-full bg-gradient-to-br from-brand-teal/40 via-brand-blue/30 to-transparent blur-3xl" />
         </div>
-        {/* Gradient fade on rider image edge */}
-        <div className="pointer-events-none absolute right-0 bottom-0 w-[500px] h-[500px] bg-gradient-to-l from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
+        <div className="pointer-events-none absolute right-[-100px] bottom-[-100px] w-[300px] h-[300px] md:w-[400px] md:h-[400px] opacity-[0.08]">
+          <div className="w-full h-full rounded-full bg-gradient-to-tl from-brand-gold/30 to-transparent blur-3xl" />
+        </div>
 
         <div className="relative mx-auto max-w-7xl px-6 py-24 md:py-32">
           <div className="mx-auto max-w-3xl text-center">
@@ -352,10 +347,10 @@ export default function LandingPage() {
             {/* Terminal-style mockup */}
             <div className="card p-5 font-mono text-[11px]">
               <div className="mb-3 flex items-center gap-1.5">
-                <div className="h-2.5 w-2.5 rounded-full bg-[#555]" />
-                <div className="h-2.5 w-2.5 rounded-full bg-[#555]" />
-                <div className="h-2.5 w-2.5 rounded-full bg-[#555]" />
-                <span className="ml-2 text-[10px] text-[#444] font-sans">
+                <div className="h-2.5 w-2.5 rounded-full bg-text-muted" />
+                <div className="h-2.5 w-2.5 rounded-full bg-text-muted" />
+                <div className="h-2.5 w-2.5 rounded-full bg-text-muted" />
+                <span className="ml-2 text-[10px] text-text-muted font-sans">
                   transaction-9f8a3b.veridrop.app
                 </span>
               </div>
@@ -363,7 +358,7 @@ export default function LandingPage() {
                 <div className="animate-fade-in">
                   <span className="text-brand-teal-light">$ </span>
                   <span className="text-text-secondary">inspect</span>
-                  <span className="text-[#555]"> --transaction tx_9f8a3b</span>
+                  <span className="text-text-muted"> --transaction tx_9f8a3b</span>
                 </div>
                 <div className="animate-fade-in" style={{ animationDelay: "200ms" }}>
                   <span className="text-text-muted">{">"} Scanning inspection report...</span>
@@ -383,7 +378,7 @@ export default function LandingPage() {
                 <div className="mt-2 border-t border-default pt-2 animate-fade-in" style={{ animationDelay: "1000ms" }}>
                   <span className="text-brand-teal-light">$ </span>
                   <span className="text-text-secondary">approve</span>
-                  <span className="text-[#555]">
+                  <span className="text-text-muted">
                     {" "}
                     --reason "quality confirmed"
                   </span>
@@ -473,9 +468,9 @@ export default function LandingPage() {
               (badge) => (
                 <div
                   key={badge}
-                  className="text-[10px] font-medium tracking-[0.1em] text-[#444] flex items-center gap-1.5"
+                  className="text-[10px] font-medium tracking-[0.1em] text-text-muted flex items-center gap-1.5"
                 >
-                  <svg width="8" height="8" viewBox="0 0 8 8" fill="#444">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor">
                     <circle cx="4" cy="4" r="4" />
                   </svg>
                   {badge}
@@ -529,13 +524,13 @@ export default function LandingPage() {
               <Link href="/login" className="transition-colors hover:text-text-primary">
                 Sign In
               </Link>
-              <span className="text-[#333]">|</span>
+              <span className="text-text-muted">|</span>
               <a href="#features" className="transition-colors hover:text-text-primary">
                 Features
               </a>
             </div>
           </div>
-          <div className="mt-6 text-center text-[10px] text-[#333]">
+          <div className="mt-6 text-center text-[10px] text-text-muted">
             &copy; {new Date().getFullYear()} Veridrop. Trust Commerce
             Infrastructure.
           </div>

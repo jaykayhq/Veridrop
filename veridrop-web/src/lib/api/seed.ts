@@ -37,17 +37,5 @@ export async function seedDatabase() {
     { _id: uuid(), vendorId, name: "PS5 Digital Edition", category: "Electronics", price: 445000, stock: 4, description: "Sony gaming console", status: "active", sales: 12, createdAt: now },
   ]);
 
-  await db.dispatchCompanies.insert([
-    { _id: uuid(), name: "SwiftLogix", vendorId, status: "connected", activeRiders: 12, deliveriesToday: 45, onboarding: false, coverage: ["Lagos", "Abuja"], createdAt: now },
-    { _id: uuid(), name: "GoLorry NG", vendorId, status: "available", activeRiders: 0, deliveriesToday: 0, onboarding: false, coverage: ["Lagos"], createdAt: now },
-    { _id: uuid(), name: "RedStar Express", vendorId, status: "pending", activeRiders: 0, deliveriesToday: 0, onboarding: true, coverage: [], createdAt: now },
-  ]);
-
-  await db.riders.insert([
-    { _id: uuid(), companyId: "swiftlogix", name: "Emeka Nwosu", phone: "08012345678", status: "available", activeDeliveries: 0, totalDeliveries: 89, createdAt: now },
-    { _id: uuid(), companyId: "swiftlogix", name: "Fatima Yusuf", phone: "08087654321", status: "available", activeDeliveries: 1, totalDeliveries: 67, createdAt: now },
-    { _id: uuid(), companyId: "swiftlogix", name: "Tunde Bakare", phone: "08055556666", status: "available", activeDeliveries: 0, totalDeliveries: 45, createdAt: now },
-  ]);
-
   console.log("[Seed] Database seeded with demo data");
 }

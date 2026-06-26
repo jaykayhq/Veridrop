@@ -3,6 +3,8 @@ import { requireVendor } from "@/lib/api/auth-server";
 import { getVendorDispatch } from "@/lib/api/queries";
 import DispatchClient from "./dispatch-client";
 
+export const dynamic = "force-dynamic";
+
 export default async function VendorDispatch() {
   const user = await requireVendor();
   const data = await getVendorDispatch(user._id);

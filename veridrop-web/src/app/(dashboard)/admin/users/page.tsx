@@ -4,6 +4,8 @@ import { formatDate } from "@/lib/utils";
 import { requireAdmin } from "@/lib/api/auth-server";
 import { getAdminUsers } from "@/lib/api/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminUsers() {
   await requireAdmin();
   const data = await getAdminUsers();

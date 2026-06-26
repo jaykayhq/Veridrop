@@ -1,6 +1,9 @@
+import Link from "next/link";
 import { formatCurrency } from "@/lib/utils";
 import { requireVendor } from "@/lib/api/auth-server";
 import { getVendorBalance } from "@/lib/api/queries";
+
+export const dynamic = "force-dynamic";
 
 export default async function VendorBalance() {
   const user = await requireVendor();
@@ -18,9 +21,12 @@ export default async function VendorBalance() {
           <p className="text-xs text-text-muted uppercase tracking-wider mb-1">Available Balance</p>
           <p className="text-3xl font-semibold text-text-primary">{formatCurrency(data.availableBalance)}</p>
           <p className="text-xs text-emerald-400 mt-2">Settled and withdrawable</p>
-          <button className="mt-4 w-full px-4 py-2 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity">
+          <Link
+            href="/vendor/store"
+            className="mt-4 w-full px-4 py-2 bg-gradient-to-r from-brand-blue to-brand-teal-light text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity inline-block text-center"
+          >
             Withdraw Funds
-          </button>
+          </Link>
         </div>
 
         <div className="bg-surface rounded-xl border border-default p-6">

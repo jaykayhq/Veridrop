@@ -19,9 +19,9 @@
   --bg-topbar: rgba(13, 13, 13, 0.7);
 
   /* ─── Semantic Border Colors ─── */
-  --border-default: transparent;
-  --border-subtle: transparent;
-  --border-hover: transparent;
+  --border-default: #1a1a1a;
+  --border-subtle: #1a1a1a;
+  --border-hover: #2a2a2a;
 
   /* ─── Semantic Text Colors ─── */
   --text-primary: #e8e8e8;
@@ -124,9 +124,9 @@
   --bg-sidebar: #f8f9fa;
   --bg-topbar: rgba(255, 255, 255, 0.8);
 
-  --border-default: transparent;
-  --border-subtle: transparent;
-  --border-hover: transparent;
+  --border-default: #e2e8f0;
+  --border-subtle: #e2e8f0;
+  --border-hover: #cbd5e1;
 
   --text-primary: #0f172a;
   --text-secondary: #334155;
@@ -154,8 +154,9 @@
   --color-input: var(--bg-input);
   --color-sidebar: var(--bg-sidebar);
   --color-topbar: var(--bg-topbar);
-  --color-border: var(--border-default);
-  --color-border-subtle: var(--border-subtle);
+  --color-default: var(--border-default);
+  --color-subtle: var(--border-subtle);
+  --color-hover: var(--border-hover);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
@@ -529,12 +530,3 @@ img, picture, video, canvas, svg {
   animation: pulse-ring 2s var(--ease-standard) infinite;
 }
 
-/* ─── Global Override to remove ALL lines everywhere ─── */
-*, ::before, ::after {
-  border-color: transparent !important;
-}
-
-hr, .divider, .divider-brand {
-  opacity: 0 !important;
-  display: none !important;
-}

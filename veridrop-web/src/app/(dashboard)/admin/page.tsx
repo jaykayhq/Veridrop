@@ -5,6 +5,8 @@ import { formatCurrency } from "@/lib/utils";
 import { requireAdmin } from "@/lib/api/auth-server";
 import { getAdminDashboard, getAdminApprovals } from "@/lib/api/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminOverview() {
   await requireAdmin();
   const [dash, approvals] = await Promise.all([

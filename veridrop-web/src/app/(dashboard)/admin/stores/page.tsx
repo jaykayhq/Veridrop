@@ -4,6 +4,8 @@ import { db } from "@/lib/api/db";
 import type { Product } from "@/lib/api/types";
 import AdminStoresClient from "./admin-stores-client";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminStores() {
   await requireAdmin();
   const [storesData, allProducts] = await Promise.all([

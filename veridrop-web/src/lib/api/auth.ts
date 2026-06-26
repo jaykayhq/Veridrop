@@ -19,8 +19,13 @@ export function verifyToken(token: string): AuthPayload | null {
 
 export function getAuthUser(req: NextRequest): AuthPayload | null {
   const auth = req.headers.get("authorization");
-  if (!auth || !auth.startsWith("Bearer ")) return null;
-  return verifyToken(auth.slice(7));
+  if (auth && auth.startsWith("Bearer ")) return verifyToken(auth.slice(7));
+
+  // Fallback: read from cookie
+  const token = req.cookies.get("veridrop_token")?.value;
+  if (token) return verifyToken(token);
+
+  return null;
 }
 
 export function requireAuth(roles?: string[]) {

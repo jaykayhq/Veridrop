@@ -53,14 +53,11 @@ export default function AdminStoresClient({ storesData, initialProducts }: Admin
 
   const handleToggleStatus = async (product: Product) => {
     try {
-      const token = localStorage.getItem("veridrop_token");
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const newStatus = product.status === "active" ? "inactive" : "active";
       await fetch(`/api/products/${product._id}`, {
         method: "PUT",
-        headers,
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
       });
 
@@ -78,7 +75,7 @@ export default function AdminStoresClient({ storesData, initialProducts }: Admin
           onClick={() => setView("stores")}
           className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
             view === "stores"
-              ? "bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white"
+              ? "bg-gradient-to-r from-brand-blue to-brand-teal-light text-white"
               : "bg-surface border border-default text-text-secondary hover:border-hover"
           }`}
         >
@@ -88,7 +85,7 @@ export default function AdminStoresClient({ storesData, initialProducts }: Admin
           onClick={() => setView("products")}
           className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
             view === "products"
-              ? "bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white"
+              ? "bg-gradient-to-r from-brand-blue to-brand-teal-light text-white"
               : "bg-surface border border-default text-text-secondary hover:border-hover"
           }`}
         >
@@ -176,7 +173,7 @@ export default function AdminStoresClient({ storesData, initialProducts }: Admin
               )}
               <div className="relative flex-1 max-w-xs">
                 <svg
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-[#666]"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
                   width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                 >
@@ -188,13 +185,13 @@ export default function AdminStoresClient({ storesData, initialProducts }: Admin
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder={selectedStore ? "Search products..." : "Search by name or vendor..."}
-                  className="w-full rounded-lg bg-[#0d0d0d] border border-[#1a1a1a] pl-9 pr-3 py-2 text-sm text-[#e8e8e8] placeholder:text-[#666] focus:outline-none focus:ring-2 focus:ring-[#00bda6] focus:border-transparent transition-all"
+                  className="w-full rounded-lg bg-input border border-default pl-9 pr-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-teal-light focus:border-transparent transition-all"
                 />
               </div>
             </div>
             <button
               onClick={() => { setEditProduct(null); setShowModal(true); }}
-              className="shrink-0 px-4 py-2 bg-gradient-to-r from-[#0a54a6] to-[#00bda6] text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity flex items-center gap-1.5"
+              className="shrink-0 px-4 py-2 bg-gradient-to-r from-brand-blue to-brand-teal-light text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity flex items-center gap-1.5"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19" />

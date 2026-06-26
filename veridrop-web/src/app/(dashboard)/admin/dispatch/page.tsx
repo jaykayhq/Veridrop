@@ -4,6 +4,8 @@ import { requireAdmin } from "@/lib/api/auth-server";
 import { getAdminDispatch } from "@/lib/api/queries";
 import DispatchRiderMap from "@/components/dispatch-rider-map";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDispatch() {
   await requireAdmin();
   const data = await getAdminDispatch();

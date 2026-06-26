@@ -3,6 +3,8 @@ import { requireVendor } from "@/lib/api/auth-server";
 import { getVendorStore } from "@/lib/api/queries";
 import StoreClient from "./store-client";
 
+export const dynamic = "force-dynamic";
+
 export default async function VendorStore() {
   const user = await requireVendor();
   const storeData = await getVendorStore(user._id);

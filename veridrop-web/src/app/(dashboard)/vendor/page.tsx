@@ -1,9 +1,12 @@
+import Link from "next/link";
 import { StatCard } from "@/components/stat-card";
 import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
 import { formatCurrency } from "@/lib/utils";
 import { requireVendor } from "@/lib/api/auth-server";
 import { getVendorDashboard } from "@/lib/api/queries";
+
+export const dynamic = "force-dynamic";
 
 export default async function VendorOverview() {
   const user = await requireVendor();
@@ -58,7 +61,7 @@ export default async function VendorOverview() {
                 <span className="font-medium text-text-primary">{pipeline.delivered}</span>
               </div>
               <div className="w-full bg-border rounded-full h-2">
-                <div className="bg-[#0a54a6] h-2 rounded-full" style={{ width: `${Math.max((pipeline.delivered / Math.max(data.activeOrders, 1)) * 100, 5)}%` }} />
+                <div className="bg-brand-blue h-2 rounded-full" style={{ width: `${Math.max((pipeline.delivered / Math.max(data.activeOrders, 1)) * 100, 5)}%` }} />
               </div>
             </div>
             <div>
@@ -76,18 +79,30 @@ export default async function VendorOverview() {
         <div className="bg-surface rounded-xl border border-default p-5">
           <h3 className="text-sm font-semibold text-text-primary mb-4">Quick Actions</h3>
           <div className="space-y-2">
-            <button className="w-full text-left px-4 py-3 rounded-lg border border-default hover:border-brand-teal-light/40 hover:bg-brand-teal-light/5 transition-colors text-sm font-medium text-text-secondary">
+            <Link
+              href="/vendor/products"
+              className="block w-full text-left px-4 py-3 rounded-lg border border-default hover:border-brand-teal-light/40 hover:bg-brand-teal-light/5 transition-colors text-sm font-medium text-text-secondary"
+            >
               + Add new product listing
-            </button>
-            <button className="w-full text-left px-4 py-3 rounded-lg border border-default hover:border-brand-teal-light/40 hover:bg-brand-teal-light/5 transition-colors text-sm font-medium text-text-secondary">
+            </Link>
+            <Link
+              href="/vendor/inspectors"
+              className="block w-full text-left px-4 py-3 rounded-lg border border-default hover:border-brand-teal-light/40 hover:bg-brand-teal-light/5 transition-colors text-sm font-medium text-text-secondary"
+            >
               View pending inspection schedule
-            </button>
-            <button className="w-full text-left px-4 py-3 rounded-lg border border-default hover:border-brand-teal-light/40 hover:bg-brand-teal-light/5 transition-colors text-sm font-medium text-text-secondary">
+            </Link>
+            <Link
+              href="/vendor/inspectors"
+              className="block w-full text-left px-4 py-3 rounded-lg border border-default hover:border-brand-teal-light/40 hover:bg-brand-teal-light/5 transition-colors text-sm font-medium text-text-secondary"
+            >
               Request inspector reassignment
-            </button>
-            <button className="w-full text-left px-4 py-3 rounded-lg border border-default hover:border-brand-teal-light/40 hover:bg-brand-teal-light/5 transition-colors text-sm font-medium text-text-secondary">
+            </Link>
+            <Link
+              href="/vendor/balance"
+              className="block w-full text-left px-4 py-3 rounded-lg border border-default hover:border-brand-teal-light/40 hover:bg-brand-teal-light/5 transition-colors text-sm font-medium text-text-secondary"
+            >
               Download settlement report
-            </button>
+            </Link>
           </div>
         </div>
       </div>

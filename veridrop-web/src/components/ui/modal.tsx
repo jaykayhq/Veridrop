@@ -71,7 +71,7 @@ export function Modal({ open, onClose, title, children, size = "md" }: ModalProp
       {/* Modal Panel — bottom sheet on mobile, centered on desktop */}
       <div
         className={cn(
-          "relative w-full rounded-t-2xl sm:rounded-xl bg-[#111] border border-[#1a1a1a] shadow-2xl shadow-black/50 transition-all duration-300",
+          "relative w-full rounded-t-2xl sm:rounded-xl bg-surface border border-default shadow-2xl shadow-black/50 transition-all duration-300",
           "max-h-[90dvh] sm:max-h-[85vh] flex flex-col",
           sizeClasses[size],
           open
@@ -81,15 +81,15 @@ export function Modal({ open, onClose, title, children, size = "md" }: ModalProp
       >
         {/* Mobile drag handle */}
         <div className="flex sm:hidden justify-center pt-2 pb-1 absolute top-0 left-0 right-0 z-10">
-          <div className="h-1 w-10 rounded-full bg-[#333]" />
+          <div className="h-1 w-10 rounded-full bg-hover" />
         </div>
 
         {/* Header */}
-        <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-[#1a1a1a] shrink-0 min-h-[48px]">
-          <h2 className="text-sm font-semibold text-[#e8e8e8] truncate pr-2">{title}</h2>
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-default shrink-0 min-h-[48px]">
+          <h2 className="text-sm font-semibold text-text-primary truncate pr-2">{title}</h2>
           <button
             onClick={onClose}
-            className="h-8 w-8 sm:h-7 sm:w-7 flex items-center justify-center rounded-lg text-[#666] hover:text-[#e8e8e8] hover:bg-[#1a1a1a] transition-colors shrink-0"
+            className="h-8 w-8 sm:h-7 sm:w-7 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-hover transition-colors shrink-0"
             aria-label="Close"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

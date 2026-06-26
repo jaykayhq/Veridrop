@@ -42,11 +42,7 @@ export default function TransactionTrackingPage() {
   useEffect(() => {
     async function fetchOrder() {
       try {
-        const token = localStorage.getItem("veridrop_token");
-        const headers: Record<string, string> = {};
-        if (token) headers["Authorization"] = `Bearer ${token}`;
-
-        const res = await fetch(`/api/orders/${transactionId}`, { headers });
+        const res = await fetch(`/api/orders/${transactionId}`, { credentials: "include" });
         const data = await res.json();
 
         if (!res.ok || !data.success) {
@@ -57,7 +53,7 @@ export default function TransactionTrackingPage() {
 
         setOrder(data.data);
 
-        const trackingRes = await fetch(`/api/orders/${transactionId}/tracking`, { headers });
+        const trackingRes = await fetch(`/api/orders/${transactionId}/tracking`, { credentials: "include" });
         const trackingData = await trackingRes.json();
         if (trackingData.success) {
           setTimeline(trackingData.data.timeline || []);
@@ -74,13 +70,10 @@ export default function TransactionTrackingPage() {
 
   async function handleApproveRelease() {
     try {
-      const token = localStorage.getItem("veridrop_token");
       const res = await fetch(`/api/orders/${transactionId}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: "delivered" }),
       });
       const data = await res.json();
@@ -98,13 +91,10 @@ export default function TransactionTrackingPage() {
 
   async function handleFileDispute() {
     try {
-      const token = localStorage.getItem("veridrop_token");
       const res = await fetch(`/api/orders/${transactionId}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: "disputed" }),
       });
       const data = await res.json();

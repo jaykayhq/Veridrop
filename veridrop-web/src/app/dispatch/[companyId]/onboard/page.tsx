@@ -31,11 +31,7 @@ export default function DispatchOnboardPage() {
 
   async function fetchRiders() {
     try {
-      const token = localStorage.getItem("veridrop_token");
-      const headers: Record<string, string> = {};
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
-      const res = await fetch(`/api/dispatch/companies/${companyId}/riders`, { headers });
+      const res = await fetch(`/api/dispatch/companies/${companyId}/riders`, { credentials: "include" });
       const data = await res.json();
       if (data.success) setRiders(data.data || []);
     } catch {
@@ -56,13 +52,10 @@ export default function DispatchOnboardPage() {
     setError("");
 
     try {
-      const token = localStorage.getItem("veridrop_token");
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const res = await fetch(`/api/dispatch/companies/${companyId}/riders`, {
         method: "POST",
-        headers,
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: name.trim(), phone: phone.trim() }),
       });
       const data = await res.json();

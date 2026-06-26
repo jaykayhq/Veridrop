@@ -2,6 +2,8 @@ import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
 import { getVendorInspectors } from "@/lib/api/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function VendorInspectors() {
   const data = await getVendorInspectors();
 

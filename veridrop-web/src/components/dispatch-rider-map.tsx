@@ -16,17 +16,8 @@ interface DispatchRiderMapProps {
   height?: number;
 }
 
-// Mock Lagos coordinates for demo riders
-const DEFAULT_RIDERS: RiderLocation[] = [
-  { id: "1", name: "Emeka Nwosu", lat: 6.5244, lng: 3.3792, status: "available" },
-  { id: "2", name: "Fatima Yusuf", lat: 6.5350, lng: 3.3650, status: "on_delivery" },
-  { id: "3", name: "Tunde Bakare", lat: 6.5100, lng: 3.3900, status: "available" },
-  { id: "4", name: "Samuel Ade", lat: 6.5450, lng: 3.3550, status: "on_delivery" },
-  { id: "5", name: "Blessing John", lat: 6.5000, lng: 3.4000, status: "available" },
-];
-
 export default function DispatchRiderMap({
-  riders = DEFAULT_RIDERS,
+  riders,
   companyName = "Dispatch Network",
   height = 400,
 }: DispatchRiderMapProps) {
@@ -81,7 +72,7 @@ export default function DispatchRiderMap({
         iconAnchor: [14, 14],
       });
 
-      riders.forEach((rider) => {
+      riders?.forEach((rider) => {
         const icon = rider.status === "on_delivery" ? deliveryIcon : availableIcon;
         const marker = L.marker([rider.lat, rider.lng], { icon }).addTo(map);
 
@@ -107,7 +98,7 @@ export default function DispatchRiderMap({
       setMapLoaded(true);
 
       // Fit bounds to show all markers
-      if (riders.length > 0) {
+      if (riders && riders.length > 0) {
         const bounds = L.latLngBounds(riders.map((r) => [r.lat, r.lng]));
         map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
       }
@@ -133,7 +124,7 @@ export default function DispatchRiderMap({
       <div className="px-5 py-4 border-b border-default flex items-center justify-between">
         <div>
           <h3 className="text-sm font-semibold text-text-primary">Live Rider Map</h3>
-          <p className="text-xs text-text-muted mt-0.5">{companyName} — {riders.length} riders</p>
+          <p className="text-xs text-text-muted mt-0.5">{companyName} — {riders?.length ?? 0} riders</p>
         </div>
         <div className="flex items-center gap-3 text-[10px]">
           <span className="flex items-center gap-1.5">
@@ -150,9 +141,9 @@ export default function DispatchRiderMap({
       {/* Map Container */}
       <div ref={mapRef} style={{ width: "100%", height }} className="relative">
         {!mapLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-[#0a0a0a]">
+          <div className="absolute inset-0 flex items-center justify-center bg-app">
             <div className="flex flex-col items-center gap-3">
-              <div className="h-8 w-8 border-2 border-[#00bda6] border-t-transparent rounded-full animate-spin" />
+              <div className="h-8 w-8 border-2 border-brand-teal-light border-t-transparent rounded-full animate-spin" />
               <span className="text-xs text-text-muted">Loading map...</span>
             </div>
           </div>
@@ -161,36 +152,42 @@ export default function DispatchRiderMap({
 
       {/* Rider List */}
       <div className="border-t border-default divide-y divide-default">
-        {riders.map((rider) => (
-          <button
-            key={rider.id}
-            onClick={() => {
-              setActiveRider(rider.id);
-              if (mapInstanceRef.current) {
-                mapInstanceRef.current.setView([rider.lat, rider.lng], 15, { animate: true });
-              }
-            }}
-            className={`w-full flex items-center justify-between px-5 py-3 text-left transition-all hover:bg-surface-hover ${
-              activeRider === rider.id ? "bg-[#00bda6]/5" : ""
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              <div className={`h-2 w-2 rounded-full ${
-                rider.status === "available" ? "bg-emerald-400" :
-                rider.status === "on_delivery" ? "bg-red-400" : "bg-gray-400"
-              }`} />
-              <div>
-                <div className="text-sm font-medium text-text-primary">{rider.name}</div>
-                <div className={`text-xs ${statusColor[rider.status]} capitalize`}>
-                  {statusLabel[rider.status]}
+        {riders && riders.length > 0 ? (
+          riders.map((rider) => (
+            <button
+              key={rider.id}
+              onClick={() => {
+                setActiveRider(rider.id);
+                if (mapInstanceRef.current) {
+                  mapInstanceRef.current.setView([rider.lat, rider.lng], 15, { animate: true });
+                }
+              }}
+              className={`w-full flex items-center justify-between px-5 py-3 text-left transition-all hover:bg-surface-hover ${
+                activeRider === rider.id ? "bg-brand-teal-light/5" : ""
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className={`h-2 w-2 rounded-full ${
+                  rider.status === "available" ? "bg-emerald-400" :
+                  rider.status === "on_delivery" ? "bg-red-400" : "bg-gray-400"
+                }`} />
+                <div>
+                  <div className="text-sm font-medium text-text-primary">{rider.name}</div>
+                  <div className={`text-xs ${statusColor[rider.status]} capitalize`}>
+                    {statusLabel[rider.status]}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="text-[10px] text-text-muted">
-              {rider.lat.toFixed(4)}, {rider.lng.toFixed(4)}
-            </div>
-          </button>
-        ))}
+              <div className="text-[10px] text-text-muted">
+                {rider.lat.toFixed(4)}, {rider.lng.toFixed(4)}
+              </div>
+            </button>
+          ))
+        ) : (
+          <div className="px-5 py-8 text-center text-sm text-text-muted">
+            No active riders to display
+          </div>
+        )}
       </div>
     </div>
   );

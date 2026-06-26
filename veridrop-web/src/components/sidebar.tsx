@@ -233,50 +233,48 @@ export function Sidebar({ role, collapsed, onToggle, onMobileOpen, onMobileClose
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        "flex flex-col h-full relative transition-all duration-300 overflow-hidden",
+        "flex flex-col h-full relative transition-all duration-300 overflow-hidden bg-sidebar border-r border-default",
         collapsed && !hovered ? "w-[var(--sidebar-collapsed-width)]" : "w-[var(--sidebar-width)]"
       )}
       style={{
         width: collapsed && !hovered ? "var(--sidebar-collapsed-width)" : "var(--sidebar-width)",
-        background: "linear-gradient(180deg, rgba(13,13,13,0.98) 0%, rgba(10,10,10,0.95) 100%)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
-        borderRight: "1px solid rgba(255,255,255,0.03)",
       }}
     >
       {/* Gradient border on the right edge */}
-      <div className="absolute right-0 top-0 bottom-12 w-px bg-gradient-to-b from-transparent via-[#00bda6]/20 to-transparent pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-12 w-px bg-gradient-to-b from-transparent via-brand-teal-light/20 to-transparent pointer-events-none" />
 
       {/* Logo */}
       <div
-        className={cn(
-          "flex items-center h-14 px-4 shrink-0 relative",
-          collapsed && !hovered ? "justify-center px-0" : "gap-3"
-        )}
-      >
-        <Link href={`/${role}`} className="flex items-center gap-3 shrink-0 group">
-          <div className="relative shrink-0">
-            <LogoIcon size={28} />
-            <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-[#00bda6]/20 to-[#0a54a6]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm" />
-          </div>
-          <span
             className={cn(
-              "logo-wordmark text-lg whitespace-nowrap overflow-hidden transition-all duration-300",
-              collapsed && !hovered ? "w-0 opacity-0" : "w-auto opacity-100"
+              "flex items-center h-14 px-4 shrink-0 relative",
+              collapsed && !hovered ? "justify-center px-0" : "gap-3"
             )}
           >
-            <span className="text-[#0a54a6]">Veri</span>
-            <span className="text-[#00bda6]">drop</span>
-          </span>
-        </Link>
-      </div>
+            <Link href={`/${role}`} className="flex items-center gap-3 shrink-0 group">
+              <div className="relative shrink-0">
+                <LogoIcon size={28} />
+                <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-brand-teal-light/20 to-brand-blue/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm" />
+              </div>
+              <span
+                className={cn(
+                  "logo-wordmark text-lg whitespace-nowrap overflow-hidden transition-all duration-300",
+                  collapsed && !hovered ? "w-0 opacity-0" : "w-auto opacity-100"
+                )}
+              >
+                <span className="text-brand-blue">Veri</span>
+                <span className="text-brand-teal-light">drop</span>
+              </span>
+            </Link>
+          </div>
 
       {/* Navigation Groups */}
       <div className="flex-1 overflow-y-auto py-4 px-3 space-y-6 relative">
         {/* Active Indicator */}
         {indicatorPos && (
           <div
-            className="absolute left-2 w-0.5 rounded-full bg-gradient-to-b from-[#00bda6] to-[#0a54a6] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] shadow-[0_0_8px_rgba(0,189,166,0.5)]"
+            className="absolute left-2 w-0.5 rounded-full bg-gradient-to-b from-brand-teal-light to-brand-blue transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] shadow-[0_0_8px_rgba(0,189,166,0.5)]"
             style={{
               top: indicatorPos.top + 6,
               height: indicatorPos.height - 12,
@@ -288,7 +286,7 @@ export function Sidebar({ role, collapsed, onToggle, onMobileOpen, onMobileClose
           <div key={group.label}>
             <div
               className={cn(
-                "px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-[#666] transition-all duration-300",
+                "px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-text-muted transition-all duration-300",
                 collapsed && !hovered ? "h-0 opacity-0 overflow-hidden" : "h-auto opacity-100"
               )}
             >
@@ -309,27 +307,27 @@ export function Sidebar({ role, collapsed, onToggle, onMobileOpen, onMobileClose
                         "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative",
                         collapsed && !hovered ? "justify-center px-0" : "",
                         active
-                          ? "text-[#00bda6]"
-                          : "text-[#666] hover:text-[#e8e8e8] hover:bg-[rgba(255,255,255,0.03)]"
+                          ? "text-brand-teal-light"
+                          : "text-text-muted hover:text-text-primary hover:bg-surface-hover"
                       )}
                       title={link.label}
                     >
                       {/* Active background glow */}
                       {active && (
-                        <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#00bda6]/8 to-transparent" />
+                        <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-brand-teal-light/8 to-transparent" />
                       )}
 
                       {/* Active dot */}
                       {active && (
-                        <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#00bda6] shadow-[0_0_6px_rgba(0,189,166,0.6)]" />
+                        <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-brand-teal-light shadow-[0_0_6px_rgba(0,189,166,0.6)]" />
                       )}
 
                       <span
                         className={cn(
                           "shrink-0 relative z-10 transition-all duration-200",
                           active
-                            ? "text-[#00bda6]"
-                            : "text-[#666] group-hover:text-[#e8e8e8]",
+                            ? "text-brand-teal-light"
+                            : "text-text-muted group-hover:text-text-primary",
                           active && "scale-110"
                         )}
                       >
@@ -361,7 +359,7 @@ export function Sidebar({ role, collapsed, onToggle, onMobileOpen, onMobileClose
       >
         <button
           onClick={copyStoreLink}
-          className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-[10px] font-medium text-[#666] hover:text-[#00bda6] hover:bg-[rgba(0,189,166,0.06)] transition-all group"
+          className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-[10px] font-medium text-text-muted hover:text-brand-teal-light hover:bg-brand-teal-light/6 transition-all group"
         >
           <span className="shrink-0 group-hover:scale-110 transition-transform">
             {Icons.copy}
@@ -375,15 +373,15 @@ export function Sidebar({ role, collapsed, onToggle, onMobileOpen, onMobileClose
       {/* User Section */}
       <div
         className={cn(
-          "py-3 px-3 flex items-center gap-3 shrink-0 border-t border-[rgba(255,255,255,0.03)]",
+          "py-3 px-3 flex items-center gap-3 shrink-0 border-t border-default",
           collapsed && !hovered ? "justify-center" : ""
         )}
       >
         <div className="relative shrink-0">
-          <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#00bda6]/20 to-[#0a54a6]/20 flex items-center justify-center text-[#00bda6] text-xs font-bold border border-[#00bda6]/20">
+          <div className="h-8 w-8 rounded-full bg-gradient-to-br from-brand-teal-light/20 to-brand-blue/20 flex items-center justify-center text-brand-teal-light text-xs font-bold border border-brand-teal-light/20">
             {role === "admin" ? "A" : "V"}
           </div>
-          <div className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-emerald-400 border-2 border-[#0d0d0d]">
+          <div className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-emerald-400 border-2 border-sidebar">
             <div className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-30" />
           </div>
         </div>
@@ -393,27 +391,29 @@ export function Sidebar({ role, collapsed, onToggle, onMobileOpen, onMobileClose
             collapsed && !hovered ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100"
           )}
         >
-          <div className="text-sm font-medium text-[#e8e8e8] truncate">
+          <div className="text-sm font-medium text-text-primary truncate">
             {role === "admin" ? "Admin User" : "Vendor Name"}
           </div>
-          <div className="text-[10px] uppercase tracking-wider text-[#00bda6] font-semibold flex items-center gap-1.5">
-            <span className="h-1 w-1 rounded-full bg-[#00bda6]" />
+          <div className="text-[10px] uppercase tracking-wider text-brand-teal-light font-semibold flex items-center gap-1.5">
+            <span className="h-1 w-1 rounded-full bg-brand-teal-light" />
             {role === "admin" ? "Admin" : "Vendor"}
-            <span className="text-[#666]">· Online</span>
+            <span className="text-text-muted">· Online</span>
           </div>
         </div>
       </div>
 
-      {/* Collapse Toggle */}
-      <button
-        onClick={onToggle}
-        className="flex items-center justify-center h-9 text-[#666] hover:text-[#e8e8e8] hover:bg-[rgba(255,255,255,0.03)] transition-all shrink-0 relative group"
-        title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-      >
-        <span className="group-hover:scale-110 transition-transform duration-200">
-          {collapsed ? Icons.chevronRight : Icons.chevronLeft}
-        </span>
-      </button>
+      {/* Collapse Toggle - Desktop only */}
+      {!onMobileOpen && (
+        <button
+          onClick={onToggle}
+          className="flex items-center justify-center h-9 text-text-muted hover:text-text-primary hover:bg-surface-hover transition-all shrink-0 relative group"
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          <span className="group-hover:scale-110 transition-transform duration-200">
+            {collapsed ? Icons.chevronRight : Icons.chevronLeft}
+          </span>
+        </button>
+      )}
     </nav>
   );
 
